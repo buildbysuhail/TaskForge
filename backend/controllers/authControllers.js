@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 // import { use } from "react";
+import generateToken from "../utils/generateToken.js";
 
 // ---------------------------------
 // Register User
@@ -14,8 +15,8 @@ export const registerUser = async (req, res) => {
             return res.status(400).json({ message: "Email and password required" });
         }
         // Check if user already exists
-        const userExist = User.findOne({ email });
-        if (!userExist) {
+        const userExist = await User.findOne({ email });
+        if (userExist) {
             return res.status(400).json({ message: "User already exists" });
         }
 
@@ -39,7 +40,7 @@ export const registerUser = async (req, res) => {
             }
         });
     } catch (err) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -69,14 +70,21 @@ export const loginUser = async (req, res) => {
             return res.status(401).json({ message: "Invalid credentials, password shrik kodk monu" })
         }
 
+        // res.status(200).json({
+        //     message: "Login successfull",
+        //     user: {
+        //         id: user._id,
+        //         name: user.name,
+        //         email: user.email
+        //     }
+        // });
+
+        const token = generateToken(user?._id);
+
         res.status(200).json({
-            message: "Login successfull",
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email
-            }
-        });
+            message: "Login successful",
+            token,
+        })
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
