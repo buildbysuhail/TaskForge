@@ -1,3 +1,27 @@
 DB credentials.png
 node_modules/
 backend/.env
+backend/node_modules/
+frontend/node_modules/
+
+
+# # Logs
+# logs
+# *.log
+# npm-debug.log*
+
+# # OS files
+# .DS_Store
+# Thumbs.db
+
+# # Build folders
+# dist/
+# build/
+# frontend/dist/
+# frontend/build/
+
+# # Coverage
+# coverage/
+
+# # Vite cache
+# frontend/.vite/
