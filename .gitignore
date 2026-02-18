@@ -1,5 +1,5 @@
 DB credentials.png
 node_modules/
-backend/.env
 # .env
+backend/.env
 backend/node_modules/
