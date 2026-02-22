@@ -5,41 +5,62 @@ import { useNavigate } from "react-router-dom";
 
 console.log("API URL:", API);
 function Login() {
-    const [form, setForm] = useState({
-        email: "",
-        password: "",
-    });
-    const navigate = useNavigate();
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
 
-    const handleChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    // return alert("testing submit");
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+    try {
+      const res = await API.post("/auth/login", form);
+      alert("Login successful ✅");
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+
+      navigate("/dashboard");
+    } catch (err) {
+      console.error("login error: ", err);
+      if (err.response) {
+        setError(err.response.data.message || "Login failed");
+      } else {
+        setError("Server not reachable");
+      }
+    } finally {
+      setLoading(false);
     }
-
-    const handleSubmit = async (e) => {
-        // return alert("ddsas")
-        e.preventDefault();
-        try {
-            const res = await API.post("/auth/login", form);
-            alert("Login successful ✅");
-            localStorage.setItem("token", res.data.token);
-
-            navigate("/dashboard");
-        } catch (err) {
-            console.error("login error: ", err);
-            alert("Login failed");
-        }
-    }
+  };
 
   return (
     <div>
       <h2>Login Page</h2>
-      <form action="" onSubmit={handleSubmit} >
-        <input name="email" placeholder="Enter Email" onChange={handleChange}/>
-        <input name="password" type="password" placeholder="Enter Password" onChange={handleChange}/>
-        <button type="submit">Login</button>
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      <form action="" onSubmit={handleSubmit}>
+        <input name="email" placeholder="Enter Email" onChange={handleChange} />
+        <input
+          name="password"
+          type="password"
+          placeholder="Enter Password"
+          onChange={handleChange}
+        />
+        <button type="submit">{loading ? "Logging in..." : "Login"}</button>
       </form>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
