@@ -1,27 +1,59 @@
 // import React from 'react'
 import { useState } from "react";
+import { createTask } from "../services/taskService";
 
 function TaskForm({ onAdd }) {
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState("todo");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!title.trim()) return;
 
-    onAdd(title);
-    setTitle("");
+    const trimmed = title.trim();
+    // const descri = descr
+    if (!trimmed) return;
+
+    try {
+      const newTask = await createTask({ title: trimmed, description, status });
+
+      onAdd(newTask);   // send FULL task object back
+      setTitle("");
+      setDescription("");
+      setStatus("todo")
+    } catch (error) {
+      console.error("Error creating task:", error);
+    }
   };
   return (
     <div>
-      Task Form
-      <form action="" onSubmit={handleSubmit}>
+      <h3>Create Task</h3>
+      <form onSubmit={handleSubmit}>
+        
         <input
           type="text"
-          placeholder="Enter task..."
+          placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+
+        <textarea
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+        >
+          <option value="todo">Todo</option>
+          <option value="in-progress">In Progress</option>
+          <option value="completed">Completed</option>
+        </select>
+
         <button type="submit">Add Task</button>
+
       </form>
     </div>
   );
