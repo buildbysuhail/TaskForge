@@ -1,14 +1,31 @@
-// import React from 'react'
+import { useEffect, useState } from "react";
 import TaskForm from "../components/TaskForm.jsx";
 import TaskList from "../components/TaskList.jsx";
-import { useState } from "react";
+import { 
+  getTasks, 
+  // createTask 
+} from "../services/taskService.js";
 
 function Dashboard() {
   const [tasks, setTasks] = useState([]);
 
-  const handleAddTask = (title) => {
-    setTasks([...tasks, { id: Date.now(), title }]);
+  const loadTasks = async () => {
+    try {
+      const data = await getTasks();
+      setTasks(data);
+      // console.log(data, "dsdsdd")
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
   };
+
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
+  const handleAddTask = (newTask) => {
+  setTasks((prevTasks) => [...prevTasks, newTask]);
+};
 
   return (
     <div>

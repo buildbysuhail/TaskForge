@@ -10,7 +10,7 @@ function App() {
 
   return (
     <Router>
-      <h1 className='' style={{color: 'red'}}>Task Forge - A Poject Management App</h1>
+      <h1 className='' style={{color: 'red'}}>Task Forge - A Project Management App</h1>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
