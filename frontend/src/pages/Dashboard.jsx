@@ -31,7 +31,7 @@ function Dashboard() {
     <div>
       <h2>Dashboard</h2>
       <TaskForm onAdd={handleAddTask} />
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks} reloadTasks={loadTasks}/>
     </div>
   );
 }
