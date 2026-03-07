@@ -1,4 +1,4 @@
-# 🦇🏴‍☠️ Project Blueprint: PM Dashboard
+# 🦇🏴‍☠️ TaskForge Blueprint: PM Dashboard
 
 > **Mission:** Construct a full-stack Project Management Application.  
 > **Architecture:** MERN Stack (MongoDB, Express, React, Node.js)  
