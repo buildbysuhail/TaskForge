@@ -1,6 +1,7 @@
 // import React from 'react'
 import { useState } from "react";
 import { createTask } from "../services/taskService";
+import { Button } from "./ui/button";
 
 function TaskForm({ onAdd }) {
   const [title, setTitle] = useState("");
@@ -52,7 +53,7 @@ function TaskForm({ onAdd }) {
           <option value="completed">Completed</option>
         </select>
 
-        <button type="submit">Add Task</button>
+        <Button type="submit" variant="destructive">Add Task</Button>
 
       </form>
     </div>
