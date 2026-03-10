@@ -14,6 +14,35 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Eye, EyeOff } from "lucide-react";
+
+function PasswordInput({ value, onChange }) {
+  const [showPassword, setShowPassword] = useState(false);
+
+  return (
+    <div className="relative">
+      <Input
+        id="password"
+        name="password"
+        type={showPassword ? "text" : "password"}
+        value={value}
+        onChange={onChange}
+        className="pr-10"
+        required
+      />
+
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon"
+        className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7"
+        onClick={() => setShowPassword(!showPassword)}
+      >
+        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+      </Button>
+    </div>
+  );
+}
 
 console.log("API URL:", API);
 function Login() {
@@ -72,52 +101,60 @@ function Login() {
     //     <button type="submit">{loading ? "Logging in..." : "Login"}</button>
     //   </form>
     // </div>
+    <div className="flex items-center min-h-screen justify-center">
     <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle>Login to your account</CardTitle>
-        <CardDescription>
+        <CardDescription className="text-sm">
           Enter your email below to login to your account
         </CardDescription>
-        <CardAction>
+        {/* <CardAction>
           <Button variant="link">Sign Up</Button>--
-        </CardAction>
+        </CardAction> */}
       </CardHeader>
-      <CardContent>
-        <form>
+
+      <form onSubmit={handleSubmit}>
+        <CardContent>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
+                name="email"
                 placeholder="m@example.com"
+                onChange={handleChange}
+                value={form?.email}
                 required
               />
+              {error && <p className="text-red-600 text-sm">{error}</p>}
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
                 <Label htmlFor="password">Password</Label>
                 <a
                   href="#"
-                  className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                  className="ml-auto inline-block text-sm underline-offset-4 hover:underline cursor-not-allowed"
+                  title="Under development"
                 >
                   Forgot your password?
                 </a>
               </div>
-              <Input id="password" type="password" required />
+              <PasswordInput value={form.password} onChange={handleChange} />
             </div>
           </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex-col gap-2">
-        <Button type="submit" className="w-full">
-          Login
-        </Button>
-        <Button variant="outline" className="w-full">
-          Login with Google
-        </Button>
-      </CardFooter>
+        </CardContent>
+        <CardFooter className="flex-col gap-2">
+          <Button type="submit" className="w-full">
+            Login
+          </Button>
+          <Button variant="outline" className="w-full cursor-not-allowed" title="Under development">
+            Login with Google
+          </Button>
+        </CardFooter>
+      </form>
     </Card>
+    </div>
   );
 }
 
