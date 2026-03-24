@@ -2,6 +2,17 @@
 import { useState } from "react";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 function Register() {
     const [form, setForm] = useState({
@@ -27,16 +38,56 @@ function Register() {
         }
     }
   return (
-    <div>
-      <h2>Register Page</h2>
-      <form action="" onSubmit={handleSubmit}>
-        <input name= "name" placeholder="Enter Name" onChange={handleChange}/>
-        <input name= "email" placeholder="Enter Email" onChange={handleChange}/>
-        <input name= "password" placeholder="Enter Password" type="password" onChange={handleChange}/>
-        <button type="submit">Register</button>
-      </form>
-    </div>
-  )
+  <div className="flex items-center justify-center min-h-screen bg-gray-100">
+
+    <Card className="w-[380px]">
+      <CardHeader>
+        <CardTitle>Create Account</CardTitle>
+        <CardDescription>
+          Enter your details to register
+        </CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4">
+
+          <Input
+            name="name"
+            placeholder="Enter Name"
+            onChange={handleChange}
+            className="w-full border rounded p-2"
+          />
+
+          <Input
+            name="email"
+            placeholder="Enter Email"
+            onChange={handleChange}
+            className="w-full border rounded p-2"
+          />
+
+          <Input
+            name="password"
+            type="password"
+            placeholder="Enter Password"
+            onChange={handleChange}
+            className="w-full border rounded p-2"
+          />
+
+          <Button
+            type="submit"
+            className="w-full text-white p-2 rounded"
+            variant="default"
+          >
+            Register
+          </Button>
+
+        </form>
+      </CardContent>
+
+    </Card>
+
+  </div>
+)
 }
 
 export default Register

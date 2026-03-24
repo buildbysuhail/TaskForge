@@ -1,6 +1,7 @@
 // import React from 'react'
 import { useEffect, useState } from "react";
 import { deleteTask, updateTask } from "../services/taskService";
+import { Button } from "./ui/button";
 // import { getTasks, creatTask } from "../services/taskService";
 
 function TaskList({ tasks, reloadTasks }) {
@@ -47,9 +48,9 @@ function TaskList({ tasks, reloadTasks }) {
               <option value="completed">Completed</option>
             </select>
 
-            <button onClick={() => handleDelete(task._id)} className="cursor-pointer">
+            <Button onClick={() => handleDelete(task._id)} variant="destructive" >
               Delete
-            </button>
+            </Button>
 
             <strong>{task.title}</strong>
             <p>{task.description}</p>

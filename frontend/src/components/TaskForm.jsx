@@ -53,7 +53,7 @@ function TaskForm({ onAdd }) {
           <option value="completed">Completed</option>
         </select>
 
-        <Button type="submit" variant="destructive">Add Task</Button>
+        <Button type="submit" variant="default">Add Task</Button>
 
       </form>
     </div>
