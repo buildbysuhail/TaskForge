@@ -28,10 +28,14 @@ function Dashboard() {
 };
 
   return (
-    <div>
-      <h2>Dashboard</h2>
+    <div className="bg-slate-100">
+      <h2 className="text-[23px] bg-slate-100 text-center">Dashboard</h2>
+      <div className="bg-gray-300 rounded-sm p-5">
       <TaskForm onAdd={handleAddTask} />
+      </div>
+      <div className="bg-green-50 rounded-sm p-5">
       <TaskList tasks={tasks} reloadTasks={loadTasks}/>
+      </div>
     </div>
   );
 }
