@@ -21,8 +21,9 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { X } from "lucide-react";
 
-function TaskForm({ onAdd }) {
+function TaskForm({ onAdd, onClose }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("todo");
@@ -52,8 +53,12 @@ function TaskForm({ onAdd }) {
 
   return (
     <Card className="max-w-lg mx-auto">
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Create Task</CardTitle>
+
+        <Button variant="ghost" onClick={onClose}>
+          <X size={18}/>
+        </Button>
       </CardHeader>
 
       <CardContent>

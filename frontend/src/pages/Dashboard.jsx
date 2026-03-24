@@ -33,13 +33,23 @@ function Dashboard() {
     <div className="bg-slate-100">
       <h2 className="text-[23px] bg-slate-100 text-center">Dashboard</h2>
       <div className="bg-gray-300 rounded-sm p-5">
-        <Button onClick={()=> setShowTaskFrm(true)}>New</Button>
+        <Button 
+        className="bg-blue-900" 
+        onClick={() => setShowTaskFrm(true)}
+        // variant="ghost"
+        >
+          New
+        </Button>
 
-        {showTaskFrm && <TaskForm onAdd={handleAddTask} />}
-      
+        {showTaskFrm && (
+          <TaskForm
+            onAdd={handleAddTask}
+            onClose={() => setShowTaskFrm(false)}
+          />
+        )}
       </div>
       <div className="bg-green-50 rounded-sm p-5">
-      <TaskList tasks={tasks} reloadTasks={loadTasks}/>
+        <TaskList tasks={tasks} reloadTasks={loadTasks} />
       </div>
     </div>
   );
