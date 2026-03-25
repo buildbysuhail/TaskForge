@@ -35,7 +35,7 @@ function TaskList({ tasks, reloadTasks }) {
 
   return (
     <div>
-      <h3>Task List</h3>
+      <h3 className="text-[12px] text-slate-600 bg-gray-100 rounded-md font-semibold my-2">Task List</h3>
       <ul>
         {tasks.map((task) => (
           <li key={task._id}>
