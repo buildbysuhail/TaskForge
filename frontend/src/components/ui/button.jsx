@@ -43,6 +43,7 @@ const buttonVariants = cva(
 )
 
 function Button({
+  disabled=false,
   className,
   variant = "default",
   size = "default",
@@ -53,6 +54,7 @@ function Button({
 
   return (
     <Comp
+      disabled={disabled}
       data-slot="button"
       data-variant={variant}
       data-size={size}
