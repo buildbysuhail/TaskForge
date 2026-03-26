@@ -148,7 +148,7 @@ function Login() {
           <Button type="submit" className="w-full">
             Login
           </Button>
-          <Button variant="outline" className="w-full cursor-not-allowed" title="Under development">
+          <Button disabled={true} variant="outline" className="w-full cursor-not-allowed" title="Under development">
             Login with Google
           </Button>
         </CardFooter>
