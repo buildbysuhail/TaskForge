@@ -85,3 +85,7 @@
     @apply font-sans;
   }
 }
+
+[data-sonner-toast] {
+  @apply font-sans;
+}

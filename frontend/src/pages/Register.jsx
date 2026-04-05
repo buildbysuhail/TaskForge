@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { showToast } from "@/lib/utils/toast";
 
 function Register() {
     const [form, setForm] = useState({
@@ -29,9 +30,10 @@ function Register() {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
+    //  return
       try {
         const res = await API.post("/auth/register", form);
-        alert("Registered successfully ✅");
+        showToast.success("Registered successfully ✅");
         navigate("/");
         console.log(res, "response");
       } catch (err) {
@@ -46,6 +48,8 @@ function Register() {
         }
       }
     }
+
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <Card className="w-[380px]">
@@ -56,7 +60,7 @@ function Register() {
 
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* 🔴 Error Message */}
+            {/* Error Message */}
             {error && (
               <p className="text-[11px] text-red-500 bg-red-50 p-1 rounded">
                 {error}

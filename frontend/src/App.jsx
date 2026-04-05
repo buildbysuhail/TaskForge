@@ -5,12 +5,14 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import MainLayout from "./layout/MainLayout";
+import { Toaster } from "sonner";
 
 function App() {
   // const [count, setCount] = useState(0)
 
   return (
     <Router>
+        <Toaster position="top-right" richColors />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
