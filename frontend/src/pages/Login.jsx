@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
+import { showToast } from "@/lib/utils/toast";
 
 function PasswordInput({ value, onChange }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -67,7 +68,7 @@ function Login() {
     setLoading(true);
     try {
       const res = await API.post("/auth/login", form);
-      alert("Login successful ✅");
+      showToast.success("Login successful");
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
