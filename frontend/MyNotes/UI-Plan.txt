@@ -1,0 +1,15 @@
+✅ Best Practice (Simple Rule)
+
+You need 2 types of loading state:
+
+1. Global Loading (Fetching Tasks)
+
+Handled in parent (Dashboard)
+
+👉 Because it controls the data
+
+2. Action Loading (Update/Delete per task)
+
+Handled in child (TaskList)
+
+👉 Because actions happen per item
