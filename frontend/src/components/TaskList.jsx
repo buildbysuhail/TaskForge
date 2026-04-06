@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 
 import { Button } from "@/components/ui/button";
+import { showToast } from "@/lib/utils/toast";
 
 function TaskList({ tasks, reloadTasks }) {
 
@@ -21,8 +22,10 @@ function TaskList({ tasks, reloadTasks }) {
     try {
       await updateTask(id, { status: newStatus });
       reloadTasks();
+      showToast.success("Task updated successfully ✅");
     } catch (error) {
       console.error("Error updating task:", error);
+      showToast.error("Failed to update task");
     }
   };
 
@@ -30,8 +33,10 @@ function TaskList({ tasks, reloadTasks }) {
     try {
       await deleteTask(id);
       reloadTasks();
+      showToast.success("Task deleted successfully ✅");
     } catch (error) {
       console.error("Error deleting task:", error);
+      showToast.error("Failed to delete task");
     }
   };
 
