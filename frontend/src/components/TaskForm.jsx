@@ -22,6 +22,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { X } from "lucide-react";
+import { showToast } from "@/lib/utils/toast";
 
 function TaskForm({ onAdd, onClose }) {
   const [title, setTitle] = useState("");
@@ -42,12 +43,13 @@ function TaskForm({ onAdd, onClose }) {
       });
 
       onAdd(newTask);
-
+      showToast.success("Task created successfully ✅");
       setTitle("");
       setDescription("");
       setStatus("todo");
     } catch (error) {
       console.error("Error creating task:", error);
+      showToast.error("Failed to create task");
     }
   };
 
