@@ -1,5 +1,5 @@
 import { deleteTask, updateTask } from "../services/taskService";
-
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -16,31 +16,59 @@ import {
 import { Button } from "@/components/ui/button";
 import { showToast } from "@/lib/utils/toast";
 
-function TaskList({ tasks, reloadTasks }) {
+function TaskList({ tasks, reloadTasks, loading }) {
 
-  const handleStatusChange = async (id, newStatus) => {
-    try {
-      await updateTask(id, { status: newStatus });
+  const [actionLoading, setActionLoading] = useState(null);
+
+  const handleStatusChange = (id, newStatus) => {
+  setActionLoading(id);
+
+  const promise = updateTask(id, { status: newStatus });
+
+  showToast.promise(promise, {
+    loading: "Updating task...",
+    success: () => {
       reloadTasks();
-      showToast.success("Task updated successfully ✅");
-    } catch (error) {
-      console.error("Error updating task:", error);
-      showToast.error("Failed to update task");
-    }
-  };
+      setActionLoading(null);
+      return "Task updated successfully ✅";
+    },
+    error: (err) => {
+      setActionLoading(null);
+      return err?.response?.data?.message || "Failed to update task";
+    },
+  });
+};
 
-  const handleDelete = async (id) => {
-    try {
-      await deleteTask(id);
+  const handleDelete = (id) => {
+  setActionLoading(id);
+
+  const promise = deleteTask(id);
+
+  showToast.promise(promise, {
+    loading: "Deleting task...",
+    success: () => {
       reloadTasks();
-      showToast.success("Task deleted successfully ✅");
-    } catch (error) {
-      console.error("Error deleting task:", error);
-      showToast.error("Failed to delete task");
-    }
-  };
+      setActionLoading(null);
+      return "Task deleted successfully ✅";
+    },
+    error: (err) => {
+      setActionLoading(null);
+      return err?.response?.data?.message || "Failed to delete task";
+    },
+  });
+};
 
-  if (!tasks.length) {
+  if (loading) {
+  return (
+    <div className="space-y-4">
+      {[1,2,3].map((i) => (
+        <div key={i} className="p-4 bg-gray-200 animate-pulse rounded-md h-20" />
+      ))}
+    </div>
+  );
+}
+
+  if (!loading && !tasks.length) {
     return (
       <p className="text-center text-gray-500 mt-4">
         No tasks yet. Create one 🚀
@@ -76,7 +104,9 @@ function TaskList({ tasks, reloadTasks }) {
                     handleStatusChange(task._id, value)
                   }
                 >
-                  <SelectTrigger className="w-[140px] rounded-md">
+                  <SelectTrigger className="w-[140px] rounded-md"
+                    disabled={actionLoading === task._id}
+                  >
                     <SelectValue />
                   </SelectTrigger>
 
@@ -89,12 +119,13 @@ function TaskList({ tasks, reloadTasks }) {
 
                 {/* Delete */}
                 <Button
+                  disabled={actionLoading === task._id}
                   variant="destructive"
                   size="sm"
                   onClick={() => handleDelete(task._id)}
                   className={"rounded-sm"}
                 >
-                  Delete
+                  {actionLoading === task._id ? "Deleting..." : "Delete"}
                 </Button>
 
               </div>
