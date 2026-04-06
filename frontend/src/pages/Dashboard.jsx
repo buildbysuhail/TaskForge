@@ -11,13 +11,18 @@ function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [showTaskFrm, setShowTaskFrm] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const loadTasks = async () => {
     try {
+      setLoading(true);
       const data = await getTasks();
       setTasks(data);
       // console.log(data, "dsdsdd")
     } catch (error) {
       console.error("Error fetching tasks:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -49,7 +54,7 @@ function Dashboard() {
         )}
       </div>
       <div className="bg-green-50 rounded-sm p-5">
-        <TaskList tasks={tasks} reloadTasks={loadTasks} />
+        <TaskList tasks={tasks} reloadTasks={loadTasks} loading={loading} />
       </div>
     </div>
   );

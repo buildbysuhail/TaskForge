@@ -31,4 +31,8 @@ export const showToast = {
       ...(description && { description }),
     });
   },
+
+  promise: (promise, messages) => {
+    toast.promise(promise, messages);
+  },
 }
