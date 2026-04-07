@@ -5,4 +5,7 @@ test credentials:-
     email: test2@gmail.com || suhail@test.com
     password: Task@123
 
+Live Test credentials:-
+    > task@gmail.com
+    > Task@123
 

@@ -29,6 +29,8 @@ function TaskForm({ onAdd, onClose }) {
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("todo");
 
+  const [formLoading, setFormLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,6 +38,7 @@ function TaskForm({ onAdd, onClose }) {
     if (!trimmed) return;
 
     try {
+      setFormLoading(true);
       const newTask = await createTask({
         title: trimmed,
         description,
@@ -50,6 +53,8 @@ function TaskForm({ onAdd, onClose }) {
     } catch (error) {
       console.error("Error creating task:", error);
       showToast.error("Failed to create task");
+    } finally {
+      setFormLoading(false);
     }
   };
 
@@ -104,7 +109,10 @@ function TaskForm({ onAdd, onClose }) {
 
           {/* Button */}
           <Button type="submit" className="w-full">
-            Add Task
+            {/* {formLoading ? "Adding Task..." : "Add Task"} */}
+            <span className={formLoading ? "animate-pulse" : ""}>
+              {formLoading ? "Adding Task..." : "Add Task"}
+            </span>
           </Button>
 
         </form>

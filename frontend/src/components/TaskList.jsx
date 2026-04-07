@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
 } from "@/components/ui/card";
-
 import {
   Select,
   SelectContent,
@@ -12,16 +11,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import { Button } from "@/components/ui/button";
 import { showToast } from "@/lib/utils/toast";
+import { TFConfirmModal } from "./common/modals";
 
 function TaskList({ tasks, reloadTasks, loading }) {
 
-  const [actionLoading, setActionLoading] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [selectedTaskId, setSelectedTaskId] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
 
   const handleStatusChange = (id, newStatus) => {
-  setActionLoading(id);
+
 
   const promise = updateTask(id, { status: newStatus });
 
@@ -29,18 +30,16 @@ function TaskList({ tasks, reloadTasks, loading }) {
     loading: "Updating task...",
     success: () => {
       reloadTasks();
-      setActionLoading(null);
       return "Task updated successfully ✅";
     },
     error: (err) => {
-      setActionLoading(null);
       return err?.response?.data?.message || "Failed to update task";
     },
   });
 };
 
   const handleDelete = (id) => {
-  setActionLoading(id);
+  setDeletingId(id);
 
   const promise = deleteTask(id);
 
@@ -48,14 +47,21 @@ function TaskList({ tasks, reloadTasks, loading }) {
     loading: "Deleting task...",
     success: () => {
       reloadTasks();
-      setActionLoading(null);
+      setDeletingId(null);
       return "Task deleted successfully ✅";
     },
     error: (err) => {
-      setActionLoading(null);
+      setDeletingId(null);
       return err?.response?.data?.message || "Failed to delete task";
     },
   });
+};
+
+const confirmDelete = () => {
+  if (!selectedTaskId) return;
+  handleDelete(selectedTaskId);
+  setOpen(false);
+  setSelectedTaskId(null);
 };
 
   if (loading) {
@@ -105,7 +111,7 @@ function TaskList({ tasks, reloadTasks, loading }) {
                   }
                 >
                   <SelectTrigger className="w-[140px] rounded-md"
-                    disabled={actionLoading === task._id}
+                    disabled={selectedTaskId === task._id}
                   >
                     <SelectValue />
                   </SelectTrigger>
@@ -119,13 +125,16 @@ function TaskList({ tasks, reloadTasks, loading }) {
 
                 {/* Delete */}
                 <Button
-                  disabled={actionLoading === task._id}
+                  disabled={deletingId === task._id}
                   variant="destructive"
                   size="sm"
-                  onClick={() => handleDelete(task._id)}
+                  onClick={() => {
+                    setSelectedTaskId(task._id);
+                    setOpen(true);
+                  }}
                   className={"rounded-sm"}
                 >
-                  {actionLoading === task._id ? "Deleting..." : "Delete"}
+                  {deletingId === task._id ? "Deleting..." : "Delete"}
                 </Button>
 
               </div>
@@ -141,6 +150,16 @@ function TaskList({ tasks, reloadTasks, loading }) {
           </CardContent>
         </Card>
       ))}
+
+      <TFConfirmModal
+        open={open}
+        onOpenChange={setOpen}
+        title="Delete Task?"
+        description="This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+        onConfirm={confirmDelete}
+      />
 
     </div>
   );
