@@ -59,5 +59,6 @@ It allows users to securely register, log in, and manage tasks efficiently.
 | cors | Cross-origin resource sharing |
 | nodemon | Development server auto restart |
 | Shadcn | Reusable and customizable UI components |
+| lucide-react | icons |
 
 ## 📂 Project Structure
