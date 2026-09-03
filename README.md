@@ -8,18 +8,18 @@ It allows users to securely register, log in, and manage tasks efficiently.
 ## 🧠 Tech Stack
 
 **Frontend**
-- React (Vite)
-- Axios
-- React Router
-- CSS
+- React (Vite) -- frontend library
+- Axios -- API Communication
+- React Router -- Routing
+- CSS -- Styling
 
 **Backend**
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- JWT Authentication
-- bcrypt
+- Node.js -- Server of Taskforge
+- Express.js -- Web framework
+- MongoDB -- DataBase
+- Mongoose -- MongoDB ODM
+- jsonwebtoken --JWT Authentication 
+- bcrypt -- password hashing
 
 ---
 
@@ -34,5 +34,30 @@ It allows users to securely register, log in, and manage tasks efficiently.
 - 🌐 Full Frontend-Backend Integration
 
 ---
+
+- ✅ Project setup
+- ✅ MongoDB connection
+- ✅ User Registration
+- ✅ User Login
+- ✅ JWT Authentication
+- ✅ Protected Routes
+- ⏳ Task CRUD
+- ⏳ Drag & Drop Board
+- ⏳ User Profile
+- ⏳ Team Collaboration
+
+## 📦 Third-Party Libraries
+
+| Library | Purpose |
+|---------|---------|
+| Axios | HTTP requests between frontend and backend |
+| React Router DOM | Client-side routing |
+| bcrypt | Password hashing |
+| jsonwebtoken | JWT authentication |
+| mongoose | MongoDB object modeling |
+| dotenv | Environment variable management |
+| cors | Cross-origin resource sharing |
+| nodemon | Development server auto restart |
+| Shadcn | Reusable and customizable UI components |
 
 ## 📂 Project Structure
