@@ -24,7 +24,7 @@
 ## 🗺️ Phase Strategy
 
 ### Phase 1: The Foundation (Skeleton)
-- [ ] Setup Repo & MERN Stack Basics
+- [. ] Setup Repo & MERN Stack Basics
 - [ ] Implement **Layout & Navigation**
 - [ ] Build **Authentication** (Login/Signup)
 
