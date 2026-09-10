@@ -102,7 +102,19 @@ function Login() {
     //     <button type="submit">{loading ? "Logging in..." : "Login"}</button>
     //   </form>
     // </div>
-    <div className="flex items-center min-h-screen justify-center">
+    <div className="flex flex-row items-center min-h-screen">
+
+
+      <div className="flex items-center justify-center w-1/2 min-h-screen bg-gray-50">
+
+        <div className="w-full max-w-[35rem]">
+        <h2 className="font-bold w-[100%] mr-8">
+          <img src="src/assets/images/TaskForge.png" className="" alt="TaskForge" />
+        </h2>
+        </div>
+      </div>
+
+    <div className="flex items-center justify-center w-1/2 min-h-screenr">
     <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle>Login to your account</CardTitle>
@@ -155,6 +167,7 @@ function Login() {
         </CardFooter>
       </form>
     </Card>
+    </div>
     </div>
   );
 }
