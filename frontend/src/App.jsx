@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import MainLayout from "./layout/MainLayout";
+import ProtectedRoute from "../routes/ProtectedRoute";
 import { Toaster } from "sonner";
 
 function App() {
@@ -18,10 +19,11 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         {/* Routes with Navbar */}
-        <Route element={<MainLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+        <Route element= {<ProtectedRoute />}>
+          <Route element={<MainLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Route>
         </Route>
-
       </Routes>
     </Router>
   );
