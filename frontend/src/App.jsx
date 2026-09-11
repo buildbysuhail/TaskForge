@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import MainLayout from "./layout/MainLayout";
 import ProtectedRoute from "../routes/ProtectedRoute";
 import { Toaster } from "sonner";
+import CreateTask from "./pages/CreateTask";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -22,6 +23,7 @@ function App() {
         <Route element= {<ProtectedRoute />}>
           <Route element={<MainLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/create-task" element={<CreateTask />} />
           </Route>
         </Route>
       </Routes>
