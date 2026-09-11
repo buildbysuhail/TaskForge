@@ -89,3 +89,10 @@
 [data-sonner-toast] {
   @apply font-sans;
 }
+
+[data-sonner-toast] [data-close-button] {
+  left: auto !important;
+  right: 8px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}

@@ -30,7 +30,7 @@ function TaskList({ tasks, reloadTasks, loading }) {
     loading: "Updating task...",
     success: () => {
       reloadTasks();
-      return "Task updated successfully ✅";
+      return "Task updated successfully";
     },
     error: (err) => {
       return err?.response?.data?.message || "Failed to update task";
@@ -48,7 +48,7 @@ function TaskList({ tasks, reloadTasks, loading }) {
     success: () => {
       reloadTasks();
       setDeletingId(null);
-      return "Task deleted successfully ✅";
+      return "Task deleted successfully";
     },
     error: (err) => {
       setDeletingId(null);
