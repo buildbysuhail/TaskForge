@@ -2,12 +2,25 @@ import Task from "../models/Task.js";
 
 export const createTask = async (req, res) => {
     try {
-        const { title, description, status } = req.body;
+        const { title,
+                description,
+                status,
+                priority,
+                type,
+                taskId,
+                owner
+            } = req.body;
+        console.log("Incoming request body:", req.body);
 
         const task = await Task.create({
             title,
             description,
             status,
+            priority,
+            type,
+            taskId,
+            owner,
+
             user: req.user._id,
         })
 
@@ -30,6 +43,7 @@ export const getTasks = async (req, res) => {
 export const updateTask = async (req, res) => {
     try {
         const task = await Task.findById(req.params.id);
+        // console.log("UPDATE TASK BODY:", req.body);
 
         if (!task) {
             return res.status(404).json({ message: "Task not found" });
