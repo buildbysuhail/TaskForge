@@ -28,7 +28,7 @@ function Navbar() {
 
       <div className="flex justify-between gap-5">
 
-      <button className="cursor-pointer bg-gray-800 p-2 rounded-md hover:bg-gray-700 transition-colors"
+      <button className="cursor-pointer p-2 rounded-md hover:bg-gray-700 transition-colors"
         // onClick={() => navigate("feature-check")}
         onClick={() => showToast.info("Feature stoped temp")}        
         title="Feature Check(Development purpose)"
@@ -36,7 +36,7 @@ function Navbar() {
         <TestTube2 />
       </button>
 
-        <button className="cursor-pointer bg-gray-800 p-2 rounded-md hover:bg-gray-700 transition-colors" onClick={()=>setOpen(true)} title="Logout">
+        <button className="cursor-pointer p-2 rounded-md hover:bg-gray-700 transition-colors" onClick={()=>setOpen(true)} title="Logout">
           <LogOut />
           </button>
       </div>
