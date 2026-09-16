@@ -10,7 +10,7 @@ export const createTask = async (req, res) => {
                 taskId,
                 owner
             } = req.body;
-        console.log("Incoming request body:", req.body);
+        // console.log("Incoming request body:", req.body);
 
         const task = await Task.create({
             title,
@@ -33,7 +33,7 @@ export const createTask = async (req, res) => {
 export const getTasks = async (req, res) => {
     try {
         const tasks = await Task.find({ user: req.user._id }); // Imoortant: Only fetch tasks that belong to the logged in user
-
+        // console.log("Fetched tasks for user:", req.user._id, tasks);
         res.status(200).json(tasks);
     } catch (err) {
         res.status(500).json({ message: err.message });
