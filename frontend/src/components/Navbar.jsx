@@ -1,4 +1,4 @@
-import { LogOut } from "lucide-react";
+import { LogOut, TestTube2 } from "lucide-react";
 import { TFConfirmModal } from "./common/modals";
 import { useState } from "react";
 import { showToast } from "@/lib/utils/toast";
@@ -26,9 +26,22 @@ function Navbar() {
         <img src="/src/assets/images/TF.Logo.png" className="w-10" alt="Task Forge" />
         </h1>
 
-        <button className="cursor-pointer" onClick={()=>setOpen(true)} title="Logout">
+      <div className="flex justify-between gap-5">
+
+      <button className="cursor-pointer bg-gray-800 p-2 rounded-md hover:bg-gray-700 transition-colors"
+        // onClick={() => navigate("feature-check")}
+        onClick={() => showToast.info("Feature stoped temp")}        
+        title="Feature Check(Development purpose)"
+      >
+        <TestTube2 />
+      </button>
+
+        <button className="cursor-pointer bg-gray-800 p-2 rounded-md hover:bg-gray-700 transition-colors" onClick={()=>setOpen(true)} title="Logout">
           <LogOut />
           </button>
+      </div>
+
+        
     </div>
     <TFConfirmModal 
       open={open}

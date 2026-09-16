@@ -1,2 +1,4 @@
+import TFCommonModal from "./TFCommonModal"
+
 export { TFConfirmModal } from "./TFConfirmModal"
-export { TFMediaModal } from "./TFMediaModal"
+// export { TFCommonModal } from "./TFCommonModal"
