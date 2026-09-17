@@ -9,7 +9,11 @@ import { Button } from "@/components/ui/button.jsx";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.jsx";
 import { useNavigate } from "react-router-dom";
 import FeatureUnderDevelopment from "./FeatureUnderDev.jsx";
-import { ArrowUpDown, ChevronDown, ChevronUp, EyeOff, Search } from "lucide-react";
+import {
+  Activity, ArrowUpDown, ChevronDown, ChevronUp, ClipboardCheck, EyeOff, LayoutList,
+  Proportions,
+  Search, SquareKanban,
+} from "lucide-react";
 import TFSelect from "@/components/common/TFSelect.jsx";
 
 function Dashboard() {
@@ -20,13 +24,13 @@ function Dashboard() {
   const [useSelectView, setUseSelectView] = useState(false); // adjust however you want
 
   const navigate = useNavigate();
-
+// console.log(LayoutList, "layoutListttttt")
   const tabItems = [
-    { label: "Backlog", value: "backlog" },
-    { label: "Kanban", value: "kanban" },
-    { label: "Completed Tasks", value: "completed-tasks" },
-    { label: "Active Sprints", value: "active-sprints" },
-    { label: "Report", value: "report" },
+    { label: "Backlog", value: "backlog", icon: LayoutList },
+    { label: "Kanban", value: "kanban", icon: SquareKanban },
+    { label: "Completed Tasks", value: "completed-tasks", icon: ClipboardCheck },
+    { label: "Active Sprints", value: "active-sprints", icon: Activity },
+    { label: "Report", value: "report", icon: Proportions },
   ]
 
   const loadTasks = async () => {
@@ -78,10 +82,11 @@ function Dashboard() {
               <TFSelect
                 value={activeTab}
                 onValueChange={setActiveTab}
-                options={tabItems.map((t) => ({ value: t.value, label: t.label }))}
+                options={tabItems.map((t) => ({ value: t.value, label: t.label, icon: t.icon }))}
                 className="w-[180px]" // removed mx-auto
                 valueClassName="text-center w-full font-bold"
                 contentClassName="font-medium w-[180px] bg-slate-400"
+                triggerClassName="h-9 py-[17px]"
                 align="start"
                 sideOffset={4}
               />

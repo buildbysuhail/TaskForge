@@ -49,15 +49,21 @@ function TFSelect({
           sideOffset={sideOffset}
           alignOffset={alignOffset}
         >
-          {options.map((option) => (
+          {options.map((option) =>{ 
+            const Icon = option.icon;
+            return (
             <SelectItem
               key={option.value}
               value={option.value}
               className={option.className || itemClassName}
             >
+              <span className="flex item-center gap-2">
+              { Icon && <Icon/> }
               {option.label}
+              </span>
             </SelectItem>
-          ))}
+          );
+          })}
         </SelectContent>
       </Select>
     </div>
