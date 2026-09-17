@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { showToast } from "@/lib/utils/toast";
 import { TFConfirmModal } from "./common/modals";
 import {TFTable} from "./common/TFTable";
+import TFSelect from "./common/TFSelect";
 
 function TaskList({ tasks, reloadTasks, loading }) {
 
@@ -22,6 +23,22 @@ function TaskList({ tasks, reloadTasks, loading }) {
   const [deletingId, setDeletingId] = useState(null);
   const [updatingId, setUpdatingId] = useState(null);
 
+  const TypeOptions = [{ label: "Feature", value: "Feature" },
+                       { label: "Quality", value: "Quality" },
+                       { label: "Bug", value: "Bug" },
+                       { label: "Test", value: "Test" },
+                      ];
+  const PriorityOptions = [{ label: "Best Effort", value: "best-effort" },
+                           { label: "Low", value: "low" },
+                           { label: "Medium", value: "medium" },
+                           { label: "High", value: "high" },
+                           { label: "Critical", value: "critical" },
+                      ];
+  const StatusOptions = [{ label: "To Do", value: "todo" },
+                         { label: "In Progress", value: "in-progress" },
+                         { label: "Completed", value: "completed" },
+                      ];
+  
   // ----------------------------------
   // Update Task Status
   // ----------------------------------
@@ -180,40 +197,14 @@ function TaskList({ tasks, reloadTasks, loading }) {
 
       // render: (task) => task.type || "-",
       render: (task) => (
-        <Select
-          value={task.type}
-          onValueChange={(value) =>
-            handleTypeChange(task._id, value)
+        <TFSelect
+          value={task?.type}
+          onValueChange={
+            (value) => handleTypeChange(task?._id, value)
           }
           disabled={updatingId === task._id}
-        >
-          <SelectTrigger className="w-[140px] rounded-md">
-            <SelectValue />
-          </SelectTrigger>
-
-          <SelectContent>
-            <SelectItem value="Feature">
-              Feature
-            </SelectItem>
-
-            <SelectItem value="Quality">
-              Quality
-            </SelectItem>
-
-            <SelectItem value="Bug">
-              Bug
-            </SelectItem>
-            <SelectItem value="Test">
-              Test
-            </SelectItem>
-            <SelectItem value="Security">
-              Security
-            </SelectItem>
-            <SelectItem value="Other">
-              Other
-            </SelectItem>
-          </SelectContent>
-        </Select>
+          options={TypeOptions}
+        />
       ),
     },
 
@@ -223,38 +214,14 @@ function TaskList({ tasks, reloadTasks, loading }) {
 
       // render: (task) => task.priority || "-",
       render: (task) => (
-        <Select
-          value={task.priority}
-          onValueChange={(value) =>
-            handlePriorityChange(task._id, value)
-          }
+        <TFSelect
+          value={task?.priority}
+          onValueChange={(value) =>{
+            handlePriorityChange(task?._id, value)
+          }}
           disabled={updatingId === task._id}
-        >
-          <SelectTrigger className="w-[140px] rounded-md">
-            <SelectValue />
-          </SelectTrigger>
-
-          <SelectContent>
-            <SelectItem value="best-effort">
-              Best Effort
-            </SelectItem>
-
-            <SelectItem value="low">
-              Low
-            </SelectItem>
-
-            <SelectItem value="medium">
-              Medium
-            </SelectItem>
-            <SelectItem value="high">
-              High
-            </SelectItem>
-            
-            <SelectItem value="critical">
-              Critical
-            </SelectItem>
-          </SelectContent>
-        </Select>
+          options={PriorityOptions}
+        />
       ),
     },
 
@@ -263,31 +230,39 @@ function TaskList({ tasks, reloadTasks, loading }) {
       header: "Status",
 
       render: (task) => (
-        <Select
-          value={task.status}
-          onValueChange={(value) =>
-            handleStatusChange(task._id, value)
-          }
+        // <Select
+        //   value={task.status}
+        //   onValueChange={(value) =>
+        //     handleStatusChange(task._id, value)
+        //   }
+        //   disabled={updatingId === task._id}
+        // >
+        //   <SelectTrigger className="w-[140px] rounded-md">
+        //     <SelectValue />
+        //   </SelectTrigger>
+
+        //   <SelectContent>
+        //     <SelectItem value="todo">
+        //       Todo
+        //     </SelectItem>
+
+        //     <SelectItem value="in-progress">
+        //       In Progress
+        //     </SelectItem>
+
+        //     <SelectItem value="completed">
+        //       Completed
+        //     </SelectItem>
+        //   </SelectContent>
+        // </Select>
+        <TFSelect 
+          value={task?.status}
+          onValueChange={(value) =>{
+            handleStatusChange(task?._id, value)
+          }}
           disabled={updatingId === task._id}
-        >
-          <SelectTrigger className="w-[140px] rounded-md">
-            <SelectValue />
-          </SelectTrigger>
-
-          <SelectContent>
-            <SelectItem value="todo">
-              Todo
-            </SelectItem>
-
-            <SelectItem value="in-progress">
-              In Progress
-            </SelectItem>
-
-            <SelectItem value="completed">
-              Completed
-            </SelectItem>
-          </SelectContent>
-        </Select>
+          options={StatusOptions}
+        />
       ),
     },
 
