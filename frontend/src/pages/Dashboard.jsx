@@ -65,7 +65,7 @@ function Dashboard() {
           </TabsTrigger>
         </TabsList>
 
-        <div className="bg-gray-200 rounded-lg p-5 flex justify-between w-full items-center">
+        <div className="rounded-lg p-5 flex justify-between w-full items-center">
           <div className="flex justify-content gap-3">
             <Button
               className="bg-blue-900 rounded-md w-14 h-9"
