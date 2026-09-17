@@ -10,13 +10,24 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.j
 import { useNavigate } from "react-router-dom";
 import FeatureUnderDevelopment from "./FeatureUnderDev.jsx";
 import { ArrowUpDown, ChevronDown, ChevronUp, EyeOff, Search } from "lucide-react";
+import TFSelect from "@/components/common/TFSelect.jsx";
 
 function Dashboard() {
   const [tasks, setTasks] = useState([]);
   // const [showTaskFrm, setShowTaskFrm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState("backlog");
+  const [useSelectView, setUseSelectView] = useState(false); // adjust however you want
 
   const navigate = useNavigate();
+
+  const tabItems = [
+    { label: "Backlog", value: "backlog" },
+    { label: "Kanban", value: "kanban" },
+    { label: "Completed Tasks", value: "completed-tasks" },
+    { label: "Active Sprints", value: "active-sprints" },
+    { label: "Report", value: "report" },
+  ]
 
   const loadTasks = async () => {
     try {
@@ -42,31 +53,40 @@ function Dashboard() {
   return (
     <div className="bg-slate-100 min-h-screen py-6">
       <h2 className="text-[23px] bg-slate-100 font-semibold text-center mb-4">Dashboard</h2>
-      <Tabs defaultValue="backlog" className="w-full mx-auto justify-center items-center bg-slate-300 flex flex-col gap-2 p-4 rounded-lg shadow-sm">
+      <Tabs 
+      // defaultValue="backlog" 
+      value={activeTab}
+      onValueChange={setActiveTab}
+      className="w-full mx-auto justify-center items-center bg-slate-300 flex flex-col gap-2 p-4 rounded-lg shadow-sm"
+      >
 
-        {/* Tab navigation */}
-        <TabsList variant="line" className={"w-[60%] mx-auto"}>
-          <TabsTrigger value="backlog" className={"text-[18px] font-bold"}>
-            All Tasks
-          </TabsTrigger>
-
-          <TabsTrigger value="kanban" className={"text-[18px] font-bold"}>
-            Kanban
-          </TabsTrigger>
-
-          <TabsTrigger value="completed-tasks" className={"text-[18px] font-bold"}>
-            Completed Tasks
-          </TabsTrigger>
-          <TabsTrigger value="active-sprints" className={"text-[18px] font-bold"}>
-            Active Sprints
-          </TabsTrigger>
-          <TabsTrigger value="report" className={"text-[18px] font-bold"}>
-            Report
-          </TabsTrigger>
-        </TabsList>
+       
+        {useSelectView &&
+          <TabsList variant="line" className={"w-[60%] mx-auto"}>
+            {tabItems.map((t) => (
+              <TabsTrigger key={t.value} value={t.value} className={"text-[18px] font-bold"}>
+                {t.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        }
 
         <div className="rounded-lg p-5 flex justify-between w-full items-center">
           <div className="flex justify-content gap-3">
+
+            {!useSelectView &&
+              <TFSelect
+                value={activeTab}
+                onValueChange={setActiveTab}
+                options={tabItems.map((t) => ({ value: t.value, label: t.label }))}
+                className="w-[180px]" // removed mx-auto
+                valueClassName="text-center w-full font-bold"
+                contentClassName="font-medium w-[180px] bg-slate-400"
+                align="start"
+                sideOffset={4}
+              />
+              }
+
             <Button
               className="bg-blue-900 rounded-md w-14 h-9"
               onClick={() => navigate("/create-task")}
@@ -106,10 +126,12 @@ function Dashboard() {
           </div>
 
           <button
-            title="Collapse/Expand Header Tabs"
+            title={useSelectView ? "Collapse" : "Expand"}
+            onClick={()=>setUseSelectView((b)=>!b)}
           >
-            {/* <ChevronDown /> */}
-            <ChevronUp />
+           { useSelectView ?
+            <ChevronUp /> : <ChevronDown/>
+            }
           </button>
         </div>
 

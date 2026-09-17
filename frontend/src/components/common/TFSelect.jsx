@@ -14,7 +14,14 @@ function TFSelect({
   options = [],
   className = "",
   triggerClassName = "",
+  contentClassName = "",
+  itemClassName = "",
+  valueClassName = "",
   disabled = false,
+  align = "start",        // "start" | "center" | "end"
+  side = "bottom",        // "top" | "bottom" | "left" | "right"
+  sideOffset = 4,         // gap (px) between trigger and panel
+  alignOffset = 0,        // shift along the alignment axis (px)
 }) {
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
@@ -30,14 +37,23 @@ function TFSelect({
         disabled={disabled}
       >
         <SelectTrigger className={`w-full ${triggerClassName}`}>
-          <SelectValue placeholder={placeholder} />
+          <span className={valueClassName}>
+            <SelectValue placeholder={placeholder} />
+          </span>
         </SelectTrigger>
 
-        <SelectContent>
+        <SelectContent
+          className={contentClassName}
+          align={align}
+          side={side}
+          sideOffset={sideOffset}
+          alignOffset={alignOffset}
+        >
           {options.map((option) => (
             <SelectItem
               key={option.value}
               value={option.value}
+              className={option.className || itemClassName}
             >
               {option.label}
             </SelectItem>
