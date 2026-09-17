@@ -28,7 +28,7 @@ function App() {
             <Route path="/create-task" element={<CreateTask />} />
 
             {/* Feature check route */}
-            {/* <Route path="/feature-check" element={<FeatureCheck />} /> */}
+            <Route path="/feature-check" element={<FeatureCheck />} />
           </Route>
         </Route>
       </Routes>

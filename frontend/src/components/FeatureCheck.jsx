@@ -11,10 +11,10 @@ function FeatureCheck() {
     <div className='flex flex-col h-screen bg-blue-50'>
         <div className="flex flex-col justify-center">
       <h3 className='text-2xl font-bold mt-2 text-center'>Feature Check</h3>
-        <p className='ms-3 font-semibold'>TFCommonModal:</p>
+        {/* <p className='ms-3 font-semibold'>TFCommonModal:</p> */}
         </div>
         {/* <Button onClick={() => setOpen(true)}>Open Modal</Button> */}
-        <TFCommonModal
+        {/* <TFCommonModal
             open={open}
             onOpenChange={setOpen}
             title="Feature Check Modal"
@@ -36,7 +36,7 @@ function FeatureCheck() {
             }
         >
             Hello
-        </TFCommonModal>
+        </TFCommonModal> */}
     </div>
   )
 }
