@@ -66,19 +66,23 @@ function Dashboard() {
 
        
         {useSelectView &&
-          <TabsList variant="line" className={"w-[60%] mx-auto"}>
-            {tabItems.map((t) => (
-              <TabsTrigger key={t.value} value={t.value} className={"text-[18px] font-bold"}>
-                {t.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+          <div className="w-full border-b-4 border-slate-400 flex justify-center">
+            <TabsList variant="line" className="w-[60%] mb-0 pb-[2px]">
+              {tabItems.map((t) => (
+                <TabsTrigger key={t.value} value={t.value} className={"text-[18px] font-bold"}>
+                  {t.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
         }
 
         <div className="rounded-lg p-5 flex justify-between w-full items-center">
           <div className="flex justify-content gap-3">
 
+          
             {!useSelectView &&
+            <div className="border-r pe-[13px] border-slate-400">
               <TFSelect
                 value={activeTab}
                 onValueChange={setActiveTab}
@@ -90,6 +94,7 @@ function Dashboard() {
                 align="start"
                 sideOffset={4}
               />
+              </div>
               }
 
             <Button
