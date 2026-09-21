@@ -55,8 +55,8 @@ function Dashboard() {
   // };
 
   return (
-    <div className="min-h-screen py-6">
-      <h2 className="text-[23px] font-semibold text-center mb-4">Dashboard</h2>
+    <div className="min-h-screen">
+      <h2 className="text-[23px] font-semibold text-start mb-4">Dashboard</h2>
       <Tabs 
       // defaultValue="backlog" 
       value={activeTab}

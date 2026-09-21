@@ -7,7 +7,8 @@ function MainLayout() {
         <div className="h-screen flex flex-col">
             <Navbar />
             
-            <div className="p-6 flex-1 overflow-y-auto">
+            <div className="p-5
+             flex-1 overflow-y-auto">
                 <Outlet />
             </div>
         </div>
