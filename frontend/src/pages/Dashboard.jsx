@@ -55,13 +55,13 @@ function Dashboard() {
   // };
 
   return (
-    <div className="bg-slate-100 min-h-screen py-6">
-      <h2 className="text-[23px] bg-slate-100 font-semibold text-center mb-4">Dashboard</h2>
+    <div className="min-h-screen py-6">
+      <h2 className="text-[23px] font-semibold text-center mb-4">Dashboard</h2>
       <Tabs 
       // defaultValue="backlog" 
       value={activeTab}
       onValueChange={setActiveTab}
-      className="w-full mx-auto justify-center items-center bg-slate-300 flex flex-col gap-2 p-4 rounded-lg shadow-sm"
+      className="w-full mx-auto justify-center items-center flex flex-col gap-2 p-4 rounded-lg shadow-sm"
       >
 
        
@@ -81,8 +81,8 @@ function Dashboard() {
           <div className="flex justify-content gap-3">
 
           
-            {!useSelectView &&
-            <div className="border-r pe-[13px] border-slate-400">
+            {!useSelectView && // border-slate-400 removed for default theme
+            <div className="border-r pe-[13px]">
               <TFSelect
                 value={activeTab}
                 onValueChange={setActiveTab}
@@ -113,21 +113,21 @@ function Dashboard() {
               Create Sprint
             </Button>
 
-            <Button className="bg-inherit text-black hover:text-white rounded-md w-23 h-9"
+            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9"
               title="under dev"
             >
               <Search />
               Search
             </Button>
 
-            <Button className="bg-inherit text-black hover:text-white rounded-md w-23 h-9"
+            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9"
               title="under dev"
             >
               <ArrowUpDown />
               Sort
             </Button>
 
-            <Button className="bg-inherit text-black hover:text-white rounded-md w-23 h-9"
+            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9"
               title="under dev"
             >
               <EyeOff />
@@ -148,7 +148,7 @@ function Dashboard() {
         {/* All Tasks tab */}
         <TabsContent value="backlog" className="w-full flex flex-col gap-4">
 
-          <div className="bg-green-50 rounded-lg p-5">
+          <div className=" rounded-lg p-5">
             <TaskList
               tasks={tasks}
               reloadTasks={loadTasks}

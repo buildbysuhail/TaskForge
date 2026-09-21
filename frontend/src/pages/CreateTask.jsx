@@ -94,17 +94,17 @@ function CreateTask({
   const selectedPriority = PRIORITY_OPTIONS.find((p) => p.value === priority);
 
   return (
-    <div className="min-h-screen bg-gray-50/60 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       {/* Header banner */}
-      <div className="bg-slate-900 text-white px-6 sm:px-10 py-8">
+      <div className="px-6 sm:px-10 py-8">
         <div className="max-w-3xl mx-auto flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-white/10 flex items-center justify-center">
+            <div className="h-10 w-10 rounded-xl flex items-center justify-center">
               <ClipboardList size={20} />
             </div>
             <div>
               <h1 className="text-xl font-semibold tracking-tight">Create New Task</h1>
-              <p className="text-sm text-slate-300 mt-0.5">
+              <p className="text-sm mt-0.5">
                 Add a new task to your project board
               </p>
             </div>
@@ -113,7 +113,7 @@ function CreateTask({
           <button
             type="button"
             onClick={onClose}
-            className="h-9 w-9 rounded-full flex items-center justify-center text-slate-300 hover:bg-white/10 hover:text-white transition-colors"
+            className="h-9 w-9 rounded-full flex items-center justify-center hover:bg-white/10 hover:text-white transition-colors"
           >
             <X size={18} />
           </button>
@@ -124,7 +124,7 @@ function CreateTask({
       <div className="flex-1 -mt-6">
         <form
           onSubmit={handleSubmit}
-          className="max-w-3xl mx-auto bg-white rounded-t-3xl shadow-xl shadow-gray-200/70 border border-gray-100 px-6 sm:px-10 py-8 space-y-8"
+          className="max-w-3xl mx-auto rounded-t-3xl shadow-xl shadow-gray-200/70 border px-6 sm:px-10 py-8 space-y-8"
         >
           {/* Identity row: Task ID + Owner */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -259,7 +259,7 @@ function CreateTask({
           <Button
             type="submit"
             disabled={formLoading}
-            className="w-full h-12 rounded-lg bg-black hover:bg-gray-800 active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed text-base"
+            className="w-full h-12 rounded-lg  active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed text-base"
           >
             <span className="flex items-center justify-center gap-2">
               {formLoading && <Loader2 size={16} className="animate-spin" />}

@@ -302,7 +302,7 @@ function TaskList({ tasks, reloadTasks, loading }) {
   return (
     <div className="space-y-4">
 
-      <h3 className="text-sm text-gray-600 font-semibold">
+      <h3 className="text-sm font-semibold">
         Task List
       </h3>
 

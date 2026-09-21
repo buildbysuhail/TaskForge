@@ -72,9 +72,9 @@
     --sidebar-border: 0 0% 100% / 10%;
     --sidebar-ring: 0 0% 35%;
   }
-  .theme {
+  /* .theme {
     --font-sans: 'Geist Variable', sans-serif;
-  }
+  } */
   * {
     @apply border-border ring-ring/50;
   }
