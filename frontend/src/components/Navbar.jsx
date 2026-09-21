@@ -31,8 +31,8 @@ function Navbar() {
 
   return (
     <div className="top-0 left-0 w-full z-50 shrink-0">
-    <div className="  py-1 px-4 flex items-center justify-between">
-      <h1 className="text-xl flex items-center hover:bg-slate-800 py-1 px-2 rounded-md cursor-pointer gap-2">
+    <div className="bg-gray-300 dark:bg-gray-950 dark:text-white py-1 px-4 flex items-center justify-between">
+      <h1 className="text-xl flex items-center hover:bg-gray-400 hover:dark:bg-slate-800 py-1 px-2 rounded-md cursor-pointer gap-2">
         {/* Task Forge */}
         <img src="/src/assets/images/TF.Logo.png" className="w-10" alt="Task Forge" />
         <span className="w-full items-center justify-center font-extrabold font-[Pacifico]">
@@ -42,7 +42,7 @@ function Navbar() {
 
       <div className="flex justify-between gap-5">
 
-        <button className="cursor-pointer p-2 rounded-md hover:bg-gray-300 hover:dark:bg-gray-700 transition-colors"
+        <button className="cursor-pointer p-2 rounded-md hover:bg-gray-400 hover:dark:bg-gray-700 transition-colors"
           onClick={toggleTheme}
           title="Change Theme"
         >
@@ -52,7 +52,7 @@ function Navbar() {
           
         </button>
 
-      <button className="cursor-pointer p-2 rounded-md hover:bg-gray-300 hover:dark:bg-gray-700 transition-colors"
+      <button className="cursor-pointer p-2 rounded-md hover:bg-gray-400 hover:dark:bg-gray-700 transition-colors"
         // onClick={() => navigate("feature-check")}
         onClick={() => showToast.info("Feature stoped temp")}        
         title="Feature Check(Development purpose)"
@@ -60,7 +60,7 @@ function Navbar() {
         <TestTube2 />
       </button>
 
-        <button className="cursor-pointer p-2 rounded-md hover:bg-gray-300 hover:dark:bg-gray-700 transition-colors" onClick={()=>setOpen(true)} title="Logout">
+        <button className="cursor-pointer p-2 rounded-md hover:bg-gray-400 hover:dark:bg-gray-700 transition-colors" onClick={()=>setOpen(true)} title="Logout">
           <LogOut />
           </button>
       </div>
