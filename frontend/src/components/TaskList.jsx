@@ -311,13 +311,15 @@ function TaskList({ tasks, reloadTasks, loading }) {
         data={tasks}
         getRowKey={(task) => task._id}
         emptyMessage="No tasks yet. Create one 🚀"
-
-        tableClassName="rounded-lg shadow-sm"
-        headerClassName="bg-slate-500"
-        headerRowClassName="hover:bg-slate-600"
-        headerCellClassName="text-slate-200 hover:text-slate-50"
-        bodyClassName="bg-slate-200"
-        rowClassName="text-gray-800"
+      // customizing stlyes :
+          tableClassName="rounded-lg shadow-sm"
+          // header:
+            headerClassName="bg-stone-400 dark:bg-zinc-800"
+            headerRowClassName="hover:bg-stone-500 dark:hover:bg-zinc-900"
+            headerCellClassName="text-slate-200 hover:text-slate-50"
+          //
+          bodyClassName="dark:bg-zinc-600"
+          rowClassName="text-gray-800 dark:text-zinc-300"
       />
 
       <TFConfirmModal
