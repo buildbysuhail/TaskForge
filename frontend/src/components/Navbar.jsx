@@ -19,11 +19,14 @@ function Navbar() {
   }
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50">
-    <div className="bg-gray-900 text-white p-4 flex items-center justify-between">
-      <h1 className="text-xl font-bold">
+    <div className="top-0 left-0 w-full z-50 shrink-0">
+    <div className="bg-gray-950 text-white py-1 px-4 flex items-center justify-between">
+      <h1 className="text-xl flex items-center hover:bg-slate-800 py-1 px-2 rounded-md cursor-pointer gap-2">
         {/* Task Forge */}
         <img src="/src/assets/images/TF.Logo.png" className="w-10" alt="Task Forge" />
+        <span className="w-full items-center justify-center font-extrabold font-[Pacifico]">
+        TaskForge
+        </span>
         </h1>
 
       <div className="flex justify-between gap-5">

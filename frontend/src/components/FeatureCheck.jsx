@@ -37,6 +37,18 @@ function FeatureCheck() {
         >
             Hello
         </TFCommonModal> */}
+        <div className="bg-cyan-50 flex flex-col">
+
+        
+        <h2 className='text-left text-xl font-bold mb-3'>Font styles :</h2>
+        <div className=" grid grid-cols-4 font-semibold">
+            <p className='font-sans text-5xl'>TaskForge</p>
+            <p className='font-serif text-5xl'>TaskForge</p>
+            <p className='font-mono text-5xl'>TaskForge</p>
+            <p className='font-thin text-5xl'>TaskForge</p>
+            <p className='font text-5xl font-[Pacifico]'>TaskForge</p>
+            </div>
+        </div>
     </div>
   )
 }
