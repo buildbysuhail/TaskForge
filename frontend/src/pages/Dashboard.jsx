@@ -139,7 +139,7 @@ function Dashboard() {
               Create Sprint
             </Button>
 
-            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9"
+            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9 cursor-not-allowed"
               title="under dev"
             >
               <Search />
