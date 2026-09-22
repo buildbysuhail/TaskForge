@@ -15,10 +15,12 @@ import {
   Search, SquareKanban,
 } from "lucide-react";
 import TFSelect from "@/components/common/TFSelect.jsx";
+import TFCommonDrawer from "@/components/common/TFCommonDrawer.jsx";
+import CreateTask from "./CreateTask.jsx";
 
 function Dashboard() {
   const [tasks, setTasks] = useState([]);
-  // const [showTaskFrm, setShowTaskFrm] = useState(false);
+  const [showTaskFrm, setShowTaskFrm] = useState(false);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("backlog");
   const [useSelectView, setUseSelectView] = useState(false); // adjust however you want
@@ -97,13 +99,23 @@ function Dashboard() {
               </div>
               }
 
-            <Button
+            {/* <Button
               className="bg-blue-900 rounded-md w-14 h-9"
               onClick={() => navigate("/create-task")}
               title="Create New Task"
             >
               New
-            </Button>
+            </Button> */}
+            <TFCommonDrawer
+              open={showTaskFrm}
+              onOpenChange={setShowTaskFrm}
+              trigger={<Button className="bg-blue-900 rounded-md w-14 h-9">
+                        New
+                       </Button>}
+            >
+              <CreateTask onClose={() => setShowTaskFrm(false)} />
+            </TFCommonDrawer>
+
             <Button
               variant="outline"
               className="bg-inherit border-2 border-slate-800 hover:bg-gray-500 hover:text-white rounded-md w-23 h-9"

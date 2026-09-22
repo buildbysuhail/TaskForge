@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { createTask } from "../services/taskService";
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+// import {
+//   Card,
+//   CardContent,
+//   CardHeader,
+//   CardTitle,
+// } from "@/components/ui/card";
 
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,7 +21,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { X } from "lucide-react";
+// import { X } from "lucide-react";
 import { showToast } from "@/lib/utils/toast";
 
 function TaskForm({ onAdd, onClose }) {
@@ -59,65 +59,52 @@ function TaskForm({ onAdd, onClose }) {
   };
 
   return (
-    <Card className="max-w-lg mx-auto">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Create Task</CardTitle>
+    <form onSubmit={handleSubmit} className="space-y-4">
 
-        <Button variant="ghost" onClick={onClose}>
-          <X size={18}/>
-        </Button>
-      </CardHeader>
+      {/* Title */}
+      <div className="space-y-2">
+        <Label>Title</Label>
+        <Input
+          placeholder="Enter task title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+      </div>
 
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+      {/* Description */}
+      <div className="space-y-2">
+        <Label>Description</Label>
+        <Textarea
+          placeholder="Enter description..."
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </div>
 
-          {/* Title */}
-          <div className="space-y-2">
-            <Label>Title</Label>
-            <Input
-              placeholder="Enter task title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
+      {/* Status */}
+      <div className="space-y-2">
+        <Label>Status</Label>
+        <Select value={status} onValueChange={setStatus}>
+          <SelectTrigger>
+            <SelectValue placeholder="Select status" />
+          </SelectTrigger>
 
-          {/* Description */}
-          <div className="space-y-2">
-            <Label>Description</Label>
-            <Textarea
-              placeholder="Enter description..."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
+          <SelectContent>
+            <SelectItem value="todo">Todo</SelectItem>
+            <SelectItem value="in-progress">In Progress</SelectItem>
+            <SelectItem value="completed">Completed</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-          {/* Status */}
-          <div className="space-y-2">
-            <Label>Status</Label>
-            <Select value={status} onValueChange={setStatus}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select status" />
-              </SelectTrigger>
+      {/* Button */}
+      <Button type="submit" className="w-full">
+        <span className={formLoading ? "animate-pulse" : ""}>
+          {formLoading ? "Adding Task..." : "Add Task"}
+        </span>
+      </Button>
 
-              <SelectContent>
-                <SelectItem value="todo">Todo</SelectItem>
-                <SelectItem value="in-progress">In Progress</SelectItem>
-                <SelectItem value="completed">Completed</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Button */}
-          <Button type="submit" className="w-full">
-            {/* {formLoading ? "Adding Task..." : "Add Task"} */}
-            <span className={formLoading ? "animate-pulse" : ""}>
-              {formLoading ? "Adding Task..." : "Add Task"}
-            </span>
-          </Button>
-
-        </form>
-      </CardContent>
-    </Card>
+    </form>
   );
 }
 

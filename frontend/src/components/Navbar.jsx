@@ -54,8 +54,8 @@ function Navbar() {
         </button>
 
       <button className="cursor-pointer rounded-md hover:bg-stone-300 hover:dark:bg-gray-700 transition-colors"
-        // onClick={() => navigate("feature-check")}
-        onClick={() => showToast.info("Feature stoped temp")}        
+        onClick={() => navigate("feature-check")}
+        // onClick={() => showToast.info("Feature stoped temp")}        
         title="Feature Check(Development purpose)"
       >
         <TestTube2 className="text-indigo-950 hover:text-indigo-800 dark:text-fuchsia-800 dark:hover:text-fuchsia-400 w-9 h-9 p-2" />
