@@ -68,7 +68,7 @@ function Dashboard() {
 
        
         {useSelectView &&
-          <div className="w-full border-b-4 border-slate-400 flex justify-center">
+          <div className="w-full border-b-4 border-stone-400 dark:border-slate-800 flex justify-center">
             <TabsList variant="line" className="w-[60%] mb-0 pb-[2px]">
               {tabItems.map((t) => (
                 <TabsTrigger key={t.value} value={t.value} className={"text-[18px] font-bold"}>
@@ -79,7 +79,7 @@ function Dashboard() {
           </div>
         }
 
-        <div className="rounded-lg p-5 flex justify-between w-full items-center">
+        <div className="rounded-lg py-5 px-8 flex justify-between w-full items-center">
           <div className="flex justify-content gap-3">
 
           
@@ -109,7 +109,7 @@ function Dashboard() {
             <TFCommonDrawer
               open={showTaskFrm}
               onOpenChange={setShowTaskFrm}
-              trigger={<Button className="bg-blue-900 rounded-md w-14 h-9">
+              trigger={<Button className="bg-blue-800 hover:bg-blue-900 text-white rounded-md w-14 h-9">
                         New
                        </Button>}
             //   footer={
@@ -132,7 +132,7 @@ function Dashboard() {
 
             <Button
               variant="outline"
-              className="bg-inherit border-2 border-slate-800 hover:bg-gray-500 hover:text-white rounded-md w-23 h-9"
+              className="bg-inherit border-2 border-slate-800 hover:bg-gray-500 dark:hover:bg-slate-800 hover:text-white rounded-md w-23 h-9 cursor-not-allowed"
               
               title="under dev"
             >
@@ -146,14 +146,14 @@ function Dashboard() {
               Search
             </Button>
 
-            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9"
+            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9 cursor-not-allowed"
               title="under dev"
             >
               <ArrowUpDown />
               Sort
             </Button>
 
-            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9"
+            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9 cursor-not-allowed"
               title="under dev"
             >
               <EyeOff />

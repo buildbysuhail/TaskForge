@@ -286,7 +286,7 @@ function TaskList({ tasks, reloadTasks, loading }) {
             setSelectedTaskId(task._id);
             setOpen(true);
           }}
-          className="rounded-sm"
+          className="rounded-sm dark:text-red-200"
         >
           {deletingId === task._id
             ? "Deleting..."
