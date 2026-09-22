@@ -107,7 +107,7 @@ function CreateTask({
               placeholder="e.g. TF1"
               value={taskId}
               onChange={(e) => setTaskId(e.target.value)}
-              className="h-11 pl-9 rounded-lg border-gray-200 focus-visible:ring-2 focus-visible:ring-gray-900/10 focus-visible:border-gray-400"
+              className="h-11 pl-9 rounded-lg bg-white border-gray-300 dark:bg-transparent dark:border-gray-200 focus-visible:ring-2 focus-visible:ring-gray-900/10 focus-visible:border-gray-400"
             />
           </div>
         </div>
@@ -122,7 +122,7 @@ function CreateTask({
               placeholder="Assign to..."
               value={owner}
               onChange={(e) => setOwner(e.target.value)}
-              className="h-11 pl-9 rounded-lg border-gray-200 focus-visible:ring-2 focus-visible:ring-gray-900/10 focus-visible:border-gray-400"
+              className="h-11 pl-9 rounded-lg bg-white border-gray-300 dark:bg-transparent dark:border-gray-200 focus-visible:ring-2 focus-visible:ring-gray-900/10 focus-visible:border-gray-400"
             />
           </div>
         </div>
@@ -137,7 +137,7 @@ function CreateTask({
           placeholder="Enter task title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="h-12 text-base rounded-lg border-gray-200 focus-visible:ring-2 focus-visible:ring-gray-900/10 focus-visible:border-gray-400"
+          className="h-12 text-base rounded-lg bg-white border-gray-300 dark:bg-transparent dark:border-gray-200 focus-visible:ring-2 focus-visible:ring-gray-900/10 focus-visible:border-gray-400"
         />
       </div>
 
@@ -150,7 +150,7 @@ function CreateTask({
           placeholder="Enter description..."
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="min-h-[100px] rounded-lg border-gray-200 focus-visible:ring-2 focus-visible:ring-gray-900/10 focus-visible:border-gray-400"
+          className="min-h-[100px] rounded-lg bg-white border-gray-300 dark:bg-transparent dark:border-gray-200 focus-visible:ring-2 focus-visible:ring-gray-900/10 focus-visible:border-gray-400"
         />
       </div>
 
@@ -168,7 +168,7 @@ function CreateTask({
               className={`px-4 h-9 rounded-full text-sm font-medium border transition-colors ${
                 status === opt.value
                   ? "bg-slate-900 text-white border-slate-900"
-                  : "bg-white text-gray-600 border-gray-200 hover:border-gray-300"
+                  : "bg-white text-gray-600 border-gray-300 hover:border-gray-400 dark:bg-white dark:border-gray-200 dark:hover:border-gray-300"
               }`}
             >
               {opt.label}
@@ -184,7 +184,7 @@ function CreateTask({
             <Flag size={12} /> Priority
           </Label>
           <Select value={priority} onValueChange={setPriority}>
-            <SelectTrigger className="h-11 rounded-lg border-gray-200 focus:ring-2 focus:ring-gray-900/10 focus:border-gray-400">
+            <SelectTrigger className="h-11 rounded-lg bg-white border-gray-300 dark:bg-transparent dark:border-gray-200 focus:ring-2 focus:ring-gray-900/10 focus:border-gray-400">
               <SelectValue>
                 <span className="flex items-center gap-2">
                   <span className={`h-2 w-2 rounded-full ${selectedPriority?.color}`} />
@@ -210,7 +210,7 @@ function CreateTask({
             <Tag size={12} /> Type
           </Label>
           <Select value={type} onValueChange={setType}>
-            <SelectTrigger className="h-11 rounded-lg border-gray-200 focus:ring-2 focus:ring-gray-900/10 focus:border-gray-400">
+            <SelectTrigger className="h-11 rounded-lg bg-white border-gray-300 dark:bg-transparent dark:border-gray-200 focus:ring-2 focus:ring-gray-900/10 focus:border-gray-400">
               <SelectValue placeholder="Select type" />
             </SelectTrigger>
             <SelectContent>
@@ -225,16 +225,18 @@ function CreateTask({
       </div>
 
       {/* Submit */}
+      <div className="w-full flex justify-center">
       <Button
         type="submit"
         disabled={formLoading}
-        className="w-full h-12 rounded-lg active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed text-base"
+        className="w-[40%] h-12 rounded-lg active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed text-base"
       >
         <span className="flex items-center justify-center gap-2">
           {formLoading && <Loader2 size={16} className="animate-spin" />}
           {formLoading ? "Adding Task..." : "Add Task"}
         </span>
       </Button>
+      </div>
     </form>
   );
 }
