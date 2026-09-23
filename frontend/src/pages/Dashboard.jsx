@@ -91,7 +91,7 @@ function Dashboard() {
                 options={tabItems.map((t) => ({ value: t.value, label: t.label, icon: t.icon }))}
                 className="w-[180px]" // removed mx-auto
                 valueClassName="text-center w-full font-bold"
-                contentClassName="font-medium w-[180px] bg-stone-200"
+                contentClassName="font-medium w-[180px] bg-stone-200 dark:bg-zinc-700"
                 triggerClassName="h-9 py-[17px]"
                 align="start"
                 sideOffset={4}
