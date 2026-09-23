@@ -32,13 +32,15 @@ function Navbar() {
   return (
     <div className="top-0 left-0 w-full z-50 shrink-0">
     <div className="bg-stone-400 dark:bg-zinc-950 dark:text-white py-1 px-4 flex items-center justify-between">
-      <h1 className="text-xl flex items-center hover:bg-stone-500 hover:dark:bg-slate-800 py-1 px-2 rounded-md cursor-pointer gap-2">
+      <button className="text-xl flex items-center hover:bg-stone-500 hover:dark:bg-slate-800 py-1 px-2 rounded-md cursor-pointer gap-2"
+        onClick={()=> navigate("/dashboard")}
+      >
         {/* Task Forge */}
         <img src="/src/assets/images/TF.Logo.png" className="w-10" alt="Task Forge" />
         <span className="w-full items-center justify-center text-emerald-950 hover:text-emerald-500 dark:text-teal-600 font-extrabold font-[Pacifico]">
         TaskForge
         </span>
-        </h1>
+        </button>
 
       <div className="flex justify-between gap-5">
 
