@@ -46,7 +46,7 @@ function TaskForm({ onAdd, onClose }) {
       });
 
       onAdd(newTask);
-      showToast.success("Task created successfully ✅");
+      showToast.success("Task created successfully");
       setTitle("");
       setDescription("");
       setStatus("todo");

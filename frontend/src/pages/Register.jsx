@@ -33,7 +33,7 @@ function Register() {
     //  return
       try {
         const res = await API.post("/auth/register", form);
-        showToast.success("Registered successfully ✅");
+        showToast.success("Registered successfully");
         navigate("/");
         console.log(res, "response");
       } catch (err) {
