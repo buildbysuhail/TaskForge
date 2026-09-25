@@ -45,6 +45,9 @@ function CreateTask({
   // onAdd,
   onClose
 }) {
+
+ 
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("todo");
@@ -55,16 +58,36 @@ function CreateTask({
 
   const [formLoading, setFormLoading] = useState(false);
 
+   const [errors, setErrors] = useState({})
+
+  const validate = () => {
+      const newErrors = {};
+
+      if (!title.trim()) {
+        newErrors.title = "Task title is required";
+      }
+
+      if (taskId && !/^TF\d+$/i.test(taskId.trim())) {
+        newErrors.taskId = "Use format like TF1 or TF25";
+      }
+
+      setErrors(newErrors);
+
+      return Object.keys(newErrors).length === 0;
+    };
+
   const handleSubmit = async (e) => {
+    // return alert("working")
     e.preventDefault();
 
-    const trimmed = title.trim();
-    if (!trimmed) return;
+    if (!validate()) return;
 
     try {
       setFormLoading(true);
-      const newTask = await createTask({
-        title: trimmed,
+      
+      // const newTask = 
+      await createTask({
+        title: title?.trim(),
         description,
         status,
         priority,
@@ -130,14 +153,24 @@ function CreateTask({
 
       {/* Title */}
       <div className="space-y-2">
-        <Label className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-          Title
+        <Label className="text-xs font-semibold flex items-center md:w-[25%] justify-between tracking-wide text-gray-500">
+          <p className="uppercase">
+          Title 
+          </p>
+          {errors.title && <span className="text-red-700 animate-bounce">{errors.title + '*'}</span>  }
         </Label>
+        {/* <p>error</p> */}
         <Input
           placeholder="Enter task title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="h-12 text-base rounded-lg bg-white border-gray-300 dark:bg-transparent dark:border-gray-200 focus-visible:ring-2 focus-visible:ring-gray-900/10 focus-visible:border-gray-400"
+          onChange={(e) => {
+            setTitle(e.target.value);
+
+            if (errors.title) {
+              setErrors((prev) => ({ ...prev, title: "" }));
+            }
+          }}
+          className={`h-12 text-base rounded-lg bg-white ${errors.title ? 'border-red-500' : 'border-gray-300 dark:border-gray-200'} dark:bg-transparent  focus-visible:ring-2 focus-visible:ring-gray-900/10 focus-visible:border-gray-400`}
         />
       </div>
 
