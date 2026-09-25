@@ -1,5 +1,6 @@
 import { LogOut, Moon, Sun, TestTube2 } from "lucide-react";
 import { TFConfirmModal } from "./common/modals";
+import TFAvatar from "./common/TFAvatar";
 import { useState } from "react";
 import { showToast } from "@/lib/utils/toast";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +29,8 @@ function Navbar() {
     return newMode;
   });
 };
+const user = JSON.parse(localStorage.getItem("user"));
+// console.log(user.name[0], "UserNameee")
 
   return (
     <div className="top-0 left-0 w-full z-50 shrink-0">
@@ -37,36 +40,43 @@ function Navbar() {
       >
         {/* Task Forge */}
         <img src="/src/assets/images/TF.Logo.png" className="w-10" alt="Task Forge" />
-        <span className="w-full items-center justify-center text-emerald-950 hover:text-emerald-500 dark:text-teal-600 font-extrabold font-[Pacifico]">
+        <span className="w-full items-center justify-center text-emerald-950 hover:text-emerald-500 dark:text-teal-600 font-extrabold 
+          font-[Pacifico]">
         TaskForge
         </span>
         </button>
 
-      <div className="flex justify-between gap-5">
+        <div className="flex justify-between gap-5">
 
-        <button className="cursor-pointer  rounded-md hover:bg-stone-300 hover:dark:bg-gray-700 transition-colors"
-          onClick={toggleTheme}
-          title="Change Theme"
-        >
-          {darkMode ?
-          <Moon className="dark:text-sky-800 dark:hover:text-sky-400 w-9 h-9 p-2" /> : 
-          <Sun className="text-yellow-800 hover:text-amber-700 w-9 h-9 p-2" />
-        }
-          
-        </button>
+          <button className="cursor-pointer  rounded-md hover:bg-stone-300 hover:dark:bg-gray-700 transition-colors"
+            onClick={toggleTheme}
+            title="Change Theme"
+          >
+            {darkMode ?
+              <Moon className="dark:text-sky-800 dark:hover:text-sky-400 w-9 h-9 p-2" /> :
+              <Sun className="text-yellow-800 hover:text-amber-700 w-9 h-9 p-2" />
+            }
 
-      <button className="cursor-pointer rounded-md hover:bg-stone-300 hover:dark:bg-gray-700 transition-colors"
-        onClick={() => navigate("feature-check")}
-        // onClick={() => showToast.info("Feature stoped temp")}        
-        title="Feature Check(Development purpose)"
-      >
-        <TestTube2 className="text-indigo-950 hover:text-indigo-800 dark:text-fuchsia-800 dark:hover:text-fuchsia-400 w-9 h-9 p-2" />
-      </button>
-
-        <button className="cursor-pointer rounded-md hover:bg-stone-300 hover:dark:bg-gray-700 transition-colors" onClick={()=>setOpen(true)} title="Logout">
-          <LogOut className="text-red-900 hover:text-red-800 dark:text-red-900 dark:hover:text-red-500 w-9 h-9 p-2" />
           </button>
-      </div>
+
+          <button className="cursor-pointer rounded-md hover:bg-stone-300 hover:dark:bg-gray-700 transition-colors"
+            onClick={() => navigate("feature-check")}
+            // onClick={() => showToast.info("Feature stoped temp")}        
+            title="Feature Check(Development purpose)"
+          >
+            <TestTube2 className="text-indigo-950 hover:text-indigo-800 dark:text-fuchsia-800 dark:hover:text-fuchsia-400 w-9 h-9 p-2" />
+          </button>
+
+          <button className="cursor-pointer rounded-md hover:bg-stone-300 hover:dark:bg-gray-700 transition-colors" onClick={() => setOpen(true)} title="Logout">
+            <LogOut className="text-red-900 hover:text-red-800 dark:text-red-900 dark:hover:text-red-500 w-9 h-9 p-2" />
+          </button>
+
+          <TFAvatar 
+            name={user.name}
+            className="cursor-pointer"
+            title={true}
+          />
+        </div>
 
         
     </div>
