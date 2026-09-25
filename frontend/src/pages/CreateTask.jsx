@@ -84,7 +84,7 @@ function CreateTask({
 
     try {
       setFormLoading(true);
-      
+
       // const newTask = 
       await createTask({
         title: title?.trim(),
@@ -105,6 +105,8 @@ function CreateTask({
       setType("Feature");
       setTaskId("");
       setOwner("");
+
+      onClose(); // close drawer only when success
     } catch (error) {
       console.error("Error creating task:", error);
       showToast.error("Failed to create task");
@@ -117,7 +119,7 @@ function CreateTask({
   const selectedPriority = PRIORITY_OPTIONS.find((p) => p.value === priority);
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form id="create-task-form" onSubmit={handleSubmit} className="space-y-6">
       {/* Identity row: Task ID + Owner */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
@@ -258,7 +260,7 @@ function CreateTask({
       </div>
 
       {/* Submit */}
-      <div className="w-full flex justify-center">
+      {/* <div className="w-full flex justify-center">
       <Button
         type="submit"
         disabled={formLoading}
@@ -269,7 +271,7 @@ function CreateTask({
           {formLoading ? "Adding Task..." : "Add Task"}
         </span>
       </Button>
-      </div>
+      </div> */}
     </form>
   );
 }

@@ -112,20 +112,27 @@ function Dashboard() {
               trigger={<Button className="bg-blue-800 hover:bg-blue-900 text-white rounded-md w-14 h-9">
                         New
                        </Button>}
-            //   footer={
-            //      <Button
-            //       type="submit"
-            //       // disabled={formLoading}
-            //       className="w-full h-12 rounded-lg active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed text-base"
-            //     >
-            //   {/* <span className="flex items-center justify-center gap-2">
-            //     {formLoading && <Loader2 size={16} className="animate-spin" />}
-            //     {formLoading ? "Adding Task..." : "Add Task"}
-            //   </span> */}
-            //   Add Task
-            // </Button>
-            //   }
-              showCloseButton={false}
+              title={"New Task"}
+              titleClassName="font-bold text-left md:text-center"
+
+              description={"Create and organize a task for your project."}
+              descriClassName="text-left md:text-center text-gray-600"
+
+              footer={
+                 <Button
+                  type="submit"
+                  form="create-task-form"
+                  // disabled={formLoading}
+                  className="w-full h-12 rounded-lg active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed text-base"
+                >
+              {/* <span className="flex items-center justify-center gap-2">
+                {formLoading && <Loader2 size={16} className="animate-spin" />}
+                {formLoading ? "Adding Task..." : "Add Task"}
+              </span> */}
+              Add Task
+            </Button>
+              }
+              showCloseButton={true}
             >
               <CreateTask onClose={() => setShowTaskFrm(false)} />
             </TFCommonDrawer>
