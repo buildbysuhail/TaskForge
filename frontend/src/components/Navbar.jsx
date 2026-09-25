@@ -1,9 +1,11 @@
 import { LogOut, Moon, Sun, TestTube2 } from "lucide-react";
 import { TFConfirmModal } from "./common/modals";
 import TFAvatar from "./common/TFAvatar";
+import TFCommonDialog from "./common/TFCommonDialog";
 import { useState } from "react";
 import { showToast } from "@/lib/utils/toast";
 import { useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -71,11 +73,35 @@ const user = JSON.parse(localStorage.getItem("user"));
             <LogOut className="text-red-900 hover:text-red-800 dark:text-red-900 dark:hover:text-red-500 w-9 h-9 p-2" />
           </button>
 
-          <TFAvatar 
-            name={user.name}
-            className="cursor-pointer"
-            title={true}
-          />
+          <TFCommonDialog
+            trigger={<button type="button">
+              <TFAvatar
+                name={user.name}
+                className="cursor-pointer"
+                title={true}
+              />
+            </button>}
+            showCloseButton={false}
+            contentClassName="p-0"
+            overlayClassName="backdrop-blur-sm"
+          >
+            <div className="flex flex-col bg-stone-300 dark:bg-gray-800 rounded-lg items-center gap-3 py-4">
+              <TFAvatar
+                src={""}
+                name={user.name}
+                size="lg"
+              />
+
+              <p className="text-base font-medium dark:text-gray-100 flex justify-between w-[45%]">
+                <span className="font-bold">User:</span>
+
+                <span>
+                  {user.name}
+                </span>
+                
+              </p>
+            </div>
+          </TFCommonDialog>
         </div>
 
         
