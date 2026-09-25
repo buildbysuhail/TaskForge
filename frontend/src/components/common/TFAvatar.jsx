@@ -1,39 +1,69 @@
 import {
   Avatar,
-  AvatarFallback,
   AvatarImage,
+  AvatarFallback,
+  AvatarBadge,
+  AvatarGroup,
+  AvatarGroupCount,
 } from "@/components/ui/avatar";
+
+import { Check } from "lucide-react";
 
 function TFAvatar({
   src,
   alt = "User",
   name = "",
-  size = "md",
+  size = "default",     // sm | default | lg
   className = "",
-  title = false
-}) {
-  const sizes = {
-    sm: "h-8 w-8",
-    md: "h-10 w-10",
-    lg: "h-14 w-14",
-    xl: "h-20 w-20",
-  };
+  title = false,
 
+  // Badge
+  badge = false,
+  badgeIcon = <Check />,
+
+  // Group
+  group = false,
+  groupCount = 0,
+  children,
+}) {
   const initials = name
-    ?.split(" ")
+    .split(" ")
     .map((word) => word[0])
     .join("")
     .slice(0, 2)
     .toUpperCase();
 
-  return (
-    <Avatar className={`${sizes[size]} ${className}`}
-        title={title && `${name}`}
+  const avatar = (
+    <Avatar
+      size={size}
+      className={className}
+      title={title ? name : undefined}
     >
       <AvatarImage src={src} alt={alt} />
-      <AvatarFallback className={"dark:text-gray-100"}>{initials || "U"}</AvatarFallback>
+      <AvatarFallback className="dark:text-gray-100">
+        {initials || "U"}
+      </AvatarFallback>
+
+      {badge && (
+        <AvatarBadge>
+          {badgeIcon}
+        </AvatarBadge>
+      )}
     </Avatar>
   );
+
+  if (group) {
+    return (
+      <AvatarGroup>
+        {children}
+        {groupCount > 0 && (
+          <AvatarGroupCount>+{groupCount}</AvatarGroupCount>
+        )}
+      </AvatarGroup>
+    );
+  }
+
+  return avatar;
 }
 
 export default TFAvatar;
