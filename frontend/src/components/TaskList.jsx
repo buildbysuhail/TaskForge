@@ -1,27 +1,39 @@
 import { deleteTask, updateTask } from "../services/taskService";
 import { useState } from "react";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
 
 import { Button } from "@/components/ui/button";
 import { showToast } from "@/lib/utils/toast";
 import { TFConfirmModal } from "./common/modals";
+import TFCommonModal from "./common/modals/TFCommonModal";
 import {TFTable} from "./common/TFTable";
 import TFSelect from "./common/TFSelect";
+import { DropdownMenu,
+         DropdownMenuContent,
+         DropdownMenuItem,
+         DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import TaskForm from "./TaskForm";
 
 function TaskList({ tasks, reloadTasks, loading }) {
+// console.log("tsks:",tasks);
 
   const [open, setOpen] = useState(false);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
 
   const [deletingId, setDeletingId] = useState(null);
   const [updatingId, setUpdatingId] = useState(null);
+
+  const [editingTask, setEditingTask] = useState(null);
+  const [editOpen, setEditOpen] = useState(false);
+
 
   const TypeOptions = [{ label: "Feature", value: "Feature" },
                        { label: "Quality", value: "Quality" },
@@ -69,6 +81,11 @@ function TaskList({ tasks, reloadTasks, loading }) {
       },
     });
   };
+
+  const handleEdit = (task) => {
+    setEditingTask(task);
+    setEditOpen(true);
+  }
 
   const handleTypeChange = (id, newType) => {
     setUpdatingId(id);
@@ -119,6 +136,14 @@ function TaskList({ tasks, reloadTasks, loading }) {
       }
     });
   };
+
+  // ----------------------------------
+  // Update Task
+  // ----------------------------------
+  const handleUpdate = (id, updatedData) => {
+    setUpdatingId(id);
+
+  }
 
   // ----------------------------------
   // Delete Task
@@ -274,26 +299,41 @@ function TaskList({ tasks, reloadTasks, loading }) {
     },
 
     {
-      key: "actions",
-      header: "Actions",
+  key: "actions",
+  header: "Actions",
 
-      render: (task) => (
-        <Button
-          disabled={deletingId === task._id}
-          variant="destructive"
-          size="sm"
+  render: (task) => (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon">
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent align="end">
+
+        <DropdownMenuItem
+          onClick={() => handleEdit(task)}
+        >
+          <Pencil className="mr-2 h-4 w-4" />
+          Update
+        </DropdownMenuItem>
+
+        <DropdownMenuItem
+          className="text-red-600 focus:text-red-600"
           onClick={() => {
             setSelectedTaskId(task._id);
             setOpen(true);
           }}
-          className="rounded-sm dark:text-red-200"
         >
-          {deletingId === task._id
-            ? "Deleting..."
-            : "Delete"}
-        </Button>
-      ),
-    },
+          <Trash2 className="mr-2 h-4 w-4" />
+          Delete
+        </DropdownMenuItem>
+
+      </DropdownMenuContent>
+    </DropdownMenu>
+  ),
+},
   ];
 
   // ----------------------------------
@@ -331,6 +371,17 @@ function TaskList({ tasks, reloadTasks, loading }) {
         cancelText="Cancel"
         onConfirm={confirmDelete}
       />
+
+      <TFCommonModal
+        // no trigger needed
+        open={editOpen}
+        onOpenChange={setEditOpen}
+      >
+        <TaskForm 
+          task={editingTask}
+          onSuccess={reloadTasks}
+        />
+      </TFCommonModal>
 
     </div>
   );

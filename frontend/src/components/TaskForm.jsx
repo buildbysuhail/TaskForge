@@ -1,73 +1,130 @@
-import { useState } from "react";
-import { createTask } from "../services/taskService";
-
-// import {
-//   Card,
-//   CardContent,
-//   CardHeader,
-//   CardTitle,
-// } from "@/components/ui/card";
+import { useEffect, useState, useMemo } from "react";
+import { createTask, updateTask } from "../services/taskService";
 
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-// import { X } from "lucide-react";
+
+import TFSelect from "./common/TFSelect";
 import { showToast } from "@/lib/utils/toast";
 
-function TaskForm({ onAdd, onClose }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("todo");
+function TaskForm({
+  task = null,
+  onSuccess,
+  onClose,
+}) {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    type: "",
+    priority: "",
+    status: "",
+  });
 
-  const [formLoading, setFormLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+// console.log("tsk in tskForm",task)
+  // Prefill when editing
+  useEffect(() => {
+    if (task) {
+      setFormData({
+        title: task.title ?? "",
+        description: task.description ?? "",
+        type: task.type ?? "Feature",
+        priority: task.priority ?? "medium",
+        status: task.status ?? "todo",
+      });
+    }
+  }, [task]);
+
+  useEffect(() => {
+  console.log("TASK RECEIVED:", task);
+}, [task]);
+
+useEffect(() => {
+  console.log("FORM UPDATED:", formData);
+}, [formData]);
+
+  const handleChange = (key, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  // ----------------------------
+  // Create
+  // ----------------------------
+  const handleCreate = async () => {
+    const newTask = await createTask(formData);
+    showToast.success("Task created successfully");
+    onSuccess?.(newTask);
+    onClose?.();
+  };
+
+  // ----------------------------
+  // Update
+  // ----------------------------
+  const handleUpdate = async () => {
+    const updatedTask = await updateTask(task._id, formData);
+    showToast.success("Task updated successfully");
+    onSuccess?.(updatedTask);
+    onClose?.();
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const trimmed = title.trim();
-    if (!trimmed) return;
+    if (!formData.title.trim()) {
+      return showToast.error("Title is required");
+    }
 
     try {
-      setFormLoading(true);
-      const newTask = await createTask({
-        title: trimmed,
-        description,
-        status,
-      });
+      setLoading(true);
 
-      onAdd(newTask);
-      showToast.success("Task created successfully");
-      setTitle("");
-      setDescription("");
-      setStatus("todo");
-    } catch (error) {
-      console.error("Error creating task:", error);
-      showToast.error("Failed to create task");
+      if (task) {
+        await handleUpdate();
+      } else {
+        await handleCreate();
+      }
+    } catch (err) {
+      showToast.error(
+        err?.response?.data?.message || "Something went wrong"
+      );
     } finally {
-      setFormLoading(false);
+      setLoading(false);
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+  const typeOptions = useMemo(() => [
+  { label: "Feature", value: "Feature" },
+  { label: "Quality", value: "Quality" },
+  { label: "Bug", value: "Bug" },
+  { label: "Test", value: "Test" },
+], []);
 
-      {/* Title */}
+const priorityOptions = useMemo(() => [
+  { label: "Best Effort", value: "best-effort" },
+  { label: "Low", value: "low" },
+  { label: "Medium", value: "medium" },
+  { label: "High", value: "high" },
+  { label: "Critical", value: "critical" },
+], []);
+
+const statusOptions = useMemo(() => [
+  { label: "To Do", value: "todo" },
+  { label: "In Progress", value: "in-progress" },
+  { label: "Completed", value: "completed" },
+], []);
+// console.log("type, prio, status",formData)
+  return (
+    <form onSubmit={handleSubmit} className="space-y-5 px-1">
       <div className="space-y-2">
         <Label>Title</Label>
         <Input
-          placeholder="Enter task title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          placeholder="e.g. Implement JWT authentication"
+          value={formData.title}
+          onChange={(e) => handleChange("title", e.target.value)}
         />
       </div>
 
@@ -75,35 +132,58 @@ function TaskForm({ onAdd, onClose }) {
       <div className="space-y-2">
         <Label>Description</Label>
         <Textarea
-          placeholder="Enter description..."
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          rows={4}
+          placeholder="Describe the task..."
+          value={formData.description}
+          onChange={(e) => handleChange("description", e.target.value)}
         />
       </div>
 
-      {/* Status */}
-      <div className="space-y-2">
-        <Label>Status</Label>
-        <Select value={status} onValueChange={setStatus}>
-          <SelectTrigger>
-            <SelectValue placeholder="Select status" />
-          </SelectTrigger>
+      <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-2">
+          <Label>Type</Label>
+          <TFSelect
+            value={formData.type}
+            onValueChange={(value) =>
+              handleChange("type", value)}
+            options={typeOptions}
+          />
+        </div>
 
-          <SelectContent>
-            <SelectItem value="todo">Todo</SelectItem>
-            <SelectItem value="in-progress">In Progress</SelectItem>
-            <SelectItem value="completed">Completed</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="space-y-2">
+          <Label>Priority</Label>
+          <TFSelect
+            value={formData.priority}
+            onValueChange={(value) => handleChange("priority", value)}
+            options={priorityOptions}
+          />
+        </div>
       </div>
 
-      {/* Button */}
-      <Button type="submit" className="w-full">
-        <span className={formLoading ? "animate-pulse" : ""}>
-          {formLoading ? "Adding Task..." : "Add Task"}
-        </span>
-      </Button>
+      <div className="space-y-2">
+        <Label>Status</Label>
+        <TFSelect
+          value={formData.status}
+          onValueChange={(value) => handleChange("status", value)}
+          options={statusOptions}
+        />
+      </div>
 
+      <div className="flex justify-end gap-2 pt-2">
+        <Button type="button" variant="outline" onClick={onClose}>
+          Cancel
+        </Button>
+
+        <Button type="submit" disabled={loading}>
+          {loading
+            ? task
+              ? "Updating..."
+              : "Creating..."
+            : task
+              ? "Save Changes"
+              : "Create Task"}
+        </Button>
+      </div>
     </form>
   );
 }
