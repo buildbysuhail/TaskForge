@@ -53,8 +53,8 @@ function TFCommonModal({
             {trigger}
           </DialogTrigger>
         )}
-
-        <DialogContent className={dialogClassName}>
+{/* width can adjusted by: sm:max-w-4xl */}
+        <DialogContent className={` ${dialogClassName}`}>
           <DialogHeader>
             {title && <DialogTitle>{title}</DialogTitle>}
 

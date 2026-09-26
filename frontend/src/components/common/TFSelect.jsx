@@ -33,7 +33,15 @@ function TFSelect({
 
       <Select
         value={value}
-        onValueChange={onValueChange}
+        onValueChange={(newValue) => {
+          // Radix's hidden native <select> can emit a spurious "" change
+          // event on mount before its portal items register (before any
+          // of the item options exist as native <option>s). Since none of
+          // our options ever use "" as a real value, ignore it here.
+          if (newValue) {
+            onValueChange(newValue);
+          }
+        }}
         disabled={disabled}
       >
         <SelectTrigger className={`w-full ${triggerClassName}`}>

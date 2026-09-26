@@ -428,7 +428,13 @@ console.error("Update Eror",err)
       >
         <TaskForm 
           task={editingTask}
-          onSuccess={reloadTasks}
+          onSuccess={ () =>
+            {
+              reloadTasks;
+              setEditOpen(false)
+            }
+          }
+        onClose={()=> setEditOpen(false)}
         />
       </TFCommonModal>
 
