@@ -147,7 +147,10 @@ function Dashboard() {
               }
               showCloseButton={true}
             >
-              <CreateTask onClose={() => setShowTaskFrm(false)} />
+              <CreateTask 
+              onClose={() => setShowTaskFrm(false)}
+              onAdd={loadTasks}
+              />
             </TFCommonDrawer>
 
             <Button

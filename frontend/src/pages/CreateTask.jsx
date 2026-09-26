@@ -42,7 +42,7 @@ const PRIORITY_OPTIONS = [
 const TYPE_OPTIONS = ["Feature", "Quality", "Bug", "Test", "Security", "Other"];
 // TaskForm ===> CreateTask
 function CreateTask({
-  // onAdd,
+  onAdd,
   onClose
 }) {
 
@@ -96,7 +96,7 @@ function CreateTask({
         owner: owner.trim(),
       });
 
-      // onAdd(newTask);
+      onAdd();
       showToast.success("Task created successfully");
       setTitle("");
       setDescription("");
