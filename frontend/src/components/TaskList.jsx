@@ -430,7 +430,7 @@ console.error("Update Eror",err)
           task={editingTask}
           onSuccess={ () =>
             {
-              reloadTasks;
+              reloadTasks();
               setEditOpen(false)
             }
           }
