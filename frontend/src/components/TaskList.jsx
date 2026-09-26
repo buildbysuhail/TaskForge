@@ -1,4 +1,4 @@
-import { deleteTask, updateTask } from "../services/taskService";
+import { deleteTask, updateTask, updateTaskPartially } from "../services/taskService";
 import { useState } from "react";
 
 // import {
@@ -22,7 +22,7 @@ import { DropdownMenu,
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import TaskForm from "./TaskForm";
 
-function TaskList({ tasks, reloadTasks, loading }) {
+function TaskList({ tasks, reloadTasks, loading, setTasks }) {
 // console.log("tsks:",tasks);
 
   const [open, setOpen] = useState(false);
@@ -50,100 +50,147 @@ function TaskList({ tasks, reloadTasks, loading }) {
                          { label: "In Progress", value: "in-progress" },
                          { label: "Completed", value: "completed" },
                       ];
+
+  const handleTaskFieldChange = (id, field, value) => {
+  setUpdatingId(id);
+
+  const promise = updateTaskPartially(id, {
+    [field]: value,
+  });
+
+  showToast.promise(promise, {
+    loading: "Updating task...",
+
+    success: (updatedTask) => {
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task._id === updatedTask._id
+            ? updatedTask
+            : task
+        )
+      );
+
+      setUpdatingId(null);
+
+      return "Task updated successfully";
+    },
+
+    error: (err) => {
+      setUpdatingId(null);
+console.error("Update Eror",err)
+      return (
+        err?.response?.data?.message ||
+        "Failed to update task"
+      );
+    },
+  });
+};
   
   // ----------------------------------
   // Update Task Status
   // ----------------------------------
+  // const handleStatusChange = (id, newStatus) => {
+  //   setUpdatingId(id);
+
+  //   const promise = updateTask(id, {
+  //     status: newStatus,
+  //   });
+
+  //   showToast.promise(promise, {
+  //     loading: "Updating task...",
+
+  //     success: () => {
+  //       reloadTasks();
+  //       setUpdatingId(null);
+
+  //       return "Task updated successfully";
+  //     },
+
+  //     error: (err) => {
+  //       setUpdatingId(null);
+
+  //       return (
+  //         err?.response?.data?.message ||
+  //         "Failed to update task"
+  //       );
+  //     },
+  //   });
+  // };
   const handleStatusChange = (id, newStatus) => {
-    setUpdatingId(id);
-
-    const promise = updateTask(id, {
-      status: newStatus,
-    });
-
-    showToast.promise(promise, {
-      loading: "Updating task...",
-
-      success: () => {
-        reloadTasks();
-        setUpdatingId(null);
-
-        return "Task updated successfully";
-      },
-
-      error: (err) => {
-        setUpdatingId(null);
-
-        return (
-          err?.response?.data?.message ||
-          "Failed to update task"
-        );
-      },
-    });
-  };
+  handleTaskFieldChange(id, "status", newStatus);
+};
 
   const handleEdit = (task) => {
     setEditingTask(task);
     setEditOpen(true);
   }
 
+  // const handleTypeChange = (id, newType) => {
+  //   setUpdatingId(id);
+
+  //   const promise = updateTask(id, {
+  //     type: newType,
+  //   });
+
+  //   showToast.promise(promise, {
+  //     loading: "Updating task...",
+
+  //     success: () => {
+  //       reloadTasks();
+  //       setUpdatingId(null);
+  //       return "Task updated successfully";
+  //     },
+  //     error: (err) => {
+  //       setUpdatingId(null);
+  //       return (
+  //         err?.response?.data?.message ||
+  //         "Failed to update task"
+  //       );
+  //     }
+  //   });
+  // };
   const handleTypeChange = (id, newType) => {
-    setUpdatingId(id);
+  handleTaskFieldChange(id, "type", newType);
+};
 
-    const promise = updateTask(id, {
-      type: newType,
-    });
+  // const handlePriorityChange = (id, newPriority) => {
+  //   setUpdatingId(id);
 
-    showToast.promise(promise, {
-      loading: "Updating task...",
+  //   const promise = updateTask(id, {
+  //     priority : newPriority,
+  //   });
 
-      success: () => {
-        reloadTasks();
-        setUpdatingId(null);
-        return "Task updated successfully";
-      },
-      error: (err) => {
-        setUpdatingId(null);
-        return (
-          err?.response?.data?.message ||
-          "Failed to update task"
-        );
-      }
-    });
-  };
+  //   showToast.promise(promise, {
+  //     loading: "Updating task...",
+
+  //     success: () => {
+  //       reloadTasks();
+  //       setUpdatingId(null);
+  //       return "Task updated successfully";
+  //     },
+  //     error: (err) => {
+  //       setUpdatingId(null);
+  //       return (
+  //         err?.response?.data?.message ||
+  //         "Failed to update task"
+  //       );
+  //     }
+  //   });
+  // };
 
   const handlePriorityChange = (id, newPriority) => {
-    setUpdatingId(id);
+  handleTaskFieldChange(id, "priority", newPriority);
+};
 
-    const promise = updateTask(id, {
-      priority : newPriority,
-    });
-
-    showToast.promise(promise, {
-      loading: "Updating task...",
-
-      success: () => {
-        reloadTasks();
-        setUpdatingId(null);
-        return "Task updated successfully";
-      },
-      error: (err) => {
-        setUpdatingId(null);
-        return (
-          err?.response?.data?.message ||
-          "Failed to update task"
-        );
-      }
-    });
-  };
+  
 
   // ----------------------------------
   // Update Task
   // ----------------------------------
-  const handleUpdate = (id, updatedData) => {
-    setUpdatingId(id);
+  // const handleUpdate = (id, updatedData) => {
+  //   setUpdatingId(id);
 
-  }
+  // }
 
   // ----------------------------------
   // Delete Task

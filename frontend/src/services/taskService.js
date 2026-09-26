@@ -15,6 +15,15 @@ export const updateTask = async (id, updatedDta) => {
     return response.data;
 }
 
+export const updateTaskPartially = async (id, updatedData) => {
+    const response = await API.patch(
+        `/tasks/${id}`,
+        updatedData
+    );
+
+    return response.data;
+};
+
 export const deleteTask = async (id) => {
     const response = await API.delete(`/tasks/${id}`)
     return response.data;

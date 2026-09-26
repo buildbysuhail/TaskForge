@@ -186,6 +186,7 @@ function Dashboard() {
               tasks={tasks}
               reloadTasks={loadTasks}
               loading={loading}
+              setTasks={setTasks}
             />
           </div>
 
