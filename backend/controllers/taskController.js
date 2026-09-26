@@ -32,7 +32,30 @@ export const createTask = async (req, res) => {
 
 export const getTasks = async (req, res) => {
     try {
-        const tasks = await Task.find({ user: req.user._id }); // Imoortant: Only fetch tasks that belong to the logged in user
+        const { search } = req.query;
+
+        const filter = {
+            user: req.user._id,
+        };
+
+        if (search) {
+            filter.$or = [
+                {
+                    title: {
+                        $regex: search,
+                        $options: "i",
+                    },
+                },
+                {
+                    description: {
+                        $regex: search,
+                        $options: "i",
+                    },
+                },
+            ];
+        }
+
+        const tasks = await Task.find(filter); // Imoortant: Only fetch tasks that belong to the logged in user
         // console.log("Fetched tasks for user:", req.user._id, tasks);
         res.status(200).json(tasks);
     } catch (err) {
