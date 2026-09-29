@@ -4,10 +4,11 @@ import { useDraggable } from "@dnd-kit/react";
 // import { CSS } from "@dnd-kit/utilities";
 
 const priorityColor = {
-  low: "bg-slate-200 text-slate-700",
-  medium: "bg-blue-100 text-blue-700",
-  high: "bg-orange-100 text-orange-700",
-  critical: "bg-red-100 text-red-700",
+  "best-effort": "bg-green-700 text-green-100",
+  low: "bg-cyan-700 text-cyan-100",
+  medium: "bg-blue-900 text-blue-200",
+  high: "bg-yellow-900 text-orange-200",
+  critical: "bg-red-900 text-red-200",
 };
 
 function TFKanbanCard({ task }) {
@@ -15,27 +16,33 @@ function TFKanbanCard({ task }) {
     const { ref } = useDraggable({
   id: task._id,
 });
-
+console.log("Task priorityyyyy",task.priority)
   return (
     <Card 
         ref={ref}
-        className="cursor-pointer hover:shadow-md transition-shadow">
+        className="cursor-pointer hover:shadow-md transition-shadow
+                   bg-stone-300 hover:bg-stone-400 
+                   text-gray-700 hover:text-gray-50
+                   dark:bg-zinc-600 dark:hover:bg-zinc-700
+                   dark:text-gray-200 dark:hover:text-gray-100
+                   ">
       <CardContent className="p-3 space-y-3">
         {/* Title */}
         <div className="flex items-start justify-between gap-2">
-          <h4 className="font-medium text-sm leading-5">{task.title}</h4>
+          <h4 className="font-bold text-sm leading-5">{task.title}</h4>
 
           <GripVertical className="h-4 w-4 text-muted-foreground flex-shrink-0" />
         </div>
 
         {/* Description */}
-        <p className="text-xs text-muted-foreground line-clamp-2">
-          {task.description || "No description"}
+        <p className="text-xs  line-clamp-2 font-semibold">
+          {task.description || <span className="font-light">No description</span>}
+          {/* {task.description && task.description} */}
         </p>
 
         {/* Footer */}
         <div className="flex items-center justify-between">
-          <span
+          <span title="Priority"
             className={`text-[10px] px-2 py-1 rounded-full font-medium capitalize ${
               priorityColor[task.priority] || priorityColor.low
             }`}

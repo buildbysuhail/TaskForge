@@ -10,12 +10,12 @@ function TFKanbanColumn({ id, title, tasks }) {
   return (
     <div 
         ref={ref}
-        className="bg-muted/40 rounded-xl p-3 flex flex-col">
+        className="bg-muted/100 rounded-xl p-3 flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold text-sm">{title}</h3>
 
-        <span className="text-xs bg-background px-2 py-1 rounded-full">
+        <span className="text-xs bg-slate-100 text-black px-2 py-1 rounded-full">
           {tasks.length}
         </span>
       </div>
