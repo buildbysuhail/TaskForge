@@ -12,6 +12,7 @@ function FeatureCheck() {
     <div className='flex flex-col h-screen'>
         <div className="flex flex-col justify-center">
       <h3 className='text-2xl font-bold mt-2 text-center'>Feature Check</h3>
+      <p className='p-3 text-sm text-gray-800 dark:text-zinc-400'>This page is used for the purpose validating, testing, debugging of each components that are developing for this project</p>
         {/* <p className='ms-3 font-semibold'>TFCommonModal:</p> */}
         </div>
         {/* <Button onClick={() => setOpen(true)}>Open Modal</Button>
