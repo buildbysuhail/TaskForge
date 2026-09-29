@@ -19,6 +19,7 @@ import TFCommonDrawer from "@/components/common/TFCommonDrawer.jsx";
 import CreateTask from "./CreateTask.jsx";
 import { Input } from "@/components/ui/input.jsx";
 import TFInput from "@/components/common/TFInput.jsx";
+import TFKanbanBoard from "@/components/common/kanban/TFKanbanBoard.jsx";
 
 function Dashboard() {
   const [tasks, setTasks] = useState([]);
@@ -235,7 +236,8 @@ function Dashboard() {
         {/* Kanban tab */}
         <TabsContent value="kanban" className="w-full">
           <div className="p-5">
-            <FeatureUnderDevelopment featureName={"Kanban"} />
+            {/* <FeatureUnderDevelopment featureName={"Kanban"} /> */}
+            <TFKanbanBoard tasks={tasks} reloadTasks={loadTasks} />
           </div>
         </TabsContent>
 
