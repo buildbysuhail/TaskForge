@@ -39,7 +39,7 @@ function FeatureCheck() {
         >
             Hello
         </TFCommonModal> */}
-        <p className='ms-3 font-semibold'>TFCommonDrawer:</p>
+        {/* <p className='ms-3 font-semibold'>TFCommonDrawer:</p>
         <TFCommonDrawer
             trigger={<Button>Create Task</Button>}
             title={"Create Task"}
@@ -53,7 +53,7 @@ function FeatureCheck() {
             }
         >
             form content
-        </TFCommonDrawer>
+        </TFCommonDrawer> */}
 
 
           {/* <div className="bg-cyan-50 flex flex-col">
