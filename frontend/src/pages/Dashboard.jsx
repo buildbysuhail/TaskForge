@@ -20,16 +20,26 @@ import CreateTask from "./CreateTask.jsx";
 import { Input } from "@/components/ui/input.jsx";
 import TFInput from "@/components/common/TFInput.jsx";
 import TFKanbanBoard from "@/components/common/kanban/TFKanbanBoard.jsx";
+import useLocalStorage from "@/hooks/useLocalStorage.js";
 
 function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [showTaskFrm, setShowTaskFrm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState("backlog");
-  const [useSelectView, setUseSelectView] = useState(false); // adjust however you want
+  // const [activeTab, setActiveTab] = useState("backlog");
+  // const [useSelectView, setUseSelectView] = useState(false); // adjust however you want
 
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+
+  const [activeTab, setActiveTab] = useLocalStorage(
+    "TF-active-Tab",
+    "backlog"
+  );
+  const [useSelectView, setUseSelectView] = useLocalStorage(
+    "TF-Select-view",
+    false
+  );
 
   const searchInputRef = useRef(null);
   // const navigate = useNavigate();

@@ -2,16 +2,22 @@ import { LogOut, Moon, Sun, TestTube2 } from "lucide-react";
 import { TFConfirmModal } from "./common/modals";
 import TFAvatar from "./common/TFAvatar";
 import TFCommonDialog from "./common/TFCommonDialog";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { showToast } from "@/lib/utils/toast";
 import { useNavigate } from "react-router-dom";
-import { Button } from "./ui/button";
+// import { Button } from "./ui/button";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 function Navbar() {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  // const [darkMode, setDarkMode] = useState(false);
+
+  const [darkMode, setDarkMode] = useLocalStorage(
+    "TF-Theme-Dark",
+    false
+  )
 
   const handleLogout = () => {
     // Perform logout logic here
@@ -22,14 +28,12 @@ function Navbar() {
     
   }
 
+useEffect(() => {
+  document.documentElement.classList.toggle("dark", darkMode);
+}, [darkMode]);
+
   const toggleTheme = () => {
-  setDarkMode((prev) => {
-    const newMode = !prev;
-
-    document.documentElement.classList.toggle("dark", newMode);
-
-    return newMode;
-  });
+    setDarkMode((prev) => !prev);
 };
 const user = JSON.parse(localStorage.getItem("user"));
 // console.log(user.name[0], "UserNameee")
