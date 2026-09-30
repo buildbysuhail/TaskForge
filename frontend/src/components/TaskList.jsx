@@ -244,7 +244,7 @@ console.error("Update Eror",err)
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="p-4 bg-gray-200 animate-pulse rounded-md h-20"
+            className="p-4 bg-stone-200 dark:bg-zinc-400 animate-pulse rounded-md h-20"
           />
         ))}
       </div>
