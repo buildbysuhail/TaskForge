@@ -185,7 +185,7 @@ function Dashboard() {
               <Button
                 className={`bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9 transition-all duration-300 ease-in-out ${showSearch ? "opacity-0 w-0 px-0 overflow-hidden pointer-events-none" : "opacity-100"
                   }`}
-                title="under dev"
+                title="Search Tasks"
                 onClick={() => setShowSearch(true)}
               >
                 <Search />
