@@ -34,6 +34,7 @@ useEffect(() => {
 
   const toggleTheme = () => {
     setDarkMode((prev) => !prev);
+    showToast.success(darkMode ? "Light Theme": "Dark Theme");
 };
 const user = JSON.parse(localStorage.getItem("user"));
 // console.log(user.name[0], "UserNameee")
