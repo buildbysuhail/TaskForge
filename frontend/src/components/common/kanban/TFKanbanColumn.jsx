@@ -15,7 +15,9 @@ function TFKanbanColumn({ id, title, tasks }) {
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold text-sm">{title}</h3>
 
-        <span className="text-xs bg-slate-100 text-black px-2 py-1 rounded-full">
+        <span className="text-xs bg-slate-100 dark:bg-zinc-400 text-black font-semibold px-2 py-1 rounded-full cursor-pointer"
+          title={`${tasks.length} Tasks in "${title}"`}
+        >
           {tasks.length}
         </span>
       </div>
