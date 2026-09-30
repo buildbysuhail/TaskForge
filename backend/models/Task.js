@@ -22,6 +22,20 @@ const taskSchema = new mongoose.Schema(
             ref: "User",
             required: true,
         },
+        priority: {
+            type: String,
+            enum: ["best-effort", "low", "medium", "high", "critical"],
+            default: "medium"
+        },
+        type: {
+            type: String,
+            enum: ["Feature", "Quality", "Bug", "Test", "Security", "Other"],
+        },
+        owner: {
+            type: String,
+            trim: true,
+            maxLength: [100, "Owner name cannot be more than 100 characters"]
+        }
     },
     { timestamps: true }
 );

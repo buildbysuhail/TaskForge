@@ -1,7 +1,7 @@
 import API from "./api";
 
-export const getTasks = async () => {
-    const response = await API.get("/tasks");
+export const getTasks = async (params = {}) => {
+    const response = await API.get("/tasks", { params });
     return response.data;
 };
 
@@ -14,6 +14,15 @@ export const updateTask = async (id, updatedDta) => {
     const response = await API.put(`/tasks/${id}`,updatedDta);
     return response.data;
 }
+
+export const updateTaskPartially = async (id, updatedData) => {
+    const response = await API.patch(
+        `/tasks/${id}`,
+        updatedData
+    );
+
+    return response.data;
+};
 
 export const deleteTask = async (id) => {
     const response = await API.delete(`/tasks/${id}`)

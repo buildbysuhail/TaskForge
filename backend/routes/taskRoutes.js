@@ -14,6 +14,7 @@ router.use(protect); // Apply authentication middleware to all routes
 router.post("/", createTask);
 router.get("/", getTasks);
 router.put("/:id", updateTask);
+router.patch("/:id", updateTask);
 router.delete("/:id", deleteTask);
 
 export default router;

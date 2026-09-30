@@ -1,24 +1,63 @@
-import { useEffect, useState } from "react";
-import TaskForm from "../components/TaskForm.jsx";
+import { useEffect, useRef, useState } from "react";
+// import TaskForm from "../components/TaskForm.jsx";
 import TaskList from "../components/TaskList.jsx";
-import { 
-  getTasks, 
+import {
+  getTasks,
   // createTask 
 } from "../services/taskService.js";
 import { Button } from "@/components/ui/button.jsx";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.jsx";
+// import { useNavigate } from "react-router-dom";
+import FeatureUnderDevelopment from "./FeatureUnderDev.jsx";
+import {
+  Activity, ArrowUpDown, ChevronDown, ChevronUp, ClipboardCheck, EyeOff, LayoutList,
+  Proportions,
+  Search, SearchIcon, SquareKanban,
+} from "lucide-react";
+import TFSelect from "@/components/common/TFSelect.jsx";
+import TFCommonDrawer from "@/components/common/TFCommonDrawer.jsx";
+import CreateTask from "./CreateTask.jsx";
+import { Input } from "@/components/ui/input.jsx";
+import TFInput from "@/components/common/TFInput.jsx";
+import TFKanbanBoard from "@/components/common/kanban/TFKanbanBoard.jsx";
+import useLocalStorage from "@/hooks/useLocalStorage.js";
 
 function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [showTaskFrm, setShowTaskFrm] = useState(false);
-
   const [loading, setLoading] = useState(false);
+  // const [activeTab, setActiveTab] = useState("backlog");
+  // const [useSelectView, setUseSelectView] = useState(false); // adjust however you want
+
+  const [search, setSearch] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
+
+  const [activeTab, setActiveTab] = useLocalStorage(
+    "TF-active-Tab",
+    "backlog"
+  );
+  const [useSelectView, setUseSelectView] = useLocalStorage(
+    "TF-Select-view",
+    false
+  );
+
+  const searchInputRef = useRef(null);
+  // const navigate = useNavigate();
+  // console.log(LayoutList, "layoutListttttt")
+  const tabItems = [
+    { label: "Backlog", value: "backlog", icon: LayoutList },
+    { label: "Kanban", value: "kanban", icon: SquareKanban },
+    { label: "Completed Tasks", value: "completed-tasks", icon: ClipboardCheck },
+    { label: "Active Sprints", value: "active-sprints", icon: Activity },
+    { label: "Report", value: "report", icon: Proportions },
+  ]
 
   const loadTasks = async () => {
     try {
       setLoading(true);
-      const data = await getTasks();
+      const data = await getTasks({ search }); // same as { search: search }
       setTasks(data);
-      // console.log(data, "dsdsdd")
+      console.log(data, "dsdsdd")
     } catch (error) {
       console.error("Error fetching tasks:", error);
     } finally {
@@ -27,21 +66,216 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    loadTasks();
-  }, []);
+  if (showSearch) {
+    searchInputRef.current?.focus();
+  }
+}, [showSearch]);
 
-  const handleAddTask = (newTask) => {
-  setTasks((prevTasks) => [...prevTasks, newTask]);
-};
+  useEffect(() => {
+    loadTasks();
+  }, [search]);
+
+  //   const handleAddTask = (newTask) => {
+  //   setTasks((prevTasks) => [...prevTasks, newTask]);
+  // };
 
   return (
-    <div className="bg-slate-100">
-      <h2 className="text-[23px] bg-slate-100 text-center">Dashboard</h2>
-      <div className="bg-gray-300 rounded-sm p-5">
+    <div className="min-h-screen">
+      <h2 className="text-[20px] font-semibold text-start mb-4">Dashboard</h2>
+
+      <Tabs
+        // defaultValue="backlog" 
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="w-full mx-auto justify-center items-center flex flex-col gap-2 p-4 rounded-lg shadow-sm"
+      >
+
+
+        {useSelectView &&
+          <div className="w-full border-b-4 border-stone-400 dark:border-slate-800 flex justify-center">
+            <TabsList variant="line" className="w-[60%] mb-0 pb-[2px]">
+              {tabItems.map((t) => (
+                <TabsTrigger key={t.value} value={t.value} className={"text-[18px] font-bold"}>
+                  {t.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
+        }
+
+        <div className="rounded-lg py-5 px-8 flex justify-between w-full items-center">
+          <div className="flex justify-content gap-3">
+
+
+            {!useSelectView && // border-slate-400 removed for default theme
+              <div className="border-r pe-[13px]">
+                <TFSelect
+                  value={activeTab}
+                  onValueChange={setActiveTab}
+                  options={tabItems.map((t) => ({ value: t.value, label: t.label, icon: t.icon }))}
+                  className="w-[180px]" // removed mx-auto
+                  valueClassName="text-center w-full font-bold"
+                  contentClassName="font-medium w-[180px] bg-stone-200 dark:bg-zinc-700"
+                  triggerClassName="h-9 py-[17px]"
+                  align="start"
+                  sideOffset={4}
+                />
+              </div>
+            }
+
+            {/* <Button
+              className="bg-blue-900 rounded-md w-14 h-9"
+              onClick={() => navigate("/create-task")}
+              title="Create New Task"
+            >
+              New
+            </Button> */}
+            <TFCommonDrawer
+              open={showTaskFrm}
+              onOpenChange={setShowTaskFrm}
+              trigger={<Button className="bg-blue-800 hover:bg-blue-900 text-white rounded-md w-14 h-9">
+                New
+              </Button>}
+              title={"New Task"}
+              titleClassName="font-bold text-left md:text-center"
+
+              description={"Create and organize a task for your project."}
+              descriClassName="text-left md:text-center text-gray-600"
+
+              footer={
+                <Button
+                  type="submit"
+                  form="create-task-form"
+                  // disabled={formLoading}
+                  className="w-full h-12 rounded-lg active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed text-base"
+                >
+                  {/* <span className="flex items-center justify-center gap-2">
+                {formLoading && <Loader2 size={16} className="animate-spin" />}
+                {formLoading ? "Adding Task..." : "Add Task"}
+              </span> */}
+                  Add Task
+                </Button>
+              }
+              showCloseButton={true}
+            >
+              <CreateTask 
+              onClose={() => setShowTaskFrm(false)}
+              onAdd={loadTasks}
+              />
+            </TFCommonDrawer>
+
+            <Button
+              variant="outline"
+              className="bg-inherit border-2 border-slate-800 hover:bg-gray-500 dark:hover:bg-slate-800 hover:text-white rounded-md w-23 h-9 cursor-not-allowed"
+
+              title="under dev"
+            >
+              Create Sprint
+            </Button>
+
+            <div className="relative flex items-center h-9">
+              <Button
+                className={`bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9 transition-all duration-300 ease-in-out ${showSearch ? "opacity-0 w-0 px-0 overflow-hidden pointer-events-none" : "opacity-100"
+                  }`}
+                title="under dev"
+                onClick={() => setShowSearch(true)}
+              >
+                <Search />
+                Search
+              </Button>
+
+              <div
+                className={`transition-all duration-300 ease-in-out overflow-hidden ${showSearch ? "opacity-100 w-[200px] ml-2" : "opacity-0 w-0 ml-0 pointer-events-none"
+                  }`}
+              >
+                <TFInput
+                inputRef={searchInputRef}
+                  autoFocus={showSearch}
+                  size="lg"
+                  onBlur={() => setShowSearch(false)}
+                  closeBtn= {search.length !==0 }
+                  onClose={()=>setSearch("")}
+                  value={search}
+                  icon={SearchIcon}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search..."
+                  className="w-full h-[35px] rounded-md focus-visible:border-blue-600 dark:focus-visible:border-blue-700"
+                />
+              </div>
+            </div>
+
+            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9 cursor-not-allowed"
+              title="under dev"
+            >
+              <ArrowUpDown />
+              Sort
+            </Button>
+
+            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9 cursor-not-allowed"
+              title="under dev"
+            >
+              <EyeOff />
+              Hide
+            </Button>
+          </div>
+
+          <button
+            title={useSelectView ? "Collapse" : "Expand"}
+            onClick={() => setUseSelectView((b) => !b)}
+          >
+            {useSelectView ?
+              <ChevronUp /> : <ChevronDown />
+            }
+          </button>
+        </div>
+
+        {/* All Tasks tab */}
+        <TabsContent value="backlog" className="w-full flex flex-col gap-4">
+
+          <div className=" rounded-lg p-5">
+            <TaskList
+              tasks={tasks}
+              reloadTasks={loadTasks}
+              loading={loading}
+              setTasks={setTasks}
+            />
+          </div>
+
+        </TabsContent>
+
+        {/* Kanban tab */}
+        <TabsContent value="kanban" className="w-full">
+          <div className="p-5">
+            {/* <FeatureUnderDevelopment featureName={"Kanban"} /> */}
+            <TFKanbanBoard tasks={tasks} reloadTasks={loadTasks} />
+          </div>
+        </TabsContent>
+
+        {/* Completed Tasks tab */}
+        <TabsContent value="completed-tasks" className="w-full">
+          <div className="p-5">
+            <FeatureUnderDevelopment featureName={"Completed Tasks"} />
+          </div>
+        </TabsContent>
+        <TabsContent value="active-sprints" className="w-full">
+          <div className="p-5">
+            <FeatureUnderDevelopment featureName={"Active Sprints"} />
+          </div>
+        </TabsContent>
+        <TabsContent value="report" className="w-full">
+          <div className="p-5">
+            <FeatureUnderDevelopment featureName={"Report"} />
+          </div>
+        </TabsContent>
+
+      </Tabs>
+      {/* <div className="bg-gray-300 rounded-sm p-5">
         <Button 
         className="bg-blue-900" 
-        onClick={() => setShowTaskFrm(true)}
+        // onClick={() => setShowTaskFrm(true)}
+        onClick={() => navigate("/create-task")}
         // variant="ghost"
+        title="Create New Task"
         >
           New
         </Button>
@@ -55,7 +289,7 @@ function Dashboard() {
       </div>
       <div className="bg-green-50 rounded-sm p-5">
         <TaskList tasks={tasks} reloadTasks={loadTasks} loading={loading} />
-      </div>
+      </div> */}
     </div>
   );
 }

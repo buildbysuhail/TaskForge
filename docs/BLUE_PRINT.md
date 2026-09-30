@@ -24,18 +24,18 @@
 ## 🗺️ Phase Strategy
 
 ### Phase 1: The Foundation (Skeleton)
-- [ ] Setup Repo & MERN Stack Basics
-- [ ] Implement **Layout & Navigation**
-- [ ] Build **Authentication** (Login/Signup)
+- [ ] Setup Repo & MERN Stack Basics ☑️
+- [ ] Implement **Layout & Navigation** ☑️
+- [ ] Build **Authentication** (Login/Signup) ☑️
 
 ### Phase 2: The Core (Muscle)
-- [ ] Build **Task Management** (CRUD Operations)
+- [ ] Build **Task Management** (CRUD Operations) ☑️
 - [ ] Implement **Dashboard** Stats
-- [ ] Connect **Forms & Inputs** to Database
+- [ ] Connect **Forms & Inputs** to Database 
 
 ### Phase 3: The Polish (Aura)
-- [ ] Add **Feedback & UX** (Toasts, Skeletons)
-- [ ] Optimize **Data Display** (Tables, Charts)
+- [ ] Add **Feedback & UX** (Toasts, Skeletons) 📈
+- [ ] Optimize **Data Display** (Tables, Charts) 📈
 - [ ] Finalize **Team & User** Features
 
 ---

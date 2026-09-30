@@ -102,7 +102,19 @@ function Login() {
     //     <button type="submit">{loading ? "Logging in..." : "Login"}</button>
     //   </form>
     // </div>
-    <div className="flex items-center min-h-screen justify-center">
+    <div className="flex flex-row items-center min-h-screen">
+
+
+      <div className="flex items-center justify-center w-1/2 min-h-screen bg-teal-50">
+
+        <div className="w-full max-w-[35rem]">
+        <h2 className="font-bold w-[100%] mr-8">
+          <img src="src/assets/images/TaskForge.png" className="" alt="TaskForge" />
+        </h2>
+        </div>
+      </div>
+
+    <div className="flex items-center justify-center w-1/2 min-h-screenr">
     <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle>Login to your account</CardTitle>
@@ -145,7 +157,7 @@ function Login() {
             </div>
           </div>
         </CardContent>
-        <CardFooter className="flex-col gap-2">
+        <CardFooter className="flex-col gap-2 cursor-not-allowed border-none" title="Under Dev">
           <Button type="submit" className="w-full">
             Login
           </Button>
@@ -153,8 +165,17 @@ function Login() {
             Login with Google
           </Button>
         </CardFooter>
+        <div className="p-3 w-full text-center">
+          Don't have an account yet?{" "}
+          <span className="text-green-700 hover:text-green-600 hover:shadow-sm font-semibold cursor-pointer hover:underline"
+            onClick={()=>navigate("/register")}
+          >
+          Register for free
+          </span>
+        </div>
       </form>
     </Card>
+    </div>
     </div>
   );
 }
