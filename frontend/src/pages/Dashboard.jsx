@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.j
 // import { useNavigate } from "react-router-dom";
 import FeatureUnderDevelopment from "./FeatureUnderDev.jsx";
 import {
-  Activity, ArrowUpDown, ChevronDown, ChevronUp, ClipboardCheck, EyeOff, LayoutList,
+  Activity, ArrowDownUp, ArrowUpDown, ChevronDown, ChevronUp, ClipboardCheck, EyeOff, LayoutList,
   Proportions,
   Search, SearchIcon, SquareKanban,
 } from "lucide-react";
@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input.jsx";
 import TFInput from "@/components/common/TFInput.jsx";
 import TFKanbanBoard from "@/components/common/kanban/TFKanbanBoard.jsx";
 import useLocalStorage from "@/hooks/useLocalStorage.js";
+import { showToast } from "@/lib/utils/toast.js";
 
 function Dashboard() {
   const [tasks, setTasks] = useState([]);
@@ -40,6 +41,11 @@ function Dashboard() {
     "TF-Select-view",
     false
   );
+  const [sorted, setSorted] = useLocalStorage(
+    "TF-sorted-tasks",
+    false
+  )
+
 
   const searchInputRef = useRef(null);
   // const navigate = useNavigate();
@@ -78,6 +84,8 @@ function Dashboard() {
   //   const handleAddTask = (newTask) => {
   //   setTasks((prevTasks) => [...prevTasks, newTask]);
   // };
+
+  const sortedTasks = [...tasks].reverse();
 
   return (
     <div className="min-h-screen">
@@ -204,10 +212,14 @@ function Dashboard() {
               </div>
             </div>
 
-            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9 cursor-not-allowed"
-              title="under dev"
+            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9"
+              title={sorted ? "Show oldest tasks first" : "Show newest tasks first"}
+                  onClick={()=>{
+                    setSorted((s) => !s)
+                    showToast.info("Tasks have Sorted")
+                  }}
             >
-              <ArrowUpDown />
+              { sorted ? <ArrowDownUp /> : <ArrowUpDown />}
               Sort
             </Button>
 
@@ -234,7 +246,7 @@ function Dashboard() {
 
           <div className=" rounded-lg p-5">
             <TaskList
-              tasks={tasks}
+              tasks={sorted ? sortedTasks : tasks}
               reloadTasks={loadTasks}
               loading={loading}
               setTasks={setTasks}

@@ -67,9 +67,9 @@ function CreateTask({
         newErrors.title = "Task title is required";
       }
 
-      if (taskId && !/^TF\d+$/i.test(taskId.trim())) {
-        newErrors.taskId = "Use format like TF1 or TF25";
-      }
+      // if (taskId && !/^TF\d+$/i.test(taskId.trim())) {
+      //   newErrors.taskId = "Use format like TF1 or TF25";
+      // }
 
       setErrors(newErrors);
 
