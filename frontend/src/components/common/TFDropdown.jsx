@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
+import { showToast } from "@/lib/utils/toast";
 
 export function TFDropdown({
   trigger,
@@ -32,6 +33,7 @@ export function TFDropdown({
   applyButtonLabel = "Apply",
 }) {
   const [tempValues, setTempValues] = useState(values);
+  const [open, setOpen] = useState(false);
 
   // Keep temporary values synchronized with parent values
   useEffect(() => {
@@ -63,10 +65,12 @@ export function TFDropdown({
         onValueChange?.(key, checked);
       }
     });
+    setOpen(false)
+    showToast.info("Column visibility updated.")
   };
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
 
       {/* Trigger */}
       <DropdownMenuTrigger asChild>
