@@ -264,7 +264,12 @@ function Dashboard() {
 
           <button
             title={useSelectView ? "Collapse" : "Expand"}
-            onClick={() => setUseSelectView((b) => !b)}
+            onClick={() =>{ 
+              setUseSelectView((b) => !b)
+              showToast.info(
+                useSelectView ? "View collapsed." : "View expanded."
+              )
+            }}
           >
             {useSelectView ?
               <ChevronUp /> : <ChevronDown />
