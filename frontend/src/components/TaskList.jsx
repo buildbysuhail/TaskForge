@@ -24,7 +24,7 @@ import { DropdownMenu,
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import TaskForm from "./TaskForm";
 
-function TaskList({ tasks, reloadTasks, loading, setTasks }) {
+function TaskList({ tasks, visibleCoumns, reloadTasks, loading, setTasks }) {
 // console.log("tsks:",tasks);
 
   const [open, setOpen] = useState(false);
@@ -91,33 +91,7 @@ console.error("Update Eror",err)
   // ----------------------------------
   // Update Task Status
   // ----------------------------------
-  // const handleStatusChange = (id, newStatus) => {
-  //   setUpdatingId(id);
 
-  //   const promise = updateTask(id, {
-  //     status: newStatus,
-  //   });
-
-  //   showToast.promise(promise, {
-  //     loading: "Updating task...",
-
-  //     success: () => {
-  //       reloadTasks();
-  //       setUpdatingId(null);
-
-  //       return "Task updated successfully";
-  //     },
-
-  //     error: (err) => {
-  //       setUpdatingId(null);
-
-  //       return (
-  //         err?.response?.data?.message ||
-  //         "Failed to update task"
-  //       );
-  //     },
-  //   });
-  // };
   const handleStatusChange = (id, newStatus) => {
   handleTaskFieldChange(id, "status", newStatus);
 };
@@ -127,58 +101,12 @@ console.error("Update Eror",err)
     setEditOpen(true);
   }
 
-  // const handleTypeChange = (id, newType) => {
-  //   setUpdatingId(id);
-
-  //   const promise = updateTask(id, {
-  //     type: newType,
-  //   });
-
-  //   showToast.promise(promise, {
-  //     loading: "Updating task...",
-
-  //     success: () => {
-  //       reloadTasks();
-  //       setUpdatingId(null);
-  //       return "Task updated successfully";
-  //     },
-  //     error: (err) => {
-  //       setUpdatingId(null);
-  //       return (
-  //         err?.response?.data?.message ||
-  //         "Failed to update task"
-  //       );
-  //     }
-  //   });
-  // };
+  
   const handleTypeChange = (id, newType) => {
   handleTaskFieldChange(id, "type", newType);
 };
 
-  // const handlePriorityChange = (id, newPriority) => {
-  //   setUpdatingId(id);
-
-  //   const promise = updateTask(id, {
-  //     priority : newPriority,
-  //   });
-
-  //   showToast.promise(promise, {
-  //     loading: "Updating task...",
-
-  //     success: () => {
-  //       reloadTasks();
-  //       setUpdatingId(null);
-  //       return "Task updated successfully";
-  //     },
-  //     error: (err) => {
-  //       setUpdatingId(null);
-  //       return (
-  //         err?.response?.data?.message ||
-  //         "Failed to update task"
-  //       );
-  //     }
-  //   });
-  // };
+  
 
   const handlePriorityChange = (id, newPriority) => {
   handleTaskFieldChange(id, "priority", newPriority);
@@ -263,6 +191,7 @@ console.error("Update Eror",err)
     {
       key: "description",
       header: "Description",
+      hidden: visibleCoumns?.description,
     },
 
     {

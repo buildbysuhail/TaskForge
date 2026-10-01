@@ -22,6 +22,7 @@ import TFInput from "@/components/common/TFInput.jsx";
 import TFKanbanBoard from "@/components/common/kanban/TFKanbanBoard.jsx";
 import useLocalStorage from "@/hooks/useLocalStorage.js";
 import { showToast } from "@/lib/utils/toast.js";
+import { TFDropdown } from "@/components/common/TFDropdown.jsx";
 
 function Dashboard() {
   const [tasks, setTasks] = useState([]);
@@ -46,7 +47,14 @@ function Dashboard() {
     false
   )
 
-
+  const [columnVisibility, setColumnVisibility] = useLocalStorage(
+    "TF-visible-columns",
+    {
+      title: true,
+      description: false
+    }
+  )
+console.log(columnVisibility, "columnVisibilityyyyyy")
   const searchInputRef = useRef(null);
   // const navigate = useNavigate();
   // console.log(LayoutList, "layoutListttttt")
@@ -223,12 +231,40 @@ function Dashboard() {
               Sort
             </Button>
 
-            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9 cursor-not-allowed"
-              title="under dev"
+            {/* <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9"
+              // title="under dev"
             >
               <EyeOff />
               Hide
-            </Button>
+            </Button> */}
+            <TFDropdown
+              trigger={
+                <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9">
+                  <EyeOff />
+                  Hide
+                </Button>
+              }
+              label="Table Columns"
+              items={[
+                // { key: "title", label: "Title" },
+                { key: "description", label: "Description" },
+                // { key: "type", label: "Type" },
+                // { key: "priority", label: "Priority" },
+                // { key: "status", label: "Status" },
+                // { key: "owner", label: "Owner" },
+                // { key: "actions", label: "Actions" },
+              ]}
+              values={columnVisibility}
+              
+              showApplyButton= {true}
+              applyButtonLabel="Apply"
+              onValueChange={(key, checked) =>
+                setColumnVisibility((prev) => ({
+                  ...prev,
+                  [key]: checked,
+                }))
+              }
+            />
           </div>
 
           <button
@@ -247,6 +283,7 @@ function Dashboard() {
           <div className=" rounded-lg p-5">
             <TaskList
               tasks={sorted ? sortedTasks : tasks}
+              visibleCoumns={columnVisibility}
               reloadTasks={loadTasks}
               loading={loading}
               setTasks={setTasks}
