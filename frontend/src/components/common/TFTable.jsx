@@ -20,10 +20,11 @@ export function TFTable({
   headerCellClassName = "",
   bodyClassName = "",
   rowClassName = "",
+  renderAddRow,
 }) {
 
   const visibleColumns = columns.filter((c) => !c.hidden);
-console.log("visible Columnsssssss",visibleColumns)
+// console.log("visible Columnsssssss",visibleColumns)
   return (
     <div className={`w-full overflow-x-auto rounded-md border ${tableClassName}`}>
       <Table>
@@ -76,6 +77,9 @@ console.log("visible Columnsssssss",visibleColumns)
               </TableCell>
             </TableRow>
           )}
+
+            {/* Optional Add Row */}
+            {renderAddRow && renderAddRow(visibleColumns)}
         </TableBody>
 
       </Table>

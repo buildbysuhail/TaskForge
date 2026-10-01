@@ -21,8 +21,9 @@ import { DropdownMenu,
          DropdownMenuContent,
          DropdownMenuItem,
          DropdownMenuTrigger } from "./ui/dropdown-menu";
-import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { MoreHorizontal, Pencil, Plus, Trash2 } from "lucide-react";
 import TaskForm from "./TaskForm";
+import { TableCell, TableRow } from "./ui/table";
 
 function TaskList({ tasks, visibleCoumns, reloadTasks, loading, setTasks }) {
 // console.log("tsks:",tasks);
@@ -162,6 +163,10 @@ console.error("Update Eror",err)
     setOpen(false);
     setSelectedTaskId(null);
   };
+
+  const handleQuickAddTask=() => {
+    return;
+  }
 
   // ----------------------------------
   // Loading State
@@ -334,11 +339,39 @@ console.error("Update Eror",err)
           tableClassName="rounded-lg shadow-sm"
           // header:
             headerClassName="bg-stone-400 dark:bg-zinc-800"
-            headerRowClassName="hover:bg-stone-500 dark:hover:bg-zinc-900"
-            headerCellClassName="text-slate-200 hover:text-slate-50"
-          //
-          bodyClassName="dark:bg-zinc-600"
-          rowClassName="text-gray-800 dark:text-zinc-300"
+        headerRowClassName="hover:bg-stone-500 dark:hover:bg-zinc-900"
+        headerCellClassName="text-slate-200 hover:text-slate-50"
+        //
+        bodyClassName="dark:bg-zinc-600"
+        rowClassName="text-gray-800 dark:text-zinc-300"
+        renderAddRow={(visibleColumns) => (
+          <TableRow className="hover:bg-transparent">
+            <TableCell
+              colSpan={visibleColumns.length}
+              className="p-0 cursor-pointer"
+              onClick={handleQuickAddTask}
+            >
+              <div className="items-center gap-2 p-1">
+                <div
+                  className="
+                          flex items-center gap-3
+                          py-2 px-4
+                          border border-transparent
+                          rounded-md
+                          transition-colors
+                          hover:border-border dark:hover:border-zinc-300
+                        "
+                >
+                  <Plus className="h-4 w-4" />
+                  <span>Add task</span>
+                </div>
+              </div>
+            </TableCell>
+
+
+            {/* other cells */}
+          </TableRow>
+        )}
       />
 
       <TFConfirmModal
