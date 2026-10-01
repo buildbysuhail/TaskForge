@@ -1,5 +1,6 @@
 import { deleteTask,
         //  updateTask,
+        createTask,
          updateTaskPartially } from "../services/taskService";
 import { useState } from "react";
 
@@ -24,6 +25,7 @@ import { DropdownMenu,
 import { MoreHorizontal, Pencil, Plus, Trash2 } from "lucide-react";
 import TaskForm from "./TaskForm";
 import { TableCell, TableRow } from "./ui/table";
+import { Input } from "./ui/input";
 
 function TaskList({ tasks, visibleCoumns, reloadTasks, loading, setTasks }) {
 // console.log("tsks:",tasks);
@@ -37,6 +39,9 @@ function TaskList({ tasks, visibleCoumns, reloadTasks, loading, setTasks }) {
   const [editingTask, setEditingTask] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
 
+  const [isAddingTask, setIsAddingTask] = useState(false);
+  const [quickTaskTitle, setQuickTaskTitle] = useState("");
+ 
 
   const TypeOptions = [{ label: "Feature", value: "Feature" },
                        { label: "Quality", value: "Quality" },
@@ -165,7 +170,31 @@ console.error("Update Eror",err)
   };
 
   const handleQuickAddTask=() => {
-    return;
+    setIsAddingTask(true);
+  };
+
+  const handleQuickAddSubmit = async (e) => {
+    if (e.key !== "Enter") return;
+
+    const title = quickTaskTitle.trim();
+
+    if(!title) return;
+
+    try {
+      await createTask({ title }); // title: title
+
+      setQuickTaskTitle("");
+      setIsAddingTask(false);
+      
+
+      // refresh tasks here
+      reloadTasks();
+      showToast.success("New Task Added");
+    } catch (err) {
+      console.error("Failed to create task:", err);
+      showToast.error("Failed to create task");
+    }
+
   }
 
   // ----------------------------------
@@ -351,6 +380,7 @@ console.error("Update Eror",err)
               className="p-0 cursor-pointer"
               onClick={handleQuickAddTask}
             >
+              { !isAddingTask ? (
               <div className="items-center gap-2 p-1">
                 <div
                   className="
@@ -363,9 +393,27 @@ console.error("Update Eror",err)
                         "
                 >
                   <Plus className="h-4 w-4" />
-                  <span>Add task</span>
+                    <span>Add task</span>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="p-2">
+                  <Input
+                    autoFocus
+                    value={quickTaskTitle}
+                    onChange={(e) => setQuickTaskTitle(e.target.value)}
+                      onKeyDown={handleQuickAddSubmit}
+                      onBlur={() => setIsAddingTask(false)}
+                      placeholder="Enter task title..."
+                      className="w-full bg-transparent outline-none
+                              placeholder:text-slate-500
+                              dark:placeholder:text-zinc-300
+                                placeholder:font-medium
+                                "
+                    />
+                  </div>
+              )
+              }
             </TableCell>
 
 
