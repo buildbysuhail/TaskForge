@@ -23,7 +23,7 @@ export function TFTable({
 }) {
 
   const visibleColumns = columns.filter((c) => !c.hidden);
-
+console.log("visible Columnsssssss",visibleColumns)
   return (
     <div className={`w-full overflow-x-auto rounded-md border ${tableClassName}`}>
       <Table>

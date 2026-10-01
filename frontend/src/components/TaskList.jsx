@@ -209,6 +209,7 @@ console.error("Update Eror",err)
           options={TypeOptions}
         />
       ),
+      hidden: visibleCoumns?.type,
     },
 
     {

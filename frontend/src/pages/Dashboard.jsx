@@ -51,10 +51,11 @@ function Dashboard() {
     "TF-visible-columns",
     {
       title: true,
-      description: false
+      description: false,
+      type: false,
     }
   )
-console.log(columnVisibility, "columnVisibilityyyyyy")
+// console.log(columnVisibility, "columnVisibilityyyyyy")
   const searchInputRef = useRef(null);
   // const navigate = useNavigate();
   // console.log(LayoutList, "layoutListttttt")
@@ -231,24 +232,18 @@ console.log(columnVisibility, "columnVisibilityyyyyy")
               Sort
             </Button>
 
-            {/* <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9"
-              // title="under dev"
-            >
-              <EyeOff />
-              Hide
-            </Button> */}
             <TFDropdown
               trigger={
                 <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9">
                   <EyeOff />
-                  Hide
+                  Hidden Columns
                 </Button>
               }
               label="Table Columns"
               items={[
                 // { key: "title", label: "Title" },
                 { key: "description", label: "Description" },
-                // { key: "type", label: "Type" },
+                { key: "type", label: "Type" },
                 // { key: "priority", label: "Priority" },
                 // { key: "status", label: "Status" },
                 // { key: "owner", label: "Owner" },
