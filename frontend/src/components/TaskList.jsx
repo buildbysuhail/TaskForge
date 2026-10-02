@@ -39,7 +39,7 @@ function TaskList({ tasks, visibleCoumns, reloadTasks, loading, setTasks }) {
   const [editingTask, setEditingTask] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
 
-  const [isAddingTask, setIsAddingTask] = useState(true);
+  const [isAddingTask, setIsAddingTask] = useState(false);
   const [quickTaskTitle, setQuickTaskTitle] = useState("");
  
 

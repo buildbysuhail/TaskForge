@@ -87,7 +87,13 @@ function Dashboard() {
 }, [showSearch]);
 
   useEffect(() => {
-    loadTasks();
+    // Debouncing
+    const timer =setTimeout(()=> {
+      loadTasks();
+    }, 600);
+
+    return ()=>clearTimeout(timer);
+
   }, [search]);
 
   //   const handleAddTask = (newTask) => {
