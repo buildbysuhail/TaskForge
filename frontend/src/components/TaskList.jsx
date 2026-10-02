@@ -39,7 +39,7 @@ function TaskList({ tasks, visibleCoumns, reloadTasks, loading, setTasks }) {
   const [editingTask, setEditingTask] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
 
-  const [isAddingTask, setIsAddingTask] = useState(false);
+  const [isAddingTask, setIsAddingTask] = useState(true);
   const [quickTaskTitle, setQuickTaskTitle] = useState("");
  
 
@@ -400,20 +400,30 @@ console.error("Update Eror",err)
                   </div>
                 </div>
               ) : (
-                <div className="p-2">
+                <div className="grid grid-cols-7 mx-1 my-2">
                   <Input
                     autoFocus
                     value={quickTaskTitle}
                     onChange={(e) => setQuickTaskTitle(e.target.value)}
                       onKeyDown={handleQuickAddSubmit}
-                      onBlur={() => setIsAddingTask(false)}
+                      // onBlur={() => setIsAddingTask(false)}
                       placeholder="Enter task title..."
                       className="w-full bg-transparent outline-none
+                                border-none
                               placeholder:text-slate-500
                               dark:placeholder:text-zinc-300
                                 placeholder:font-medium
+                                col-span-2
                                 "
-                    />
+                    /> 
+                   { 
+                    quickTaskTitle.length > 0 ?
+                   (<p className="col-span-5 p-2 text-orange-800 animate-pulse">
+                      Click <span className="text-orange-950 font-semibold">'Enter'</span> Key to add the Task
+                      <span className="text-red-600">*</span>
+                    </p>)
+                  : <></>
+                  }
                   </div>
               )
               }
