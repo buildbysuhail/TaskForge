@@ -21,6 +21,20 @@ function TFKanbanBoard({ tasks = [], reloadTasks }) {
     (task) => task.status === "in-progress"
   );
 
+  const onTestintTasks = kTasks.filter(
+    (task) => task.status === "on-testing"
+  );
+
+  const pendingTasks = kTasks.filter(
+    (task) => task.status === "pending"
+  );
+
+  const holdTasks = kTasks.filter(
+    (task) => task.status === "hold"
+  );
+
+console.log(pendingTasks, holdTasks, "kanban pending, hold")
+
   const completedTasks = kTasks.filter(
     (task) => task.status === "completed"
   );
@@ -53,7 +67,10 @@ function TFKanbanBoard({ tasks = [], reloadTasks }) {
 const statusLabels = {
   todo: "To Do",
   "in-progress": "In Progress",
-  completed: "Completed",
+  "on-testing": "On Testing",
+  pending: "Pending",
+  hold: "Hold",
+  completed: "Completed", 
 };
 
     setKTasks((currentTasks) =>
@@ -100,7 +117,7 @@ const statusLabels = {
 
   return (
     <DragDropProvider onDragEnd={handleDragEnd}>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-6">
         <TFKanbanColumn
           id="todo"
           title="To Do"
@@ -111,6 +128,24 @@ const statusLabels = {
           id="in-progress"
           title="In Progress"
           tasks={inProgressTasks}
+        />
+
+        <TFKanbanColumn
+          id="on-testing"
+          title="On Testing"
+          tasks={onTestintTasks}
+        />
+
+        <TFKanbanColumn
+          id="pending"
+          title="Pending"
+          tasks={pendingTasks}
+        />
+
+        <TFKanbanColumn
+          id="hold"
+          title="Hold"
+          tasks={holdTasks}
         />
 
         <TFKanbanColumn
