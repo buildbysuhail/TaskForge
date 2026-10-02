@@ -56,6 +56,9 @@ function TaskList({ tasks, visibleCoumns, reloadTasks, loading, setTasks }) {
                       ];
   const StatusOptions = [{ label: "To Do", value: "todo" },
                          { label: "In Progress", value: "in-progress" },
+                         { label: "On Testing", value: "on-testing" },
+                         { label: "Pending", value: "pending" },
+                         { label: "Hold", value: "hold" },
                          { label: "Completed", value: "completed" },
                       ];
 
