@@ -14,7 +14,8 @@ function CompletedTaskCard({ task }) {
         rounded-2xl
         border
         border-base-300
-        bg-base-100
+        bg-[#F2E7DF]/30
+        dark:bg-zinc-700/70
         p-5
         shadow-md
         transition-all
@@ -26,6 +27,7 @@ function CompletedTaskCard({ task }) {
         hover:scale-[1.02]
         hover:shadow-2xl
       "
+    //   style={}
     >
       {/* Completed indicator */}
       <div
@@ -51,8 +53,8 @@ function CompletedTaskCard({ task }) {
         className="
           pr-10
           text-lg
-          font-semibold
-          text-base-content
+          font-medium
+          text-stone-700
           transition-colors
           duration-300
           group-hover:text-success
@@ -66,27 +68,33 @@ function CompletedTaskCard({ task }) {
         className="
           mt-2
           line-clamp-3
-          min-h-[4.5rem]
+          min-h-[6.5rem]
           text-sm
-          text-base-content/60
+          text-stone-600
         "
       >
         {description || "No description provided."}
       </p>
 
       {/* Priority + Type */}
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-4 flex justify-between px-3 py-2 gap-5">
+        <div className="flex-flex-col">
+            <p className="font-light">Priority</p>
         {priority && (
           <span className="badge badge-outline">
             {priority}
           </span>
         )}
+        </div>
 
+        <div className="flex-flex-col">
+            <p className="font-light">Type</p>
         {type && (
           <span className="badge badge-outline">
             {type}
           </span>
         )}
+        </div>
       </div>
 
       {/* Subtle completed glow */}
