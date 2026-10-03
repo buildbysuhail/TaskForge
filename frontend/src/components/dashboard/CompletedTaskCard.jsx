@@ -1,3 +1,5 @@
+import useSoundEffects from "@/hooks/useSoundEffects";
+
 function CompletedTaskCard({ task }) {
   const {
     title,
@@ -6,8 +8,11 @@ function CompletedTaskCard({ task }) {
     type,
   } = task;
 
+  const { playHoverCompleted } = useSoundEffects();
+
   return (
     <div
+        onMouseEnter={playHoverCompleted}
       className="
         group
         relative
