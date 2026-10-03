@@ -103,7 +103,7 @@ function Dashboard() {
   const sortedTasks = [...tasks].reverse();
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen select-none">
       <h2 className="text-[20px] font-semibold text-start mb-4">Dashboard</h2>
 
       <Tabs

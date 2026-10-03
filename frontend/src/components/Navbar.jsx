@@ -50,7 +50,7 @@ const user = JSON.parse(localStorage.getItem("user"));
         {/* Task Forge */}
         <img src="/src/assets/images/TF.Logo.png" className="w-10" alt="Task Forge" />
         <span className="w-full items-center justify-center font-extrabold 
-          font-[Pacifico]">
+          font-[Pacifico] select-none">
         TaskForge
         </span>
         </button>
