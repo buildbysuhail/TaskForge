@@ -4,6 +4,7 @@ import { DragDropProvider } from "@dnd-kit/react";
 import TFKanbanColumn from "./TFKanbanColumn";
 import { updateTask } from "@/services/taskService";
 import { showToast } from "@/lib/utils/toast";
+import useSoundEffects from "@/hooks/useSoundEffects";
 
 function TFKanbanBoard({ tasks = [], reloadTasks }) {
   const [kTasks, setKTasks] = useState(tasks);
@@ -33,7 +34,9 @@ function TFKanbanBoard({ tasks = [], reloadTasks }) {
     (task) => task.status === "hold"
   );
 
-console.log(pendingTasks, holdTasks, "kanban pending, hold")
+  const { playKanbanDrop } = useSoundEffects();
+
+// console.log(pendingTasks, holdTasks, "kanban pending, hold")
 
   const completedTasks = kTasks.filter(
     (task) => task.status === "completed"
@@ -41,6 +44,7 @@ console.log(pendingTasks, holdTasks, "kanban pending, hold")
 
   const handleDragEnd = async (event) => {
     const { operation } = event;
+    // playKanbanDrop();
 
     if (!operation?.target) return;
 
@@ -58,6 +62,7 @@ console.log(pendingTasks, holdTasks, "kanban pending, hold")
     if (draggedTask.status === targetColumnId) {
       return;
     }
+    playKanbanDrop();
 
     // Save previous status in case API fails
     const previousStatus = draggedTask.status;

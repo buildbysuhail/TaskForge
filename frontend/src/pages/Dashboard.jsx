@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input.jsx";
 import TFInput from "@/components/common/TFInput.jsx";
 import TFKanbanBoard from "@/components/common/kanban/TFKanbanBoard.jsx";
 import useLocalStorage from "@/hooks/useLocalStorage.js";
+import useSoundEffects from "@/hooks/useSoundEffects.js";
 import { showToast } from "@/lib/utils/toast.js";
 import { TFDropdown } from "@/components/common/TFDropdown.jsx";
 import CompletedTasks from "@/components/dashboard/CompletedTasks.jsx";
@@ -56,6 +57,9 @@ function Dashboard() {
       type: false,
     }
   )
+
+  const { playTabClick } = useSoundEffects();
+
 // console.log(columnVisibility, "columnVisibilityyyyyy")
   const searchInputRef = useRef(null);
   // const navigate = useNavigate();
@@ -101,6 +105,11 @@ function Dashboard() {
   //   setTasks((prevTasks) => [...prevTasks, newTask]);
   // };
 
+  const handleTabChange = (value) => {
+  setActiveTab(value);
+  playTabClick();
+};
+
   const sortedTasks = [...tasks].reverse();
 
   return (
@@ -110,8 +119,9 @@ function Dashboard() {
       <Tabs
         // defaultValue="backlog" 
         value={activeTab}
-        onValueChange={setActiveTab}
+        onValueChange={handleTabChange}
         className="w-full mx-auto justify-center items-center flex flex-col gap-2 p-4 rounded-lg shadow-sm"
+        // onClick={playTabClick}
       >
 
 
@@ -135,7 +145,7 @@ function Dashboard() {
               <div className="border-r pe-[13px]">
                 <TFSelect
                   value={activeTab}
-                  onValueChange={setActiveTab}
+                  onValueChange={handleTabChange}
                   options={tabItems.map((t) => ({ value: t.value, label: t.label, icon: t.icon }))}
                   className="w-[180px]" // removed mx-auto
                   valueClassName="text-center w-full font-bold"

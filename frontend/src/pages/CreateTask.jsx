@@ -20,10 +20,11 @@ import {
   UserRound,
   Flag,
   Tag,
-  Loader2,
+  // Loader2,
   // ClipboardList,
 } from "lucide-react";
 import { showToast } from "@/lib/utils/toast";
+import useSoundEffects from "@/hooks/useSoundEffects";
 
 const STATUS_OPTIONS = [
   { value: "todo", label: "Todo" },
@@ -60,6 +61,8 @@ function CreateTask({
 
    const [errors, setErrors] = useState({})
 
+   const { playSubmitButton } = useSoundEffects();
+
   const validate = () => {
       const newErrors = {};
 
@@ -84,6 +87,8 @@ function CreateTask({
 
     try {
       setFormLoading(true);
+      //Submit button sound effect
+      playSubmitButton();
 
       // const newTask = 
       await createTask({
