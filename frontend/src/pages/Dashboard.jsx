@@ -23,6 +23,7 @@ import TFKanbanBoard from "@/components/common/kanban/TFKanbanBoard.jsx";
 import useLocalStorage from "@/hooks/useLocalStorage.js";
 import { showToast } from "@/lib/utils/toast.js";
 import { TFDropdown } from "@/components/common/TFDropdown.jsx";
+import CompletedTasks from "@/components/dashboard/CompletedTasks.jsx";
 
 function Dashboard() {
   const [tasks, setTasks] = useState([]);
@@ -309,7 +310,8 @@ function Dashboard() {
         {/* Completed Tasks tab */}
         <TabsContent value="completed-tasks" className="w-full">
           <div className="p-5">
-            <FeatureUnderDevelopment featureName={"Completed Tasks"} />
+            {/* <FeatureUnderDevelopment featureName={"Completed Tasks"} /> */}
+            <CompletedTasks tasks={tasks} />
           </div>
         </TabsContent>
         <TabsContent value="active-sprints" className="w-full">
