@@ -60,6 +60,7 @@ function CompletedTaskCard({ task }) {
           text-lg
           font-medium
           text-stone-700
+          dark:text-gray-100
           transition-colors
           duration-300
           group-hover:text-success
@@ -76,15 +77,20 @@ function CompletedTaskCard({ task }) {
           min-h-[6.5rem]
           text-sm
           text-stone-600
+          dark:text-gray-200
         "
       >
-        {description || "No description provided."}
+        {description || 
+        <span className="text-slate-400">
+        No description provided.
+        </span>
+        }
       </p>
 
       {/* Priority + Type */}
       <div className="mt-4 flex justify-between px-3 py-2 gap-5">
         <div className="flex-flex-col">
-            <p className="font-light">Priority</p>
+            <p className="font-light text-stone-600 dark:text-gray-300">Priority</p>
         {priority && (
           <span className="badge badge-outline">
             {priority}
@@ -93,7 +99,7 @@ function CompletedTaskCard({ task }) {
         </div>
 
         <div className="flex-flex-col">
-            <p className="font-light">Type</p>
+            <p className="font-light text-stone-600 dark:text-gray-300">Type</p>
         {type && (
           <span className="badge badge-outline">
             {type}
