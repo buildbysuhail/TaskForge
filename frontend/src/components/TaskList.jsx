@@ -358,7 +358,7 @@ console.error("Update Eror",err)
   return (
     <div className="space-y-4">
 
-      <h3 className="text-sm font-semibold">
+      <h3 className="text-lg font-semibold">
         Task List
       </h3>
 
