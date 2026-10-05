@@ -113,23 +113,23 @@ function Dashboard() {
   const sortedTasks = [...tasks].reverse();
 
   return (
-    <div className="min-h-screen select-none">
+    <div className="min-h-full select-none">
       <h2 className="text-[20px] font-semibold text-start mb-4">Dashboard</h2>
 
       <Tabs
         // defaultValue="backlog" 
         value={activeTab}
         onValueChange={handleTabChange}
-        className="w-full mx-auto justify-center items-center flex flex-col gap-2 p-4 rounded-lg shadow-sm"
+        className="w-full mx-auto justify-center items-center flex flex-col gap-2 p-1 sm:p-4 rounded-lg shadow-sm"
         // onClick={playTabClick}
       >
 
 
         {useSelectView &&
           <div className="w-full border-b-4 border-stone-400 dark:border-slate-800 flex justify-center">
-            <TabsList variant="line" className="w-[60%] mb-0 pb-[2px]">
+            <TabsList variant="line" className="w-full sm:w-[60%] mb-0 pb-[2px] overflow-x-auto">
               {tabItems.map((t) => (
-                <TabsTrigger key={t.value} value={t.value} className={"text-[18px] font-bold"}>
+                <TabsTrigger key={t.value} value={t.value} className={"text-sm sm:text-[18px] font-bold"}>
                   {t.label}
                 </TabsTrigger>
               ))}
@@ -137,8 +137,8 @@ function Dashboard() {
           </div>
         }
 
-        <div className="rounded-lg py-5 px-8 flex justify-between w-full items-center">
-          <div className="flex justify-content gap-3">
+        <div className="rounded-lg py-3 px-2 sm:py-5 sm:px-8 flex justify-between w-full items-start sm:items-center">
+          <div className="flex flex-wrap justify-content gap-2 sm:gap-3">
 
 
             {!useSelectView && // border-slate-400 removed for default theme
@@ -297,7 +297,7 @@ function Dashboard() {
         {/* All Tasks tab */}
         <TabsContent value="backlog" className="w-full flex flex-col gap-4">
 
-          <div className=" rounded-lg p-5">
+          <div className=" rounded-lg p-1 sm:p-5 overflow-x-auto">
             <TaskList
               tasks={sorted ? sortedTasks : tasks}
               visibleCoumns={columnVisibility}
@@ -311,7 +311,7 @@ function Dashboard() {
 
         {/* Kanban tab */}
         <TabsContent value="kanban" className="w-full">
-          <div className="p-5">
+          <div className="p-1 sm:p-5">
             {/* <FeatureUnderDevelopment featureName={"Kanban"} /> */}
             <TFKanbanBoard tasks={tasks} reloadTasks={loadTasks} />
           </div>
@@ -319,18 +319,18 @@ function Dashboard() {
 
         {/* Completed Tasks tab */}
         <TabsContent value="completed-tasks" className="w-full">
-          <div className="p-5">
+          <div className="p-1 sm:p-5">
             {/* <FeatureUnderDevelopment featureName={"Completed Tasks"} /> */}
             <CompletedTasks tasks={tasks} />
           </div>
         </TabsContent>
         <TabsContent value="active-sprints" className="w-full">
-          <div className="p-5">
+          <div className="p-1 sm:p-5">
             <FeatureUnderDevelopment featureName={"Active Sprints"} />
           </div>
         </TabsContent>
         <TabsContent value="report" className="w-full">
-          <div className="p-5">
+          <div className="p-1 sm:p-5">
             <FeatureUnderDevelopment featureName={"Report"} />
           </div>
         </TabsContent>
