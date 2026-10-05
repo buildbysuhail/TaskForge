@@ -10,12 +10,12 @@ function TFKanbanColumn({ id, title, tasks }) {
   return (
     <div 
         ref={ref}
-        className="bg-muted/100 rounded-xl p-3 flex flex-col">
+        className="bg-muted/100 rounded-xl p-3 flex flex-col min-w-0">
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
-        <h3 className="font-semibold text-sm">{title}</h3>
+        <h3 className="font-semibold text-sm truncate min-w-0">{title}</h3>
 
-        <span className="text-xs bg-slate-200 dark:bg-zinc-400 text-black font-semibold px-2 py-1 rounded-full cursor-pointer"
+        <span className="text-xs bg-slate-200 dark:bg-zinc-400 text-black font-semibold px-2 py-1 rounded-full cursor-pointer shrink-0"
           title={`${tasks.length} Tasks in "${title}"`}
         >
           {tasks.length}
@@ -23,7 +23,7 @@ function TFKanbanColumn({ id, title, tasks }) {
       </div>
 
       {/* Cards */}
-      <div className="space-y-3 min-h-[250px]">
+      <div className="space-y-3 min-h-[120px] sm:min-h-[250px]">
         {tasks.length === 0 ? (
           <div className="h-28 border-2 border-dashed rounded-lg flex items-center justify-center text-xs text-muted-foreground">
             No Tasks

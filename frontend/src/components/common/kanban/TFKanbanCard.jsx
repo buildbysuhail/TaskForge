@@ -29,19 +29,19 @@ console.log("Task priorityyyyy",task.priority)
       <CardContent className="p-3 space-y-3">
         {/* Title */}
         <div className="flex items-start justify-between gap-2">
-          <h4 className="font-bold text-sm leading-5">{task.title}</h4>
+          <h4 className="font-bold text-sm leading-5 min-w-0 break-words">{task.title}</h4>
 
           <GripVertical className="h-4 w-4 text-muted-foreground flex-shrink-0" />
         </div>
 
         {/* Description */}
-        <p className="text-xs  line-clamp-2 font-semibold">
+        <p className="ttext-xs  line-clamp-2 font-semibold break-words">
           {task.description || <span className="font-light">No description</span>}
           {/* {task.description && task.description} */}
         </p>
 
         {/* Footer */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <span title="Priority"
             className={`text-[10px] px-2 py-1 rounded-full font-medium capitalize ${
               priorityColor[task.priority] || priorityColor.low
@@ -51,7 +51,7 @@ console.log("Task priorityyyyy",task.priority)
           </span>
 
           {task.dueDate && (
-            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+            <div className="flex items-center gap-1 text-xs text-muted-foreground whitespace-nowrap">
               <CalendarDays className="h-3 w-3" />
               {new Date(task.dueDate).toLocaleDateString()}
             </div>

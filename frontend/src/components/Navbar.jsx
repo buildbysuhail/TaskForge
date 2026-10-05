@@ -42,21 +42,21 @@ const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <div className="top-0 left-0 w-full z-50 shrink-0">
-    <div className="bg-stone-400 dark:bg-zinc-950 dark:text-white py-1 px-4 flex items-center justify-between">
-      <button className="text-xl flex items-center hover:bg-muted/30 hover:dark:bg-slate-800
+    <div className="bg-stone-400 dark:bg-zinc-950 dark:text-white py-1 px-2 sm:px-4 flex items-center justify-between">
+        <button className="text-base sm:text-xl flex items-center hover:bg-muted/30 hover:dark:bg-slate-800
                       text-emerald-950 hover:text-emerald-700 dark:text-teal-600
-                        py-1 px-2 rounded-md cursor-pointer gap-2"
-        onClick={()=> navigate("/dashboard")}
-      >
-        {/* Task Forge */}
-        <img src={TFLogo} className="w-10" alt="Task Forge" />
-        <span className="w-full items-center justify-center font-extrabold 
-          font-[Pacifico] select-none">
-        TaskForge
-        </span>
+                        py-1 px-2 rounded-md cursor-pointer gap-1 sm:gap-2 min-w-0"
+          onClick={() => navigate("/dashboard")}
+        >
+          {/* Task Forge */}
+          <img src={TFLogo} className="w-8 sm:w-10 shrink-0" alt="Task Forge" />
+          <span className="w-full items-center justify-center font-extrabold 
+          font-[Pacifico] select-none truncate">
+            TaskForge
+          </span>
         </button>
 
-        <div className="flex justify-between gap-5">
+        <div className="flex justify-between gap-2 sm:gap-5 shrink-0">
 
           <button className="cursor-pointer  rounded-md hover:bg-stone-300 hover:dark:bg-gray-700 transition-colors"
             onClick={toggleTheme}
@@ -100,7 +100,7 @@ const user = JSON.parse(localStorage.getItem("user"));
                 size="lg"
               />
 
-              <p className="text-base font-medium dark:text-gray-100 flex justify-between w-[45%]">
+              <p className="text-base font-medium dark:text-gray-100 flex justify-between w-[70%] sm:w-[45%]">
                 <span className="font-bold">User:</span>
 
                 <span>
