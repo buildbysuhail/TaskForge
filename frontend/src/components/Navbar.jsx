@@ -7,6 +7,7 @@ import { showToast } from "@/lib/utils/toast";
 import { useNavigate } from "react-router-dom";
 // import { Button } from "./ui/button";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import TFLogo from "../assets/images/TF.Logo.png";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const user = JSON.parse(localStorage.getItem("user"));
         onClick={()=> navigate("/dashboard")}
       >
         {/* Task Forge */}
-        <img src="/src/assets/images/TF.Logo.png" className="w-10" alt="Task Forge" />
+        <img src={TFLogo} className="w-10" alt="Task Forge" />
         <span className="w-full items-center justify-center font-extrabold 
           font-[Pacifico] select-none">
         TaskForge

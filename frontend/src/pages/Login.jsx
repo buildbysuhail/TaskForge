@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
 import { showToast } from "@/lib/utils/toast";
+import taskForgeLogo from "../assets/images/TaskForge.png"
 
 function PasswordInput({ value, onChange }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -109,7 +110,7 @@ function Login() {
 
         <div className="w-full max-w-[35rem]">
         <h2 className="font-bold w-[100%] mr-8">
-          <img src="src/assets/images/TaskForge.png" className="" alt="TaskForge" />
+          <img src={taskForgeLogo} className="" alt="TaskForge" />
         </h2>
         </div>
       </div>
