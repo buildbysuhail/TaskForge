@@ -41,9 +41,9 @@ It allows users to securely register, log in, and manage tasks efficiently.
 - ✅ User Login
 - ✅ JWT Authentication
 - ✅ Protected Routes
-- ⏳ Task CRUD
-- ⏳ Drag & Drop Board
-- ⏳ User Profile
+- ✅ Task CRUD
+- ✅ Drag & Drop Board
+- ✅ User Profile
 - ⏳ Team Collaboration
 
 ## 📦 Third-Party Libraries
@@ -60,5 +60,6 @@ It allows users to securely register, log in, and manage tasks efficiently.
 | nodemon | Development server auto restart |
 | Shadcn | Reusable and customizable UI components |
 | lucide-react | icons |
+| dnd-kt | Drag and Drop for Kanban |
 
 ## 📂 Project Structure
