@@ -127,7 +127,7 @@ function Dashboard() {
 
         {useSelectView &&
           <div className="w-full border-b-4 border-stone-400 dark:border-slate-800 flex justify-center">
-            <TabsList variant="line" className="w-full sm:w-[60%] mb-0 pb-[2px] overflow-x-auto">
+            <TabsList variant="line" className="w-full sm:w-[60%] mb-0 pb-[2px] overflow-y-hidden">
               {tabItems.map((t) => (
                 <TabsTrigger key={t.value} value={t.value} className={"text-sm sm:text-[18px] font-bold"}>
                   {t.label}
