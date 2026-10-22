@@ -27,6 +27,7 @@
     "clsx": "^2.1.1",
     "cn": "^0.3.0",
     "lucide-react": "^0.577.0",
+    "radix-ui": "^1.6.7",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.0",

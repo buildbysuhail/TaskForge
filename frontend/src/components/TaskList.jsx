@@ -1,5 +1,6 @@
 import { deleteTask,
         //  updateTask,
+        createTask,
          updateTaskPartially } from "../services/taskService";
 import { useState } from "react";
 
@@ -21,10 +22,12 @@ import { DropdownMenu,
          DropdownMenuContent,
          DropdownMenuItem,
          DropdownMenuTrigger } from "./ui/dropdown-menu";
-import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { MoreHorizontal, Pencil, Plus, Trash2 } from "lucide-react";
 import TaskForm from "./TaskForm";
+import { TableCell, TableRow } from "./ui/table";
+import { Input } from "./ui/input";
 
-function TaskList({ tasks, reloadTasks, loading, setTasks }) {
+function TaskList({ tasks, visibleCoumns, reloadTasks, loading, setTasks }) {
 // console.log("tsks:",tasks);
 
   const [open, setOpen] = useState(false);
@@ -36,6 +39,9 @@ function TaskList({ tasks, reloadTasks, loading, setTasks }) {
   const [editingTask, setEditingTask] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
 
+  const [isAddingTask, setIsAddingTask] = useState(false);
+  const [quickTaskTitle, setQuickTaskTitle] = useState("");
+ 
 
   const TypeOptions = [{ label: "Feature", value: "Feature" },
                        { label: "Quality", value: "Quality" },
@@ -50,6 +56,9 @@ function TaskList({ tasks, reloadTasks, loading, setTasks }) {
                       ];
   const StatusOptions = [{ label: "To Do", value: "todo" },
                          { label: "In Progress", value: "in-progress" },
+                         { label: "On Testing", value: "on-testing" },
+                         { label: "Pending", value: "pending" },
+                         { label: "Hold", value: "hold" },
                          { label: "Completed", value: "completed" },
                       ];
 
@@ -91,33 +100,7 @@ console.error("Update Eror",err)
   // ----------------------------------
   // Update Task Status
   // ----------------------------------
-  // const handleStatusChange = (id, newStatus) => {
-  //   setUpdatingId(id);
 
-  //   const promise = updateTask(id, {
-  //     status: newStatus,
-  //   });
-
-  //   showToast.promise(promise, {
-  //     loading: "Updating task...",
-
-  //     success: () => {
-  //       reloadTasks();
-  //       setUpdatingId(null);
-
-  //       return "Task updated successfully";
-  //     },
-
-  //     error: (err) => {
-  //       setUpdatingId(null);
-
-  //       return (
-  //         err?.response?.data?.message ||
-  //         "Failed to update task"
-  //       );
-  //     },
-  //   });
-  // };
   const handleStatusChange = (id, newStatus) => {
   handleTaskFieldChange(id, "status", newStatus);
 };
@@ -127,58 +110,12 @@ console.error("Update Eror",err)
     setEditOpen(true);
   }
 
-  // const handleTypeChange = (id, newType) => {
-  //   setUpdatingId(id);
-
-  //   const promise = updateTask(id, {
-  //     type: newType,
-  //   });
-
-  //   showToast.promise(promise, {
-  //     loading: "Updating task...",
-
-  //     success: () => {
-  //       reloadTasks();
-  //       setUpdatingId(null);
-  //       return "Task updated successfully";
-  //     },
-  //     error: (err) => {
-  //       setUpdatingId(null);
-  //       return (
-  //         err?.response?.data?.message ||
-  //         "Failed to update task"
-  //       );
-  //     }
-  //   });
-  // };
+  
   const handleTypeChange = (id, newType) => {
   handleTaskFieldChange(id, "type", newType);
 };
 
-  // const handlePriorityChange = (id, newPriority) => {
-  //   setUpdatingId(id);
-
-  //   const promise = updateTask(id, {
-  //     priority : newPriority,
-  //   });
-
-  //   showToast.promise(promise, {
-  //     loading: "Updating task...",
-
-  //     success: () => {
-  //       reloadTasks();
-  //       setUpdatingId(null);
-  //       return "Task updated successfully";
-  //     },
-  //     error: (err) => {
-  //       setUpdatingId(null);
-  //       return (
-  //         err?.response?.data?.message ||
-  //         "Failed to update task"
-  //       );
-  //     }
-  //   });
-  // };
+  
 
   const handlePriorityChange = (id, newPriority) => {
   handleTaskFieldChange(id, "priority", newPriority);
@@ -235,6 +172,34 @@ console.error("Update Eror",err)
     setSelectedTaskId(null);
   };
 
+  const handleQuickAddTask=() => {
+    setIsAddingTask(true);
+  };
+
+  const handleQuickAddSubmit = async (e) => {
+    if (e.key !== "Enter") return;
+
+    const title = quickTaskTitle.trim();
+
+    if(!title) return;
+
+    try {
+      await createTask({ title }); // title: title
+
+      setQuickTaskTitle("");
+      setIsAddingTask(false);
+      
+
+      // refresh tasks here
+      reloadTasks();
+      showToast.success("New Task Added");
+    } catch (err) {
+      console.error("Failed to create task:", err);
+      showToast.error("Failed to create task");
+    }
+
+  }
+
   // ----------------------------------
   // Loading State
   // ----------------------------------
@@ -244,7 +209,7 @@ console.error("Update Eror",err)
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="p-4 bg-gray-200 animate-pulse rounded-md h-20"
+            className="p-4 bg-stone-200 dark:bg-zinc-400 animate-pulse rounded-md h-20"
           />
         ))}
       </div>
@@ -263,6 +228,7 @@ console.error("Update Eror",err)
     {
       key: "description",
       header: "Description",
+      hidden: visibleCoumns?.description,
     },
 
     {
@@ -280,6 +246,7 @@ console.error("Update Eror",err)
           options={TypeOptions}
         />
       ),
+      hidden: visibleCoumns?.type,
     },
 
     {
@@ -391,7 +358,7 @@ console.error("Update Eror",err)
   return (
     <div className="space-y-4">
 
-      <h3 className="text-sm font-semibold">
+      <h3 className="text-lg font-semibold">
         Task List
       </h3>
 
@@ -404,11 +371,68 @@ console.error("Update Eror",err)
           tableClassName="rounded-lg shadow-sm"
           // header:
             headerClassName="bg-stone-400 dark:bg-zinc-800"
-            headerRowClassName="hover:bg-stone-500 dark:hover:bg-zinc-900"
-            headerCellClassName="text-slate-200 hover:text-slate-50"
-          //
-          bodyClassName="dark:bg-zinc-600"
-          rowClassName="text-gray-800 dark:text-zinc-300"
+        headerRowClassName="hover:bg-stone-500 dark:hover:bg-zinc-900"
+        headerCellClassName="text-slate-200 hover:text-slate-50"
+        //
+        bodyClassName="dark:bg-zinc-600"
+        rowClassName="text-gray-800 dark:text-zinc-300"
+        renderAddRow={(visibleColumns) => (
+          <TableRow className="hover:bg-transparent">
+            <TableCell
+              colSpan={visibleColumns.length}
+              className="p-0 cursor-pointer"
+              onClick={handleQuickAddTask}
+            >
+              { !isAddingTask ? (
+              <div className="items-center gap-2 p-1">
+                <div
+                  className="
+                          flex items-center gap-3
+                          py-2 px-4
+                          border border-transparent
+                          rounded-md
+                          transition-colors
+                          hover:border-border dark:hover:border-zinc-300
+                        "
+                >
+                  <Plus className="h-4 w-4" />
+                    <span>Add task</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-7 mx-1 my-2">
+                  <Input
+                    autoFocus
+                    value={quickTaskTitle}
+                    onChange={(e) => setQuickTaskTitle(e.target.value)}
+                      onKeyDown={handleQuickAddSubmit}
+                      // onBlur={() => setIsAddingTask(false)}
+                      placeholder="Enter task title..."
+                      className="w-full bg-transparent outline-none
+                                border-none
+                              placeholder:text-slate-500
+                              dark:placeholder:text-zinc-300
+                                placeholder:font-medium
+                                col-span-2
+                                "
+                    /> 
+                   { 
+                    quickTaskTitle.length > 0 ?
+                   (<p className="col-span-5 p-2 text-orange-800 animate-pulse">
+                      Click <span className="text-orange-950 font-semibold">'Enter'</span> Key to add the Task
+                      <span className="text-red-600">*</span>
+                    </p>)
+                  : <></>
+                  }
+                  </div>
+              )
+              }
+            </TableCell>
+
+
+            {/* other cells */}
+          </TableRow>
+        )}
       />
 
       <TFConfirmModal

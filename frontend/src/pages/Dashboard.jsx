@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs.j
 // import { useNavigate } from "react-router-dom";
 import FeatureUnderDevelopment from "./FeatureUnderDev.jsx";
 import {
-  Activity, ArrowUpDown, ChevronDown, ChevronUp, ClipboardCheck, EyeOff, LayoutList,
+  Activity, ArrowDownUp, ArrowUpDown, ChevronDown, ChevronUp, ClipboardCheck, EyeOff, LayoutList,
   Proportions,
   Search, SearchIcon, SquareKanban,
 } from "lucide-react";
@@ -21,6 +21,10 @@ import { Input } from "@/components/ui/input.jsx";
 import TFInput from "@/components/common/TFInput.jsx";
 import TFKanbanBoard from "@/components/common/kanban/TFKanbanBoard.jsx";
 import useLocalStorage from "@/hooks/useLocalStorage.js";
+import useSoundEffects from "@/hooks/useSoundEffects.js";
+import { showToast } from "@/lib/utils/toast.js";
+import { TFDropdown } from "@/components/common/TFDropdown.jsx";
+import CompletedTasks from "@/components/dashboard/CompletedTasks.jsx";
 
 function Dashboard() {
   const [tasks, setTasks] = useState([]);
@@ -40,7 +44,23 @@ function Dashboard() {
     "TF-Select-view",
     false
   );
+  const [sorted, setSorted] = useLocalStorage(
+    "TF-sorted-tasks",
+    false
+  )
 
+  const [columnVisibility, setColumnVisibility] = useLocalStorage(
+    "TF-visible-columns",
+    {
+      title: true,
+      description: false,
+      type: false,
+    }
+  )
+
+  const { playTabClick } = useSoundEffects();
+
+// console.log(columnVisibility, "columnVisibilityyyyyy")
   const searchInputRef = useRef(null);
   // const navigate = useNavigate();
   // console.log(LayoutList, "layoutListttttt")
@@ -72,30 +92,44 @@ function Dashboard() {
 }, [showSearch]);
 
   useEffect(() => {
-    loadTasks();
+    // Debouncing
+    const timer =setTimeout(()=> {
+      loadTasks();
+    }, 600);
+
+    return ()=>clearTimeout(timer);
+
   }, [search]);
 
   //   const handleAddTask = (newTask) => {
   //   setTasks((prevTasks) => [...prevTasks, newTask]);
   // };
 
+  const handleTabChange = (value) => {
+  setActiveTab(value);
+  playTabClick();
+};
+
+  const sortedTasks = [...tasks].reverse();
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-full select-none">
       <h2 className="text-[20px] font-semibold text-start mb-4">Dashboard</h2>
 
       <Tabs
         // defaultValue="backlog" 
         value={activeTab}
-        onValueChange={setActiveTab}
-        className="w-full mx-auto justify-center items-center flex flex-col gap-2 p-4 rounded-lg shadow-sm"
+        onValueChange={handleTabChange}
+        className="w-full mx-auto justify-center items-center flex flex-col gap-2 p-1 sm:p-4 rounded-lg shadow-sm"
+        // onClick={playTabClick}
       >
 
 
         {useSelectView &&
           <div className="w-full border-b-4 border-stone-400 dark:border-slate-800 flex justify-center">
-            <TabsList variant="line" className="w-[60%] mb-0 pb-[2px]">
+            <TabsList variant="line" className="w-full sm:w-[60%] mb-0 pb-[2px] overflow-y-hidden">
               {tabItems.map((t) => (
-                <TabsTrigger key={t.value} value={t.value} className={"text-[18px] font-bold"}>
+                <TabsTrigger key={t.value} value={t.value} className={"text-sm sm:text-[18px] font-bold"}>
                   {t.label}
                 </TabsTrigger>
               ))}
@@ -103,15 +137,15 @@ function Dashboard() {
           </div>
         }
 
-        <div className="rounded-lg py-5 px-8 flex justify-between w-full items-center">
-          <div className="flex justify-content gap-3">
+        <div className="rounded-lg py-3 px-2 sm:py-5 sm:px-8 flex justify-between w-full items-start sm:items-center">
+          <div className="flex flex-wrap justify-content gap-2 sm:gap-3">
 
 
             {!useSelectView && // border-slate-400 removed for default theme
               <div className="border-r pe-[13px]">
                 <TFSelect
                   value={activeTab}
-                  onValueChange={setActiveTab}
+                  onValueChange={handleTabChange}
                   options={tabItems.map((t) => ({ value: t.value, label: t.label, icon: t.icon }))}
                   className="w-[180px]" // removed mx-auto
                   valueClassName="text-center w-full font-bold"
@@ -177,7 +211,7 @@ function Dashboard() {
               <Button
                 className={`bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9 transition-all duration-300 ease-in-out ${showSearch ? "opacity-0 w-0 px-0 overflow-hidden pointer-events-none" : "opacity-100"
                   }`}
-                title="under dev"
+                title="Search Tasks"
                 onClick={() => setShowSearch(true)}
               >
                 <Search />
@@ -204,24 +238,55 @@ function Dashboard() {
               </div>
             </div>
 
-            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9 cursor-not-allowed"
-              title="under dev"
+            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9"
+              title={sorted ? "Show oldest tasks first" : "Show newest tasks first"}
+                  onClick={()=>{
+                    setSorted((s) => !s)
+                    showToast.info("Tasks have Sorted")
+                  }}
             >
-              <ArrowUpDown />
+              { sorted ? <ArrowDownUp /> : <ArrowUpDown />}
               Sort
             </Button>
 
-            <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9 cursor-not-allowed"
-              title="under dev"
-            >
-              <EyeOff />
-              Hide
-            </Button>
+            <TFDropdown
+              trigger={
+                <Button className="bg-inherit text-black dark:text-white hover:text-white rounded-md w-23 h-9">
+                  <EyeOff />
+                  Hidden Columns
+                </Button>
+              }
+              label="Table Columns"
+              items={[
+                // { key: "title", label: "Title" },
+                { key: "description", label: "Description" },
+                { key: "type", label: "Type" },
+                // { key: "priority", label: "Priority" },
+                // { key: "status", label: "Status" },
+                // { key: "owner", label: "Owner" },
+                // { key: "actions", label: "Actions" },
+              ]}
+              values={columnVisibility}
+              
+              showApplyButton= {true}
+              applyButtonLabel="Apply"
+              onValueChange={(key, checked) =>
+                setColumnVisibility((prev) => ({
+                  ...prev,
+                  [key]: checked,
+                }))
+              }
+            />
           </div>
 
           <button
             title={useSelectView ? "Collapse" : "Expand"}
-            onClick={() => setUseSelectView((b) => !b)}
+            onClick={() =>{ 
+              setUseSelectView((b) => !b)
+              showToast.info(
+                useSelectView ? "View collapsed." : "View expanded."
+              )
+            }}
           >
             {useSelectView ?
               <ChevronUp /> : <ChevronDown />
@@ -232,9 +297,10 @@ function Dashboard() {
         {/* All Tasks tab */}
         <TabsContent value="backlog" className="w-full flex flex-col gap-4">
 
-          <div className=" rounded-lg p-5">
+          <div className=" rounded-lg p-1 sm:p-5 overflow-x-auto">
             <TaskList
-              tasks={tasks}
+              tasks={sorted ? sortedTasks : tasks}
+              visibleCoumns={columnVisibility}
               reloadTasks={loadTasks}
               loading={loading}
               setTasks={setTasks}
@@ -245,7 +311,7 @@ function Dashboard() {
 
         {/* Kanban tab */}
         <TabsContent value="kanban" className="w-full">
-          <div className="p-5">
+          <div className="p-1 sm:p-5">
             {/* <FeatureUnderDevelopment featureName={"Kanban"} /> */}
             <TFKanbanBoard tasks={tasks} reloadTasks={loadTasks} />
           </div>
@@ -253,17 +319,18 @@ function Dashboard() {
 
         {/* Completed Tasks tab */}
         <TabsContent value="completed-tasks" className="w-full">
-          <div className="p-5">
-            <FeatureUnderDevelopment featureName={"Completed Tasks"} />
+          <div className="p-1 sm:p-5">
+            {/* <FeatureUnderDevelopment featureName={"Completed Tasks"} /> */}
+            <CompletedTasks tasks={tasks} />
           </div>
         </TabsContent>
         <TabsContent value="active-sprints" className="w-full">
-          <div className="p-5">
+          <div className="p-1 sm:p-5">
             <FeatureUnderDevelopment featureName={"Active Sprints"} />
           </div>
         </TabsContent>
         <TabsContent value="report" className="w-full">
-          <div className="p-5">
+          <div className="p-1 sm:p-5">
             <FeatureUnderDevelopment featureName={"Report"} />
           </div>
         </TabsContent>

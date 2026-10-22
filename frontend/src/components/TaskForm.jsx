@@ -111,11 +111,14 @@ const priorityOptions = useMemo(() => [
   { label: "Critical", value: "critical" },
 ], []);
 
-const statusOptions = useMemo(() => [
-  { label: "To Do", value: "todo" },
-  { label: "In Progress", value: "in-progress" },
-  { label: "Completed", value: "completed" },
-], []);
+  const statusOptions = useMemo(() => [
+    { label: "To Do", value: "todo" },
+    { label: "In Progress", value: "in-progress" },
+    { label: "On Testing", value: "on-testing" },
+    { label: "Pending", value: "pending" },
+    { label: "Hold", value: "hold" },
+    { label: "Completed", value: "completed" },
+  ], []);
 // console.log("type, prio, status",formData)
   return (
     <form onSubmit={handleSubmit} className="space-y-5 px-1">

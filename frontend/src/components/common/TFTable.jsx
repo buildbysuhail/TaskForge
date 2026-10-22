@@ -20,7 +20,11 @@ export function TFTable({
   headerCellClassName = "",
   bodyClassName = "",
   rowClassName = "",
+  renderAddRow,
 }) {
+
+  const visibleColumns = columns.filter((c) => !c.hidden);
+// console.log("visible Columnsssssss",visibleColumns)
   return (
     <div className={`w-full overflow-x-auto rounded-md border ${tableClassName}`}>
       <Table>
@@ -28,7 +32,7 @@ export function TFTable({
         {/* Table Header */}
         <TableHeader className={headerClassName}>
           <TableRow className={headerRowClassName}>
-            {columns.map((column) => (
+            {visibleColumns.map((column) => ( // previously: columns.map
               <TableHead
                 key={column.key}
                 className={column.headerClassName || headerCellClassName}
@@ -51,7 +55,7 @@ export function TFTable({
                     : rowClassName
                 }
               >
-                {columns.map((column) => (
+                {visibleColumns.map((column) => ( // before: columns.map
                   <TableCell
                     key={column.key}
                     className={column.cellClassName || ""}
@@ -66,13 +70,16 @@ export function TFTable({
           ) : (
             <TableRow>
               <TableCell
-                colSpan={columns.length}
+                colSpan={visibleColumns.length} // columns.length
                 className="h-24 text-center"
               >
                 {emptyMessage}
               </TableCell>
             </TableRow>
           )}
+
+            {/* Optional Add Row */}
+            {renderAddRow && renderAddRow(visibleColumns)}
         </TableBody>
 
       </Table>

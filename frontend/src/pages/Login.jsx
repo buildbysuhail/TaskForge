@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
 import { showToast } from "@/lib/utils/toast";
+import taskForgeLogo from "../assets/images/TaskForge.png"
 
 function PasswordInput({ value, onChange }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -102,19 +103,19 @@ function Login() {
     //     <button type="submit">{loading ? "Logging in..." : "Login"}</button>
     //   </form>
     // </div>
-    <div className="flex flex-row items-center min-h-screen">
+    <div className="flex flex-col md:flex-row items-center min-h-dvh">
 
 
-      <div className="flex items-center justify-center w-1/2 min-h-screen bg-teal-50">
+      <div className="flex items-center justify-center w-full md:w-1/2 min-h-[30vh] md:min-h-dvh bg-teal-50/40 md:bg-teal-50 px-6 py-8 md:p-0">
 
-        <div className="w-full max-w-[35rem]">
-        <h2 className="font-bold w-[100%] mr-8">
-          <img src="src/assets/images/TaskForge.png" className="" alt="TaskForge" />
-        </h2>
+        <div className="w-full max-w-[14rem] sm:max-w-[20rem] md:max-w-[35rem]">
+          <h2 className="font-bold w-[100%] md:mr-8">
+            <img src={taskForgeLogo} className="max-w-full h-auto" alt="TaskForge" />
+          </h2>
         </div>
       </div>
 
-    <div className="flex items-center justify-center w-1/2 min-h-screenr">
+    <div className="flex items-center justify-center w-full md:w-1/2 flex-1 md:flex-none min-h-screenr px-4 py-6 md:p-0">
     <Card className="w-full max-w-sm">
       <CardHeader>
         <CardTitle>Login to your account</CardTitle>

@@ -4,6 +4,7 @@ import { DragDropProvider } from "@dnd-kit/react";
 import TFKanbanColumn from "./TFKanbanColumn";
 import { updateTask } from "@/services/taskService";
 import { showToast } from "@/lib/utils/toast";
+import useSoundEffects from "@/hooks/useSoundEffects";
 
 function TFKanbanBoard({ tasks = [], reloadTasks }) {
   const [kTasks, setKTasks] = useState(tasks);
@@ -21,12 +22,29 @@ function TFKanbanBoard({ tasks = [], reloadTasks }) {
     (task) => task.status === "in-progress"
   );
 
+  const onTestintTasks = kTasks.filter(
+    (task) => task.status === "on-testing"
+  );
+
+  const pendingTasks = kTasks.filter(
+    (task) => task.status === "pending"
+  );
+
+  const holdTasks = kTasks.filter(
+    (task) => task.status === "hold"
+  );
+
+  const { playKanbanDrop } = useSoundEffects();
+
+// console.log(pendingTasks, holdTasks, "kanban pending, hold")
+
   const completedTasks = kTasks.filter(
     (task) => task.status === "completed"
   );
 
   const handleDragEnd = async (event) => {
     const { operation } = event;
+    // playKanbanDrop();
 
     if (!operation?.target) return;
 
@@ -44,6 +62,7 @@ function TFKanbanBoard({ tasks = [], reloadTasks }) {
     if (draggedTask.status === targetColumnId) {
       return;
     }
+    playKanbanDrop();
 
     // Save previous status in case API fails
     const previousStatus = draggedTask.status;
@@ -53,7 +72,10 @@ function TFKanbanBoard({ tasks = [], reloadTasks }) {
 const statusLabels = {
   todo: "To Do",
   "in-progress": "In Progress",
-  completed: "Completed",
+  "on-testing": "On Testing",
+  pending: "Pending",
+  hold: "Hold",
+  completed: "Completed", 
 };
 
     setKTasks((currentTasks) =>
@@ -100,7 +122,7 @@ const statusLabels = {
 
   return (
     <DragDropProvider onDragEnd={handleDragEnd}>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
         <TFKanbanColumn
           id="todo"
           title="To Do"
@@ -111,6 +133,24 @@ const statusLabels = {
           id="in-progress"
           title="In Progress"
           tasks={inProgressTasks}
+        />
+
+        <TFKanbanColumn
+          id="on-testing"
+          title="On Testing"
+          tasks={onTestintTasks}
+        />
+
+        <TFKanbanColumn
+          id="pending"
+          title="Pending"
+          tasks={pendingTasks}
+        />
+
+        <TFKanbanColumn
+          id="hold"
+          title="Hold"
+          tasks={holdTasks}
         />
 
         <TFKanbanColumn

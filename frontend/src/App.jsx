@@ -10,6 +10,7 @@ import { Toaster } from "sonner";
 import CreateTask from "./pages/CreateTask";
 // Feature check component:
 import FeatureCheck from "./components/FeatureCheck";
+import NotFound from "./pages/NoFound";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -29,6 +30,7 @@ function App() {
 
             {/* Feature check route */}
             <Route path="/feature-check" element={<FeatureCheck />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Route>
       </Routes>

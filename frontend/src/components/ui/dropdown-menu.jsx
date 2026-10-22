@@ -72,6 +72,7 @@ function DropdownMenuCheckboxItem({
   children,
   checked,
   inset,
+  showCheckbox= false,
   ...props
 }) {
   return (
@@ -91,6 +92,28 @@ function DropdownMenuCheckboxItem({
           <CheckIcon />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
+      {showCheckbox ? (
+        // Real checkbox style
+        <span
+          className={cn(
+            "pointer-events-none absolute right-2 flex h-4 w-4 items-center justify-center rounded-sm border",
+            checked && "bg-primary text-primary-foreground"
+          )}
+        >
+          {checked && <CheckIcon className="h-3 w-3" />}
+        </span>
+      ) : (
+        // Existing tick style
+        <span
+          className="pointer-events-none absolute right-2 flex items-center justify-center"
+          data-slot="dropdown-menu-checkbox-item-indicator"
+        >
+          <DropdownMenuPrimitive.ItemIndicator>
+            <CheckIcon />
+          </DropdownMenuPrimitive.ItemIndicator>
+        </span>
+      )}
+
       {children}
     </DropdownMenuPrimitive.CheckboxItem>
   );

@@ -51,7 +51,7 @@ function Register() {
 
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden bg-gradient-to-br from-teal-100 to-background">
+    <div className="relative flex flex-col items-center justify-center min-h-dvh overflow-hidden bg-gradient-to-br from-teal-100 to-background">
       {/* Blurred glow shapes behind the glass */}
       <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-accent/40 blur-3xl" />
