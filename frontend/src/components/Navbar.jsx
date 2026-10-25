@@ -106,8 +106,14 @@ const user = JSON.parse(localStorage.getItem("user"));
                 <span>
                   {user.name}
                 </span>
+
+              
                 
               </p>
+
+                <button className="cursor-not-allowed p-3 border border-gray-200 rounded-md">
+                  Add New User
+                </button>
             </div>
           </TFCommonDialog>
         </div>
