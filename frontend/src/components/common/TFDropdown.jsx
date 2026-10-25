@@ -122,6 +122,7 @@ export function TFDropdown({
             <div className="flex justify-end px-1 pt-1">
               <Button
                 size="sm"
+                className={"rounded-md w-full"}
                 onClick={handleApply}
               >
                 {applyButtonLabel}

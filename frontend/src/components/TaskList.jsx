@@ -27,7 +27,14 @@ import TaskForm from "./TaskForm";
 import { TableCell, TableRow } from "./ui/table";
 import { Input } from "./ui/input";
 
-function TaskList({ tasks, visibleCoumns, reloadTasks, loading, setTasks }) {
+function TaskList({ 
+  tasks,
+  visibleCoumns,
+  reloadTasks,
+  loading,
+  setTasks,
+  searchEmpty
+}) {
 // console.log("tsks:",tasks);
 
   const [open, setOpen] = useState(false);
@@ -366,7 +373,7 @@ console.error("Update Eror",err)
         columns={columns}
         data={tasks}
         getRowKey={(task) => task._id}
-        emptyMessage="No tasks yet. Create one 🚀"
+        emptyMessage={searchEmpty ? "There is no such task 👻" : "No tasks yet. Create one 🚀"}
       // customizing stlyes :
           tableClassName="rounded-lg shadow-sm"
           // header:

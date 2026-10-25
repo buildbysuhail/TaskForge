@@ -304,6 +304,7 @@ function Dashboard() {
               reloadTasks={loadTasks}
               loading={loading}
               setTasks={setTasks}
+              searchEmpty={!!search.length}
             />
           </div>
 
