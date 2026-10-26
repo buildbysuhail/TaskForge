@@ -11,6 +11,8 @@ import CreateTask from "./pages/CreateTask";
 // Feature check component:
 import FeatureCheck from "./components/FeatureCheck";
 import NotFound from "./pages/NoFound";
+import EmailVerification from "./pages/EmailVerification";
+import VerifyEmail from "./pages/VerifyEmail";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -21,6 +23,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/check-email" element={<EmailVerification />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
 
         {/* Routes with Navbar */}
         <Route element= {<ProtectedRoute />}>

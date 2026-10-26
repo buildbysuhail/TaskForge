@@ -19,12 +19,27 @@ const userSchema = new mongoose.Schema(
                 "Please enter a valid email"
             ]
         },
+         isEmailVerified: {
+            type: Boolean,
+            default: false
+        },
+        emailVerificationToken: {
+            type: String,
+            default: undefined,
+            select: false
+        },
+
+        emailVerificationTokenExpires: {
+            type: Date,
+            default: undefined,
+            select: false
+        },
         password: {
             type: String,
             required: [true, "Password is important"],
             minlength: [6, "Password must be at least 6 characters"],
             select: false 
-        }
+        },   
     },
     {
         timestamps: true
