@@ -393,6 +393,7 @@ console.error("Update Eror",err)
               { !isAddingTask ? (
               <div className="items-center gap-2 p-1">
                 <div
+                title="Instant task creation"
                   className="
                           flex items-center gap-3
                           py-2 px-4
@@ -425,8 +426,8 @@ console.error("Update Eror",err)
                     /> 
                    { 
                     quickTaskTitle.length > 0 ?
-                   (<p className="col-span-5 p-2 text-orange-800 animate-pulse">
-                      Click <span className="text-orange-950 font-semibold">'Enter'</span> Key to add the Task
+                   (<p className="col-span-5 p-2 text-orange-800 dark:text-orange-300 animate-pulse">
+                      Click <span className="text-orange-950 dark:text-orange-500 font-semibold">'Enter'</span> Key to add the Task
                       <span className="text-red-600">*</span>
                     </p>)
                   : <></>
