@@ -33,8 +33,15 @@ function Register() {
     //  return
       try {
         const res = await API.post("/auth/register", form);
-        showToast.success("Registered successfully");
-        navigate("/");
+
+        showToast.success(
+          res.data.message ||
+          "Registration successful. Please check your email."
+        );
+
+        navigate("/check-email", {
+          state: { email: form.email.trim() },
+        });
         console.log(res, "response");
       } catch (err) {
         console.error("Something Wrong: ", err);
