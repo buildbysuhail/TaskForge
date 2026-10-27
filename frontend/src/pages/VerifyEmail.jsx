@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { CheckCircle2, XCircle, LoaderCircle } from "lucide-react";
 import API from "../services/api";
@@ -13,6 +13,9 @@ import {
 
 function VerifyEmail() {
   const [searchParams] = useSearchParams();
+
+  const requestedToken = useRef(null);
+
   // taking token from the Url
   const token = searchParams.get("token");
 
@@ -20,42 +23,42 @@ function VerifyEmail() {
   const [message, setMessage] = useState("Verifying your email address...");
 
   useEffect(() => {
-    let cancelled = false;
+    // let cancelled = false;
 
-    const verifyEmail = async () => {
-      if (!token) {
-        setStatus("error");
-        setMessage("The verification link is missing its token.");
-        return;
+      const verifyEmail = async () => {
+          // Skip the duplicate run caused by React Strict Mode
+          if (requestedToken.current === token) return;
+          requestedToken.current = token;
+
+          if (!token) {
+              setStatus("error");
+              setMessage("The verification link is missing its token.");
+              return;
       }
 
-      try {
+            try {
         const res = await API.get("/auth/verify-email", {
           params: { token },
         });
 
-        if (!cancelled) {
-          setStatus("success");
-          setMessage(
-            res.data.message || "Your email has been verified successfully."
-          );
-        }
+        setStatus("success");
+        setMessage(
+          res.data.message || "Your email has been verified successfully."
+        );
       } catch (err) {
-        if (!cancelled) {
-          setStatus("error");
-          setMessage(
-            err.response?.data?.message ||
-              "We couldn't verify your email. The link may be invalid or expired."
-          );
-        }
+        setStatus("error");
+        setMessage(
+          err.response?.data?.message ||
+            "We couldn't verify your email. The link may be invalid or expired."
+        );
       }
     };
 
     verifyEmail();
 
-    return () => {
-      cancelled = true;
-    };
+    // return () => {
+    //   cancelled = true;
+    // };
   }, [token]);
 
   return (
