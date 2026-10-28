@@ -363,9 +363,9 @@ console.error("Update Eror",err)
   // Render
   // ----------------------------------
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 w-0 min-w-full">
 
-      <h3 className="text-lg font-semibold">
+      <h3 className="text-base sm:text-lg font-semibold">
         Task List
       </h3>
 
@@ -375,7 +375,7 @@ console.error("Update Eror",err)
         getRowKey={(task) => task._id}
         emptyMessage={searchEmpty ? "There is no such task 👻" : "No tasks yet. Create one 🚀"}
       // customizing stlyes :
-          tableClassName="rounded-lg shadow-sm"
+          tableClassName="rounded-lg shadow-sm min-w-[720px] sm:min-w-0"
           // header:
             headerClassName="bg-stone-400 dark:bg-zinc-800"
         headerRowClassName="hover:bg-stone-500 dark:hover:bg-zinc-900"
@@ -408,7 +408,7 @@ console.error("Update Eror",err)
                   </div>
                 </div>
               ) : (
-                <div className="grid grid-cols-7 mx-1 my-2">
+                <div className="grid grid-cols-1 sm:grid-cols-7 mx-1 my-2">
                   <Input
                     autoFocus
                     value={quickTaskTitle}
@@ -421,12 +421,13 @@ console.error("Update Eror",err)
                               placeholder:text-slate-500
                               dark:placeholder:text-zinc-300
                                 placeholder:font-medium
-                                col-span-2
+                                col-span-1
+                                sm:col-span-2
                                 "
                     /> 
                    { 
                     quickTaskTitle.length > 0 ?
-                   (<p className="col-span-5 p-2 text-orange-800 dark:text-orange-300 animate-pulse">
+                   (<p className="sm:col-span-5 p-2 text-orange-800 dark:text-orange-300 animate-pulse">
                       Click <span className="text-orange-950 dark:text-orange-500 font-semibold">'Enter'</span> Key to add the Task
                       <span className="text-red-600">*</span>
                     </p>)

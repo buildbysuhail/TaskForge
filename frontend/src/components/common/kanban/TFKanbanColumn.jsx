@@ -10,7 +10,7 @@ function TFKanbanColumn({ id, title, tasks }) {
   return (
     <div 
         ref={ref}
-        className="bg-muted/100 rounded-xl p-3 flex flex-col min-w-0">
+        className="bg-muted/100 rounded-xl p-3 flex flex-col min-w-0 w-[90vw] max-w-[420px] shrink-0 snap-start md:w-auto md:max-w-none md:shrink">
       {/* Header */}
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold text-sm truncate min-w-0">{title}</h3>
