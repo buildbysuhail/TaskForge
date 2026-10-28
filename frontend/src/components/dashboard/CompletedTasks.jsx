@@ -6,10 +6,10 @@ function CompletedTasks({ tasks = [] }) {
   );
 
   return (
-    <section className="w-full">
+    <section className="w-0 min-w-full">
       {/* Section heading */}
-      <div className="mb-5">
-        <h2 className="text-xl font-semibold text-base-content">
+      <div className="mb-4 sm:mb-5">
+        <h2 className="text-lg sm:text-xl font-semibold text-base-content">
           Completed Tasks
         </h2>
 
@@ -31,7 +31,8 @@ function CompletedTasks({ tasks = [] }) {
             border-dashed
             border-base-300
             bg-base-200/30
-            px-6
+            px-4
+            sm:px-6
             text-center
           "
         >
@@ -48,18 +49,22 @@ function CompletedTasks({ tasks = [] }) {
           </div>
         </div>
       ) : (
-        <div
-          className="
-            grid
-            grid-cols-1
-            gap-5
-            sm:grid-cols-2
-            lg:grid-cols-3
-            xl:grid-cols-4
-          "
-        >
-          {completedTasks.map((task) => (
-            <CompletedTaskCard
+          <div
+              className="
+                grid
+                grid-cols-1
+                gap-1
+                sm:grid-cols-2
+                sm:gap-4
+                md:grid-cols-3
+                lg:gap-5
+                xl:grid-cols-4
+                items-start
+                [&>*]:min-w-0
+              "
+          >
+            {completedTasks.map((task) => (
+              <CompletedTaskCard
               key={task._id}
               task={task}
             />

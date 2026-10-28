@@ -35,7 +35,7 @@ console.log("Task priorityyyyy",task.priority)
         </div>
 
         {/* Description */}
-        <p className="ttext-xs  line-clamp-2 font-semibold break-words">
+        <p className="text-xs  line-clamp-2 font-semibold break-words">
           {task.description || <span className="font-light">No description</span>}
           {/* {task.description && task.description} */}
         </p>

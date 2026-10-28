@@ -127,9 +127,9 @@ function Dashboard() {
 
         {useSelectView &&
           <div className="w-full border-b-4 border-stone-400 dark:border-slate-800 flex justify-center">
-            <TabsList variant="line" className="w-full sm:w-[60%] mb-0 pb-[2px] overflow-y-hidden">
+            <TabsList variant="line" className="w-full sm:w-[60%] mb-0 pb-[2px] overflow-y-hidden overflow-x-auto justify-start sm:justify-center">
               {tabItems.map((t) => (
-                <TabsTrigger key={t.value} value={t.value} className={"text-sm sm:text-[18px] font-bold"}>
+                <TabsTrigger key={t.value} value={t.value} className={"text-sm sm:text-[18px] font-bold shrink-0 whitespace-nowrap"}>
                   {t.label}
                 </TabsTrigger>
               ))}
@@ -137,19 +137,19 @@ function Dashboard() {
           </div>
         }
 
-        <div className="rounded-lg py-3 px-2 sm:py-5 sm:px-8 flex justify-between w-full items-start sm:items-center">
-          <div className="flex flex-wrap justify-content gap-2 sm:gap-3">
+        <div className="rounded-lg py-3 px-2 sm:py-5 sm:px-8 flex justify-between gap-2 w-full items-start sm:items-center">
+          <div className="flex flex-wrap items-center min-w-0 flex-1 gap-2 sm:gap-3">
 
 
             {!useSelectView && // border-slate-400 removed for default theme
-              <div className="border-r pe-[13px]">
+              <div className="w-full sm:w-auto sm:border-r sm:pe-[13px]">
                 <TFSelect
                   value={activeTab}
                   onValueChange={handleTabChange}
                   options={tabItems.map((t) => ({ value: t.value, label: t.label, icon: t.icon }))}
-                  className="w-[180px]" // removed mx-auto
+                  className="w-full sm:w-[180px]" // removed mx-auto
                   valueClassName="text-center w-full font-bold"
-                  contentClassName="font-medium w-[180px] bg-stone-200 dark:bg-zinc-700"
+                  contentClassName="font-medium w-full sm:w-[180px] bg-stone-200 dark:bg-zinc-700"
                   triggerClassName="h-9 py-[17px]"
                   align="start"
                   sideOffset={4}
@@ -167,7 +167,7 @@ function Dashboard() {
             <TFCommonDrawer
               open={showTaskFrm}
               onOpenChange={setShowTaskFrm}
-              trigger={<Button className="bg-blue-800 hover:bg-blue-900 text-white rounded-md w-14 h-9">
+              trigger={<Button className="bg-green-800 sm:bg-blue-800 hover:bg-blue-900 text-white rounded-md w-14 h-9">
                 New
               </Button>}
               title={"New Task"}
@@ -219,7 +219,7 @@ function Dashboard() {
               </Button>
 
               <div
-                className={`transition-all duration-300 ease-in-out overflow-hidden ${showSearch ? "opacity-100 w-[200px] ml-2" : "opacity-0 w-0 ml-0 pointer-events-none"
+                className={`transition-all duration-300 ease-in-out overflow-hidden ${showSearch ? "opacity-100 w-[160px] sm:w-[200px] ml-2" : "opacity-0 w-0 ml-0 pointer-events-none"
                   }`}
               >
                 <TFInput
@@ -280,6 +280,7 @@ function Dashboard() {
           </div>
 
           <button
+            className="shrink-0 h-9 w-9 flex items-center justify-center"
             title={useSelectView ? "Collapse" : "Expand"}
             onClick={() =>{ 
               setUseSelectView((b) => !b)
@@ -312,7 +313,7 @@ function Dashboard() {
 
         {/* Kanban tab */}
         <TabsContent value="kanban" className="w-full">
-          <div className="p-1 sm:p-5">
+          <div className="p-1 sm:p-5 overflow-x-auto">
             {/* <FeatureUnderDevelopment featureName={"Kanban"} /> */}
             <TFKanbanBoard tasks={tasks} reloadTasks={loadTasks} />
           </div>
@@ -320,18 +321,18 @@ function Dashboard() {
 
         {/* Completed Tasks tab */}
         <TabsContent value="completed-tasks" className="w-full">
-          <div className="p-1 sm:p-5">
+          <div className="p-1 sm:p-5 overflow-x-auto">
             {/* <FeatureUnderDevelopment featureName={"Completed Tasks"} /> */}
             <CompletedTasks tasks={tasks} />
           </div>
         </TabsContent>
         <TabsContent value="active-sprints" className="w-full">
-          <div className="p-1 sm:p-5">
+          <div className="p-1 sm:p-5 overflow-x-auto">
             <FeatureUnderDevelopment featureName={"Active Sprints"} />
           </div>
         </TabsContent>
         <TabsContent value="report" className="w-full">
-          <div className="p-1 sm:p-5">
+          <div className="p-1 sm:p-5 overflow-x-auto">
             <FeatureUnderDevelopment featureName={"Report"} />
           </div>
         </TabsContent>
