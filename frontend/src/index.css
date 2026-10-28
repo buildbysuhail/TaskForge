@@ -96,3 +96,9 @@
   top: 50% !important;
   transform: translateY(-50%) !important;
 }
+
+@media (max-width: 639px) {
+  .tf-condensed {
+    font-family: "Roboto Condensed", sans-serif;
+  }
+}
