@@ -16,12 +16,13 @@ function CompletedTaskCard({ task }) {
       className="
         group
         relative
-        rounded-2xl
+        rounded-xl
         border
         border-base-300
         bg-[#F2E7DF]/30
         dark:bg-zinc-700/70
-        p-5
+        p-3
+        sm:p-5
         shadow-md
         transition-all
         duration-300
@@ -37,17 +38,22 @@ function CompletedTaskCard({ task }) {
       {/* Completed indicator */}
       <div
         className="
-          absolute
-          right-4
-          top-4
+          right-2
+          top-2
           flex
-          h-8
-          w-8
+          h-6
+          w-6
+          sm:right-4
+          sm:top-4
+          sm:h-8
+          sm:w-8
           items-center
           justify-center
           rounded-full
           bg-success/15
           text-success
+          text-xs
+          sm:text-base
         "
       >
         ✓
@@ -56,14 +62,11 @@ function CompletedTaskCard({ task }) {
       {/* Task title */}
       <h3
         className="
-          pr-10
-          text-lg
-          font-medium
-          text-stone-700
-          dark:text-gray-100
-          transition-colors
-          duration-300
-          group-hover:text-success
+          pr-8
+          sm:pr-10
+          text-sm
+          sm:text-lg
+          break-words
         "
       >
         {title}
@@ -74,10 +77,11 @@ function CompletedTaskCard({ task }) {
         className="
           mt-2
           line-clamp-3
-          min-h-[6.5rem]
-          text-sm
-          text-stone-600
-          dark:text-gray-200
+          min-h-[3rem]
+          sm:min-h-[6.5rem]
+          break-words
+          text-xs
+          sm:text-sm
         "
       >
         {description || 
@@ -88,9 +92,9 @@ function CompletedTaskCard({ task }) {
       </p>
 
       {/* Priority + Type */}
-      <div className="mt-4 flex justify-between px-3 py-2 gap-5">
-        <div className="flex-flex-col">
-            <p className="font-light text-stone-600 dark:text-gray-300">Priority</p>
+      <div className="mt-2 sm:mt-4 flex justify-between px-0 sm:px-3 py-1 sm:py-2 gap-2 sm:gap-5">
+        <div className="flex flex-col items-start min-w-0">
+            <p className="font-light text-xs sm:text-base text-stone-600 dark:text-gray-300">Priority</p>
         {priority && (
           <span className="badge badge-outline">
             {priority}
