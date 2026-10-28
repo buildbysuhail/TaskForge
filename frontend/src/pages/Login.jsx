@@ -160,7 +160,7 @@ function Login() {
         </CardContent>
         <CardFooter className="flex-col gap-2 cursor-not-allowed border-none" title="Under Dev">
           <Button type="submit" className="w-full">
-            Login
+                          { loading ? <span className="bg-inherit animate-ping [animation-duration:1.3s] bg-gray-50 w-[49%] rounded-full h-3"/>:"Login"}
           </Button>
           <Button disabled={true} variant="outline" className="w-full cursor-not-allowed" title="Under development">
             Login with Google
