@@ -1,3 +1,5 @@
+import "@fontsource/roboto-condensed/500.css";
+import "@fontsource/roboto-condensed/700.css";
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'

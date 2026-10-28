@@ -129,7 +129,7 @@ function Dashboard() {
           <div className="w-full border-b-4 border-stone-400 dark:border-slate-800 flex justify-center">
             <TabsList variant="line" className="w-full sm:w-[60%] mb-0 pb-[2px] overflow-y-hidden overflow-x-auto justify-start sm:justify-center">
               {tabItems.map((t) => (
-                <TabsTrigger key={t.value} value={t.value} className={"text-sm sm:text-[18px] font-bold shrink-0 whitespace-nowrap"}>
+                <TabsTrigger key={t.value} value={t.value} className={"tf-condensed text-xs sm:text-[18px] font-bold shrink-0 whitespace-nowrap"}>
                   {t.label}
                 </TabsTrigger>
               ))}
@@ -167,7 +167,7 @@ function Dashboard() {
             <TFCommonDrawer
               open={showTaskFrm}
               onOpenChange={setShowTaskFrm}
-              trigger={<Button className="bg-green-800 sm:bg-blue-800 hover:bg-blue-900 text-white rounded-md w-14 h-9">
+              trigger={<Button className="bg-green-800 hover:bg-green-900 sm:bg-blue-800 sm:hover:bg-blue-900 text-white rounded-md w-14 h-9">
                 New
               </Button>}
               title={"New Task"}

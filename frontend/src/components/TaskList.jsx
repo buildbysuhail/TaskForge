@@ -26,6 +26,7 @@ import { MoreHorizontal, Pencil, Plus, Trash2 } from "lucide-react";
 import TaskForm from "./TaskForm";
 import { TableCell, TableRow } from "./ui/table";
 import { Input } from "./ui/input";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 function TaskList({ 
   tasks,
@@ -49,6 +50,7 @@ function TaskList({
   const [isAddingTask, setIsAddingTask] = useState(false);
   const [quickTaskTitle, setQuickTaskTitle] = useState("");
  
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const TypeOptions = [{ label: "Feature", value: "Feature" },
                        { label: "Quality", value: "Quality" },
@@ -414,6 +416,7 @@ console.error("Update Eror",err)
                     value={quickTaskTitle}
                     onChange={(e) => setQuickTaskTitle(e.target.value)}
                       onKeyDown={handleQuickAddSubmit}
+                      enterKeyHint="done"
                       // onBlur={() => setIsAddingTask(false)}
                       placeholder="Enter task title..."
                       className="w-full bg-transparent outline-none
@@ -428,7 +431,7 @@ console.error("Update Eror",err)
                    { 
                     quickTaskTitle.length > 0 ?
                    (<p className="sm:col-span-5 p-2 text-orange-800 dark:text-orange-300 animate-pulse">
-                      Click <span className="text-orange-950 dark:text-orange-500 font-semibold">'Enter'</span> Key to add the Task
+                      {isDesktop ? "Click" : "Press"} <span className="text-orange-950 dark:text-orange-500 font-semibold">'{isDesktop ? "Enter Key" : "Done"}'</span>  to add the Task
                       <span className="text-red-600">*</span>
                     </p>)
                   : <></>
