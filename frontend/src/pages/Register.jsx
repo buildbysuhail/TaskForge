@@ -14,14 +14,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { showToast } from "@/lib/utils/toast";
+import { Link } from "react-router-dom";
 
 function Register() {
     const [form, setForm] = useState({
         name: "",
         email: "",
         password: ""
-    })
+    });
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
     const handleChange = (e) => {
@@ -32,6 +34,7 @@ function Register() {
       e.preventDefault();
     //  return
       try {
+        setLoading(true);
         const res = await API.post("/auth/register", form);
 
         showToast.success(
@@ -53,12 +56,22 @@ function Register() {
         } else {
           setError("Server not reachable");
         }
+      } finally {
+        setLoading(false);
       }
     }
 
 
   return (
     <div className="relative flex flex-col items-center justify-center min-h-dvh overflow-hidden bg-gradient-to-br from-teal-100 to-background">
+
+      <div className="absolute top-3 right-3 text-xs sm:text-sm bg-inherit">
+        Already have an account? 
+        <Link to={"/"} className="hover:underline underline-offset-4 px-1 text-green-800 hover:text-green-600 font-semibold">
+          Login
+        </Link>
+      </div>
+
       {/* Blurred glow shapes behind the glass */}
       <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-accent/40 blur-3xl" />
@@ -115,7 +128,7 @@ function Register() {
               className="w-full text-white p-2 rounded"
               variant="default"
             >
-              Register
+              { loading ? <span className="bg-inherit animate-ping [animation-duration:1.3s] bg-gray-50 w-[49%] rounded-full h-3"/>:"Register"}
             </Button>
           </form>
         </CardContent>
