@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { showToast } from "@/lib/utils/toast";
 import { Link } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 
 function Register() {
     const [form, setForm] = useState({
@@ -24,6 +25,7 @@ function Register() {
     });
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate();
     const handleChange = (e) => {
@@ -63,11 +65,11 @@ function Register() {
 
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-dvh overflow-hidden bg-gradient-to-br from-teal-100 to-background">
+    <div className="relative flex flex-col items-center justify-center min-h-dvh overflow-hidden bg-gradient-to-br from-teal-100 to-background select-none">
 
-      <div className="absolute top-3 right-3 text-xs sm:text-sm bg-inherit">
+      <div className="absolute bottom-3 right-3 text-xs sm:text-sm bg-inherit font-semibold">
         Already have an account? 
-        <Link to={"/"} className="hover:underline underline-offset-4 px-1 text-green-800 hover:text-green-600 font-semibold">
+        <Link to={"/"} className="hover:underline underline-offset-4 px-1 text-green-800 hover:text-green-600 font-bold">
           Login
         </Link>
       </div>
@@ -115,13 +117,23 @@ function Register() {
               className="w-full border rounded p-2 bg-background/40 backdrop-blur-sm"
             />
 
-            <Input
-              name="password"
-              type="password"
-              placeholder="Enter Password"
-              onChange={handleChange}
-              className="w-full border rounded p-2 bg-background/40 backdrop-blur-sm"
-            />
+            <div className="relative">
+              <Input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter Password"
+                onChange={handleChange}
+                className="w-full border rounded p-2 pr-10 bg-background/40 backdrop-blur-sm"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
 
             <Button
               type="submit"

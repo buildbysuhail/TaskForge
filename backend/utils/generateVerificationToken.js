@@ -12,7 +12,7 @@ const generateVerificationToken = () => {
         .digest("hex");
 
     // Set the token to expire after 15 minutes
-    const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
+    const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
 
     return {
         rawToken,
