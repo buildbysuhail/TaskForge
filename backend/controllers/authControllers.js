@@ -24,7 +24,7 @@ export const registerUser = async (req, res) => {
         // 2. Normalize the email
         const normalizedEmail = email.trim().toLowerCase();
 
-        console.log("User model database:", User.db.name);
+        // console.log("User model database:", User.db.name);
 // console.log("User model host:", User.db.host);
 // console.log("Email being checked:", normalizedEmail);
 
@@ -92,7 +92,7 @@ export const registerUser = async (req, res) => {
                             </a>
                         </p>
 
-                        <p>This link expires in 30 minutes.</p>
+                        <p>This link expires in 15 minutes.</p>
                         <p>If you didn't create this account, you can ignore this email.</p>
                     </div>
                 `
@@ -282,7 +282,7 @@ export const resendVerificationEmail = async (req, res) => {
                             </a>
                         </p>
 
-                        <p>This link expires in 30 minutes.</p>
+                        <p>This link expires in 15 minutes.</p>
 
                         <p>If you did not request this email, you can ignore it.</p>
                     </div>
