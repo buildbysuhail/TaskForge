@@ -201,7 +201,7 @@ function Dashboard() {
             <Button
               variant="outline"
               className="bg-inherit border-2 border-slate-800 hover:bg-gray-500 dark:hover:bg-slate-800 hover:text-white rounded-md w-23 h-9 cursor-not-allowed"
-
+              onClick={()=> showToast.error("Feature under development")}
               title="under dev"
             >
               Create Sprint
