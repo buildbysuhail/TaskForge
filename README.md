@@ -42,10 +42,13 @@ It allows users to securely register, log in, and manage tasks efficiently.
 - ✅ JWT Authentication
 - ✅ Protected Routes
 - ✅ Task CRUD
-- ✅ Drag & Drop Board
+- ✅ Drag & Drop Board(Kanban)
 - ✅ User Profile
+- ⏳ User Invitation via Email
 - ⏳ Team Collaboration
-
+- ✅ Email Verification
+- ⏳ Create Sprint
+- ⏳ Report 
 ## 📦 Third-Party Libraries
 
 | Library | Purpose |
@@ -61,5 +64,6 @@ It allows users to securely register, log in, and manage tasks efficiently.
 | Shadcn | Reusable and customizable UI components |
 | lucide-react | icons |
 | dnd-kt | Drag and Drop for Kanban |
+| nodemailer | Send Mail to user's for email verification task |
 
 ## 📂 Project Structure
