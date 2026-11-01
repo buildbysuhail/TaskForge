@@ -42,10 +42,13 @@ It allows users to securely register, log in, and manage tasks efficiently.
 - ✅ JWT Authentication
 - ✅ Protected Routes
 - ✅ Task CRUD
-- ✅ Drag & Drop Board
+- ✅ Drag & Drop Board(Kanban)
 - ✅ User Profile
+- ⏳ User Invitation via Email
 - ⏳ Team Collaboration
-
+- ✅ Email Verification
+- ⏳ Create Sprint
+- ⏳ Report 
 ## 📦 Third-Party Libraries
 
 | Library | Purpose |
