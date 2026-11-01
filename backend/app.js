@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
-import authRoutes from "./routes/authRoutes.js"
-import taskRoutes from "./routes/taskRoutes.js"
+import authRoutes from "./routes/authRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
+import teamRoutes from "./routes/teamRoutes.js";
 
 const app = express();
 // ----------------------------------------------
@@ -16,6 +17,8 @@ app.use(express.urlencoded({ extended: true })); // ???
 // ----------------------------------------------
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
+
+app.use("/api/teams", teamRoutes);
 
 app.get("/", (_, res) => {
     res.json({

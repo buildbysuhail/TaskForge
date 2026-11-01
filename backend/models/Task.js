@@ -35,10 +35,24 @@ const taskSchema = new mongoose.Schema(
             type: String,
             trim: true,
             maxLength: [100, "Owner name cannot be more than 100 characters"]
+        },
+        // // Instead of 'owner' with string type, we need to bring a reference type
+        //         assignedTo: {
+        //     type: mongoose.Schema.Types.ObjectId,
+        //     ref: "User",
+        //     default: null,
+        // },
+        // Team referance:
+        team: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Team",
+            default: null,
         }
     },
     { timestamps: true }
 );
+
+taskSchema.index({ team: 1, createdAt: -1 });
 
 const Task = mongoose.model("Task", taskSchema);
 
