@@ -12,7 +12,7 @@ import crypto from "crypto";
 
 export const registerUser = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, inviteToken } = req.body;
 
         // 1. Validate the required fields
         if (!name || !email || !password) {
@@ -25,8 +25,8 @@ export const registerUser = async (req, res) => {
         const normalizedEmail = email.trim().toLowerCase();
 
         // console.log("User model database:", User.db.name);
-// console.log("User model host:", User.db.host);
-// console.log("Email being checked:", normalizedEmail);
+        // console.log("User model host:", User.db.host);
+        // console.log("Email being checked:", normalizedEmail);
 
         // 3. Check whether this email is already registered
         const userExist = await User.findOne({
@@ -65,13 +65,21 @@ export const registerUser = async (req, res) => {
         // const backendUrl =
         //     process.env.BACKEND_URL ||
         //     `http://localhost:${process.env.PORT || 7000}`;
-        
+
         const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
 
         // const verificationUrl =
         //     `${backendUrl}/api/auth/verify-email?token=${encodeURIComponent(rawToken)}`;
-        const verificationUrl =
-            `${frontendUrl}/verify-email?token=${encodeURIComponent(rawToken)}`;
+        const verificationUrl = new URL(
+            "/verify-email",
+            frontendUrl
+        );
+
+        verificationUrl.searchParams.set("token", rawToken);
+
+        if (inviteToken) {
+            verificationUrl.searchParams.set("inviteToken", inviteToken);
+        }
 
         // 8. Send the verification email
         try {
@@ -84,7 +92,7 @@ export const registerUser = async (req, res) => {
                         <p>Please verify your email address to activate your account.</p>
 
                         <p>
-                            <a href="${verificationUrl}"
+                            <a href="${verificationUrl.toString()}"
                                style="display:inline-block;padding:12px 20px;
                                background:#2563eb;color:white;text-decoration:none;
                                border-radius:6px;">
@@ -145,12 +153,12 @@ export const verifyEmail = async (req, res) => {
         console.log("Token provided:", Boolean(token));
         console.log("Hash generated from URL token:", hashedToken);
 
-        const storedUser = await User.findOne({
-    emailVerificationToken: hashedToken,
-    emailVerificationTokenExpires: { $gt: new Date() }
-});
+        // const storedUser = await User.findOne({
+        //     emailVerificationToken: hashedToken,
+        //     emailVerificationTokenExpires: { $gt: new Date() }
+        // });
 
-console.log("Matching unexpired token found:", Boolean(storedUser));
+        // console.log("Matching unexpired token found:", Boolean(storedUser));
 
         // 3. Find the user with a matching, unexpired token
         const user = await User.findOneAndUpdate(
@@ -200,7 +208,7 @@ console.log("Matching unexpired token found:", Boolean(storedUser));
 // ---------------------------------
 export const resendVerificationEmail = async (req, res) => {
     try {
-        const { email } = req.body;
+        const { email, inviteToken } = req.body;
 
         // 1. Validate input
         if (!email) {
@@ -256,9 +264,16 @@ export const resendVerificationEmail = async (req, res) => {
 
         const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
 
-        const verificationUrl =
-            // `${backendUrl}/api/auth/verify-email?token=${encodeURIComponent(rawToken)}`;
-            `${frontendUrl}/verify-email?token=${encodeURIComponent(rawToken)}`;
+        const verificationUrl = new URL(
+            "/verify-email",
+            frontendUrl
+        );
+
+        verificationUrl.searchParams.set("token", rawToken);
+
+        if (inviteToken) {
+            verificationUrl.searchParams.set("inviteToken", inviteToken);
+        }
 
         // 8. Send the new verification email
         try {
@@ -273,7 +288,7 @@ export const resendVerificationEmail = async (req, res) => {
 
                         <p>
                             <a
-                                href="${verificationUrl}"
+                                href="${verificationUrl.toString()}"
                                 style="display:inline-block;padding:12px 20px;
                                 background:#2563eb;color:white;text-decoration:none;
                                 border-radius:6px;"
@@ -321,20 +336,20 @@ export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-    //Basic validation
+        //Basic validation
         if (!email || !password) {
             return res.status(400).json({ message: "Email and password are required." })
         }
 
         const normalizedEmail = email.trim().toLowerCase();
 
-    // Invalid Credentials
+        // Invalid Credentials
         // Find user + explicitly include password
         const user = await User.findOne({
-             email: normalizedEmail
-            }).select("+password");
+            email: normalizedEmail
+        }).select("+password");
 
-        if(!user) {
+        if (!user) {
             return res.status(401).json({ message: "Invalid email or password." })
         }
 

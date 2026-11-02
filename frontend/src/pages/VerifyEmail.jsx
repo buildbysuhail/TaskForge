@@ -18,6 +18,7 @@ function VerifyEmail() {
 
   // taking token from the Url
   const token = searchParams.get("token");
+  const inviteToken = searchParams.get("inviteToken");
 
   const [status, setStatus] = useState("loading");
   const [message, setMessage] = useState("Verifying your email address...");
@@ -91,7 +92,13 @@ function VerifyEmail() {
         <CardContent>
           {status !== "loading" && (
             <Button asChild className="w-full">
-              <Link to="/login">
+              <Link
+                to={
+                  inviteToken
+                    ? `/?inviteToken=${encodeURIComponent(inviteToken)}`
+                    : "/"
+                }
+              >
                 {status === "success" ? "Continue to Login" : "Back to Login"}
               </Link>
             </Button>

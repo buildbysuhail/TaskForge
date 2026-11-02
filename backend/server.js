@@ -10,7 +10,6 @@ const PORT = process.env.PORT || 7000;
 // Connect DB First;
 connectDB();
 
-app.use(cors());
 
 // Start server
 app.listen(PORT, () => {
