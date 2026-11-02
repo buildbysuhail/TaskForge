@@ -55,6 +55,16 @@ teamInvitationSchema.index({ email:1, status: 1 });
 // Automatically remove expired invitation documents after their expiry.
 teamInvitationSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
+teamInvitationSchema.index(
+    { team: 1, email: 1 },
+    {
+        unique: true,
+        partialFilterExpression: {
+            status: "pending",
+        },
+    }
+);
+
 const TeamInvitation = mongoose.model(
     "TeamInvitation",
     teamInvitationSchema

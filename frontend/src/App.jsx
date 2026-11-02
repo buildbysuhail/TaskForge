@@ -13,6 +13,7 @@ import FeatureCheck from "./components/FeatureCheck";
 import NotFound from "./pages/NoFound";
 import EmailVerification from "./pages/EmailVerification";
 import VerifyEmail from "./pages/VerifyEmail";
+import AcceptInvitation from "./pages/AcceptInvitation";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -31,6 +32,7 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/create-task" element={<CreateTask />} />
+            <Route path="/accept-invitation" element={<AcceptInvitation />} />
 
             {/* Feature check route */}
             <Route path="/feature-check" element={<FeatureCheck />} />
