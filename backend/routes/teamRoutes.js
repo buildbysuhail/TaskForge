@@ -4,6 +4,10 @@ import {
     createTeam,
     getMyTeams
  } from "../controllers/teamController.js"
+ import { 
+    sendTeamInvitation,
+    acceptTeamInvitation
+  } from "../controllers/teamInvitationController.js";
 
 const router = express.Router();
 
@@ -14,5 +18,9 @@ router.use(protect);
 router.post("/", createTeam);
 // Retrieve teams
 router.get("/", getMyTeams);
+
+// Team invitations
+router.post("/:teamId/invitations", sendTeamInvitation);
+router.post("/invitations/accept", acceptTeamInvitation);
 
 export default router;

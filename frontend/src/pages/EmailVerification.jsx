@@ -1,5 +1,5 @@
 import { Mail, ArrowLeft, RefreshCw } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import API from "../services/api";
 import { showToast } from "@/lib/utils/toast";
@@ -15,6 +15,9 @@ import { Input } from "@/components/ui/input";
 
 function CheckYourEmail() {
   const location = useLocation();
+
+  const [searchParams] = useSearchParams();
+  const inviteToken = searchParams.get("inviteToken");
 
   const [email, setEmail] = useState(location.state?.email || "");
   const [loading, setLoading] = useState(false);
@@ -32,6 +35,7 @@ function CheckYourEmail() {
 
       const res = await API.post("/auth/resend-verification", {
         email: email.trim(),
+        ...(inviteToken && { inviteToken }),
       });
 
       showToast.success(

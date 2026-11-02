@@ -1,7 +1,7 @@
 // import React from 'react'
 import { useState } from "react";
 import API from "../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Card,
   CardAction,
@@ -57,6 +57,8 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const inviteToken = searchParams.get("inviteToken");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -73,7 +75,14 @@ function Login() {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      navigate("/dashboard");
+      if (inviteToken) {
+        navigate(
+          `/accept-invitation?token=${encodeURIComponent(inviteToken)}`
+        );
+      } else {
+        navigate("/dashboard");
+      }
+      
     } catch (err) {
       console.error("login error: ", err);
       if (err.response) {

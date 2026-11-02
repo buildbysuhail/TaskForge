@@ -1,7 +1,7 @@
 // import React from 'react'
 import { useState } from "react";
 import API from "../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Card,
   CardAction,
@@ -28,6 +28,9 @@ function Register() {
     const [showPassword, setShowPassword] = useState(false);
 
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const inviteToken = searchParams.get("token");
+
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
@@ -37,16 +40,24 @@ function Register() {
     //  return
       try {
         setLoading(true);
-        const res = await API.post("/auth/register", form);
+        const res = await API.post("/auth/register", {
+          ...form,
+          ...(inviteToken && { inviteToken }),
+        });
 
         showToast.success(
           res.data.message ||
           "Registration successful. Please check your email."
         );
 
-        navigate("/check-email", {
-          state: { email: form.email.trim() },
-        });
+        navigate(
+          inviteToken
+            ? `/check-email?inviteToken=${encodeURIComponent(inviteToken)}`
+            : "/check-email",
+          {
+            state: { email: form.email.trim() },
+          }
+        );
         console.log(res, "response");
       } catch (err) {
         console.error("Something Wrong: ", err);
