@@ -3,6 +3,7 @@ import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
 import teamRoutes from "./routes/teamRoutes.js";
+import teamTaskRoutes from "./routes/teamTaskRoutes.js";
 
 const app = express();
 // ----------------------------------------------
@@ -19,6 +20,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 
 app.use("/api/teams", teamRoutes);
+app.use("/api/teams", teamTaskRoutes);
 
 app.get("/", (_, res) => {
     res.json({

@@ -5,7 +5,8 @@ import {
     getMyTeams,
     getTeamMembers,
     removeTeamMember,
-    changeTeamMemberRole
+    changeTeamMemberRole,
+    transferTeamOwnership
  } from "../controllers/teamController.js"
  import { 
     sendTeamInvitation,
@@ -23,10 +24,11 @@ router.post("/", createTeam);
 router.get("/", getMyTeams);
 router.get("/:teamId/members", getTeamMembers)
 
-// Team invitations
+// Team invitations and team DB's operations
 router.post("/:teamId/invitations", sendTeamInvitation);
 router.post("/invitations/accept", acceptTeamInvitation);
 router.delete("/:teamId/members/:userId", removeTeamMember);
 router.patch("/:teamId/members/:userId/role", changeTeamMemberRole);
+router.patch("/:teamId/transfer-ownership", transferTeamOwnership);
 
 export default router;
