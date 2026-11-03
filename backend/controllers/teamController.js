@@ -1,5 +1,6 @@
 import Team from "../models/Team.js";
 import TeamMembership from "../models/TeamMembership.js";
+import mongoose from "mongoose";
 
 export const createTeam = async (req, res) => {
     try {
@@ -335,5 +336,105 @@ export const changeTeamMemberRole = async (req, res) => {
         return res.status(500).json({
             message: "Failed to update team member role.",
         });
+    }
+};
+
+export const transferTeamOwnership = async (req, res) => {
+    const session = await mongoose.startSession();
+
+    try {
+        const { teamId } = req.params;
+        const { newOwnerId } = req.body;
+
+        // Step 1: Validate the new owner's ID.
+        if (!mongoose.Types.ObjectId.isValid(newOwnerId)) {
+            return res.status(400).json({
+                message: "Invalid new owner ID.",
+            });
+        }
+
+        // Prevent transferring ownership to yourself.
+        if (newOwnerId === req.user._id.toString()) {
+            return res.status(400).json({
+                message: "You are already the team owner.",
+            });
+        }
+
+        let previousOwnerId;
+
+        // Step 2: Execute both role updates in one transaction.
+        await session.withTransaction(async () => {
+
+            // Step 3: Verify the team is active.
+            const team = await Team.findOne({
+                _id: teamId,
+                isActive: true,
+            }).session(session);
+
+            if (!team) {
+                throw new Error("TEAM_NOT_FOUND");
+            }
+
+            // Step 4: Verify the requester is the current owner.
+            const currentOwner = await TeamMembership.findOne({
+                team: teamId,
+                user: req.user._id,
+                role: "owner",
+                status: "active",
+            }).session(session);
+
+            if (!currentOwner) {
+                throw new Error("NOT_CURRENT_OWNER");
+            }
+
+            // Step 5: Find the new owner among active members.
+            const newOwner = await TeamMembership.findOne({
+                team: teamId,
+                user: newOwnerId,
+                status: "active",
+            }).session(session);
+
+            if (!newOwner) {
+                throw new Error("NEW_OWNER_NOT_FOUND");
+            }
+
+            previousOwnerId = currentOwner.user;
+
+            // Step 6: Promote the new owner.
+            newOwner.role = "owner";
+            await newOwner.save({ session });
+
+            // Step 7: Change the previous owner's role to admin.
+            currentOwner.role = "admin";
+            await currentOwner.save({ session });
+        });
+
+        return res.status(200).json({
+            message: "Team ownership transferred successfully.",
+            previousOwnerId,
+            newOwnerId,
+        });
+
+    } catch (err) {
+        console.error("Transfer ownership error:", err);
+
+        const errors = {
+            TEAM_NOT_FOUND: [404, "Team not found."],
+            NOT_CURRENT_OWNER: [403, "Only the current owner can transfer ownership."],
+            NEW_OWNER_NOT_FOUND: [404, "The new owner must be an active team member."],
+        };
+
+        if (errors[err.message]) {
+            const [status, message] = errors[err.message];
+
+            return res.status(status).json({ message });
+        }
+
+        return res.status(500).json({
+            message: "Failed to transfer team ownership.",
+        });
+
+    } finally {
+        await session.endSession();
     }
 };
