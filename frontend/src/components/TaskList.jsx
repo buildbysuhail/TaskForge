@@ -1,7 +1,14 @@
-import { deleteTask,
-        //  updateTask,
-        createTask,
-         updateTaskPartially } from "../services/taskService";
+import {
+  deleteTask,
+  //  updateTask,
+  createTask,
+  updateTaskPartially
+} from "../services/taskService";
+import {
+  createTeamTask,
+  deleteTeamTask,
+  updateTeamTask,
+} from "@/services/teamApiService";
 import { useState } from "react";
 
 // import {
@@ -27,6 +34,7 @@ import TaskForm from "./TaskForm";
 import { TableCell, TableRow } from "./ui/table";
 import { Input } from "./ui/input";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { useWorkspace } from "@/context/WorkSpaceContext";
 
 function TaskList({ 
   tasks,
@@ -34,10 +42,11 @@ function TaskList({
   reloadTasks,
   loading,
   setTasks,
-  searchEmpty
+  searchEmpty,
+  selectedTeam
 }) {
 // console.log("tsks:",tasks);
-
+// console.log("selectedTeam:",selectedTeam);
   const [open, setOpen] = useState(false);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
 
@@ -74,9 +83,11 @@ function TaskList({
   const handleTaskFieldChange = (id, field, value) => {
   setUpdatingId(id);
 
-  const promise = updateTaskPartially(id, {
-    [field]: value,
-  });
+    const promise = selectedTeam ?
+      updateTeamTask(selectedTeam, id, { [field]: value }) :
+      updateTaskPartially(id, {
+        [field]: value,
+      });
 
   showToast.promise(promise, {
     loading: "Updating task...",
@@ -146,7 +157,7 @@ console.error("Update Eror",err)
   const handleDelete = (id) => {
     setDeletingId(id);
 
-    const promise = deleteTask(id);
+    const promise = selectedTeam ? deleteTeamTask(selectedTeam, id) : deleteTask(id);
 
     showToast.promise(promise, {
       loading: "Deleting task...",
@@ -193,7 +204,11 @@ console.error("Update Eror",err)
     if(!title) return;
 
     try {
+      if(selectedTeam){
+        await createTeamTask(selectedTeam, { title }); // title: title
+      } else {
       await createTask({ title }); // title: title
+      }
 
       setQuickTaskTitle("");
       setIsAddingTask(false);
@@ -464,6 +479,7 @@ console.error("Update Eror",err)
       >
         <TaskForm 
           task={editingTask}
+          selectedTeam={selectedTeam}
           onSuccess={ () =>
             {
               reloadTasks();

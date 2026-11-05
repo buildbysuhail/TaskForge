@@ -28,11 +28,14 @@ function TFCommonDrawer({
   contentClassName,
   open,
   onOpenChange,
+
+  direction = "bottom", // top | right | bottom | left
 }) {
   return (
     <Drawer
       open={open}
       onOpenChange={onOpenChange}
+      direction={direction}
     >
       {trigger && (
         <DrawerTrigger asChild>

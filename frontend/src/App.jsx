@@ -14,6 +14,7 @@ import NotFound from "./pages/NoFound";
 import EmailVerification from "./pages/EmailVerification";
 import VerifyEmail from "./pages/VerifyEmail";
 import AcceptInvitation from "./pages/AcceptInvitation";
+import { WorkspaceProvider } from "./context/WorkSpaceContext";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -29,7 +30,11 @@ function App() {
 
         {/* Routes with Navbar */}
         <Route element= {<ProtectedRoute />}>
-          <Route element={<MainLayout />}>
+          <Route element={
+            <WorkspaceProvider>
+              <MainLayout />
+            </WorkspaceProvider>}
+            >
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/create-task" element={<CreateTask />} />
             <Route path="/accept-invitation" element={<AcceptInvitation />} />
