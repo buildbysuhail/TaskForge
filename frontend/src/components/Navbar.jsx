@@ -1,7 +1,10 @@
 import { LogOut, Moon, Sun, TestTube2 } from "lucide-react";
 import { TFConfirmModal } from "./common/modals";
 import TFAvatar from "./common/TFAvatar";
-import TFCommonDialog from "./common/TFCommonDialog";
+// import TFCommonDialog from "./common/TFCommonDialog";
+import TFCommonDrawer from "./common/TFCommonDrawer";
+import TeamSelector from "./teams/TeamSelector";
+import { useWorkspace } from "@/context/WorkSpaceContext";
 import { useState, useEffect } from "react";
 import { showToast } from "@/lib/utils/toast";
 import { useNavigate } from "react-router-dom";
@@ -11,9 +14,10 @@ import TFLogo from "../assets/images/TF.Logo.png";
 
 function Navbar() {
   const navigate = useNavigate();
+  const { selectedTeam, setSelectedTeam } = useWorkspace();
 
   const [open, setOpen] = useState(false);
-  // const [darkMode, setDarkMode] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
 
   const [darkMode, setDarkMode] = useLocalStorage(
     "TF-Theme-Dark",
@@ -38,7 +42,7 @@ useEffect(() => {
     showToast.success(darkMode ? "Light Theme": "Dark Theme");
 };
 const user = JSON.parse(localStorage.getItem("user"));
-// console.log(user.name[0], "UserNameee")
+// console.log(user, "UserNameee")
 
   return (
     <div className="top-0 left-0 w-full z-50 shrink-0">
@@ -81,7 +85,72 @@ const user = JSON.parse(localStorage.getItem("user"));
             <LogOut className="text-red-900 hover:text-red-800 dark:text-red-900 dark:hover:text-red-500 w-9 h-9 p-2" />
           </button>
 
-          <TFCommonDialog
+          <TFCommonDrawer
+            direction="right"
+            open={openDrawer}
+            onOpenChange={setOpenDrawer}
+            showCloseButton={false}
+            contentClassName="w-full sm:max-w-md"
+            trigger={
+              <button
+                type="button"
+                className="rounded-full cursor-pointer"
+                title="Open workspace"
+              >
+                <TFAvatar
+                  name={user.name}
+                  className="cursor-pointer"
+                  title={true}
+                />
+              </button>
+            }
+          >
+            <div className="flex flex-col gap-6">
+
+              {/* User Profile */}
+              <section className="rounded-xl border bg-muted/30 p-4">
+                <div className="flex items-center gap-4">
+                  <TFAvatar
+                    name={user.name}
+                    size="lg"
+                  />
+
+                  <div className="min-w-0">
+                    <h2 className="truncate text-base font-semibold">
+                      {user.name}
+                    </h2>
+
+                    <p className="truncate text-sm text-muted-foreground">
+                      {user.email}
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Workspace */}
+              <section className="flex flex-col gap-3">
+                {/* <div>
+                  <h3 className="font-semibold">
+                    Workspace
+                  </h3>
+
+                  <p className="text-sm text-muted-foreground">
+                    Switch between your personal tasks and team workspaces.
+                  </p>
+                </div> */}
+
+                <TeamSelector
+                  selectedTeam={selectedTeam}
+                  onTeamChange={setSelectedTeam}
+                />
+              </section>
+
+            </div>
+          </TFCommonDrawer>
+
+
+
+          {/* <TFCommonDialog
             trigger={<button type="button">
               <TFAvatar
                 name={user.name}
@@ -93,15 +162,18 @@ const user = JSON.parse(localStorage.getItem("user"));
             contentClassName="p-0"
             overlayClassName="backdrop-blur-sm"
           >
-            <div className="flex flex-col bg-stone-300 dark:bg-gray-800 rounded-lg items-center gap-3 py-4">
+            <div className="flex flex-col bg-stone-300 dark:bg-gray-800 rounded-lg items-center gap-3 pb-4">
+              <div className="flex dark:bg-gray-700 rounded-md w-full justify-center h-full">
               <TFAvatar
                 src={""}
                 name={user.name}
                 size="lg"
               />
+              </div>
+              <p className="text-left w-full px-5">User Info :-</p>
 
-              <p className="text-base font-medium dark:text-gray-100 flex justify-between w-[70%] sm:w-[45%]">
-                <span className="font-bold">User:</span>
+              <p className="text-base font-medium dark:text-gray-100 flex justify-between w-[70%] sm:w-[65%]">
+                <span className="font-bold">Name:</span>
 
                 <span>
                   {user.name}
@@ -110,12 +182,19 @@ const user = JSON.parse(localStorage.getItem("user"));
               
                 
               </p>
+              <p className="text-base font-medium dark:text-gray-100 flex justify-between w-[70%] sm:w-[65%]">
+                <span className="font-bold">Email:</span>
+
+                <span>
+                  {user.email}
+                </span>
+              </p>
 
                 <button className="cursor-not-allowed p-3 border border-gray-200 rounded-md">
                   Add New User
                 </button>
             </div>
-          </TFCommonDialog>
+          </TFCommonDialog> */}
         </div>
 
         

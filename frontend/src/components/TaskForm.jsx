@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { createTask, updateTask } from "../services/taskService";
+import { updateTeamTask } from "@/services/teamApiService";
 
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,6 +14,7 @@ function TaskForm({
   task = null,
   onSuccess,
   onClose,
+  selectedTeam = null,
 }) {
   const [formData, setFormData] = useState({
     title: "",
@@ -66,7 +68,10 @@ useEffect(() => {
   // Update
   // ----------------------------
   const handleUpdate = async () => {
-    const updatedTask = await updateTask(task._id, formData);
+    const updatedTask = selectedTeam
+      ? await updateTeamTask(selectedTeam, task._id, formData)
+      : await updateTask(task._id, formData);
+
     showToast.success("Task updated successfully");
     onSuccess?.(updatedTask);
     onClose?.();
