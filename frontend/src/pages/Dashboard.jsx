@@ -25,11 +25,14 @@ import useSoundEffects from "@/hooks/useSoundEffects.js";
 import { showToast } from "@/lib/utils/toast.js";
 import { TFDropdown } from "@/components/common/TFDropdown.jsx";
 import CompletedTasks from "@/components/dashboard/CompletedTasks.jsx";
+import TeamSelector from "@/components/teams/TeamSelector.jsx";
+import { getTeamTasks } from "@/services/teamApiService.js";
 
 function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [showTaskFrm, setShowTaskFrm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedTeam, setSelectedTeam] = useState(null);
   // const [activeTab, setActiveTab] = useState("backlog");
   // const [useSelectView, setUseSelectView] = useState(false); // adjust however you want
 
@@ -75,11 +78,16 @@ function Dashboard() {
   const loadTasks = async () => {
     try {
       setLoading(true);
-      const data = await getTasks({ search }); // same as { search: search }
+
+      const data = selectedTeam
+        ? await getTeamTasks(selectedTeam, search)
+        : await getTasks({ search });
+
       setTasks(data);
-      console.log(data, "dsdsdd")
+
     } catch (error) {
       console.error("Error fetching tasks:", error);
+      showToast.error("Failed to load tasks.");
     } finally {
       setLoading(false);
     }
@@ -99,7 +107,7 @@ function Dashboard() {
 
     return ()=>clearTimeout(timer);
 
-  }, [search]);
+  }, [search, selectedTeam]);
 
   //   const handleAddTask = (newTask) => {
   //   setTasks((prevTasks) => [...prevTasks, newTask]);
@@ -139,7 +147,10 @@ function Dashboard() {
 
         <div className="rounded-lg py-3 px-2 sm:py-5 sm:px-8 flex justify-between gap-2 w-full items-start sm:items-center">
           <div className="flex flex-wrap items-center min-w-0 flex-1 gap-2 sm:gap-3">
-
+            <TeamSelector 
+              selectedTeam={selectedTeam}
+              onTeamChange={setSelectedTeam}
+            />
 
             {!useSelectView && // border-slate-400 removed for default theme
               <div className="w-full sm:w-auto sm:border-r sm:pe-[13px]">

@@ -22,7 +22,7 @@ router.use(protect);
 router.post("/", createTeam);
 // Retrieve teams
 router.get("/", getMyTeams);
-router.get("/:teamId/members", getTeamMembers)
+router.get("/:teamId/members", getTeamMembers);
 
 // Team invitations and team DB's operations
 router.post("/:teamId/invitations", sendTeamInvitation);

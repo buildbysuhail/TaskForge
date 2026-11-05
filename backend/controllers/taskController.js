@@ -139,7 +139,7 @@ export const getTasks = async (req, res) => {
 
         const tasks = await Task.find(filter); // Imoortant: Only fetch tasks that belong to the logged in user
         // console.log("Fetched tasks for user:", req.user._id, tasks);
-        return es.status(200).json(tasks);
+        return res.status(200).json(tasks);
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
