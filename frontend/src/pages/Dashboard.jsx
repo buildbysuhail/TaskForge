@@ -27,12 +27,14 @@ import { TFDropdown } from "@/components/common/TFDropdown.jsx";
 import CompletedTasks from "@/components/dashboard/CompletedTasks.jsx";
 import TeamSelector from "@/components/teams/TeamSelector.jsx";
 import { getTeamTasks } from "@/services/teamApiService.js";
+import { useWorkspace } from "@/context/WorkSpaceContext.jsx";
 
 function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [showTaskFrm, setShowTaskFrm] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [selectedTeam, setSelectedTeam] = useState(null);
+  // const [selectedTeam, setSelectedTeam] = useState(null);
+  const { selectedTeam } = useWorkspace();
   // const [activeTab, setActiveTab] = useState("backlog");
   // const [useSelectView, setUseSelectView] = useState(false); // adjust however you want
 
@@ -147,10 +149,10 @@ function Dashboard() {
 
         <div className="rounded-lg py-3 px-2 sm:py-5 sm:px-8 flex justify-between gap-2 w-full items-start sm:items-center">
           <div className="flex flex-wrap items-center min-w-0 flex-1 gap-2 sm:gap-3">
-            <TeamSelector 
+            {/* <TeamSelector 
               selectedTeam={selectedTeam}
               onTeamChange={setSelectedTeam}
-            />
+            /> */}
 
             {!useSelectView && // border-slate-400 removed for default theme
               <div className="w-full sm:w-auto sm:border-r sm:pe-[13px]">
@@ -206,6 +208,7 @@ function Dashboard() {
               <CreateTask 
               onClose={() => setShowTaskFrm(false)}
               onAdd={loadTasks}
+              selectedTeam={selectedTeam}
               />
             </TFCommonDrawer>
 
@@ -317,6 +320,7 @@ function Dashboard() {
               loading={loading}
               setTasks={setTasks}
               searchEmpty={!!search.length}
+              selectedTeam={selectedTeam}
             />
           </div>
 

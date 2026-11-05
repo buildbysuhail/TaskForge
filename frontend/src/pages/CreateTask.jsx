@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createTask } from "../services/taskService";
+import { createTeamTask } from "@/services/teamApiService";
 
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -44,7 +45,8 @@ const TYPE_OPTIONS = ["Feature", "Quality", "Bug", "Test", "Security", "Other"];
 // TaskForm ===> CreateTask
 function CreateTask({
   onAdd,
-  onClose
+  onClose,
+  selectedTeam
 }) {
 
  
@@ -91,15 +93,21 @@ function CreateTask({
       playSubmitButton();
 
       // const newTask = 
-      await createTask({
-        title: title?.trim(),
+      const taskData = {
+        title: title.trim(),
         description,
         status,
         priority,
         type,
         taskId: taskId.trim(),
         owner: owner.trim(),
-      });
+      };
+
+      if (selectedTeam) {
+        await createTeamTask(selectedTeam, taskData);
+      } else {
+        await createTask(taskData);
+      }
 
       onAdd();
       showToast.success("Task created successfully");

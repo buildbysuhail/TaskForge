@@ -3,6 +3,7 @@ import { Users, User } from "lucide-react";
 
 import TFSelect from "@/components/common/TFSelect";
 import { getMyTeams } from "@/services/teamApiService";
+import { showToast } from "@/lib/utils/toast";
 
 function TeamSelector({ selectedTeam, onTeamChange }) {
   const [teams, setTeams] = useState([]);
@@ -23,6 +24,25 @@ function TeamSelector({ selectedTeam, onTeamChange }) {
     fetchTeams();
   }, []);
 
+  const handleTeamChange = (value) => {
+    const newTeam = value === "personal" ? null : value;
+
+    // Prevent duplicate notifications
+    if (newTeam === selectedTeam) return;
+
+    const teamName = teams.find(
+      (team) => team._id === newTeam
+    )?.name;
+
+    onTeamChange(newTeam);
+
+    showToast.success(
+      newTeam
+        ? `Switched to ${teamName || "Team"} workspace`
+        : "Switched to Personal Workspace"
+    );
+  };
+
   const options = [
     {
       value: "personal",
@@ -40,9 +60,7 @@ function TeamSelector({ selectedTeam, onTeamChange }) {
     <TFSelect
       label="Workspace"
       value={selectedTeam || "personal"}
-      onValueChange={(value) =>
-        onTeamChange(value === "personal" ? null : value)
-      }
+      onValueChange={handleTeamChange}
       placeholder={loading ? "Loading teams..." : "Select a workspace"}
       options={options}
       disabled={loading}
