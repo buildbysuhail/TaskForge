@@ -145,6 +145,14 @@ const user = JSON.parse(localStorage.getItem("user"));
                 />
               </section>
 
+              <button className="border rounded-md p-3 cursor-not-allowed">
+                Team Creation - coming soon
+                </button>
+
+                <button className="border rounded-md p-3 cursor-not-allowed">
+                  Team Invitation - coming soon
+                </button>
+
             </div>
           </TFCommonDrawer>
 
