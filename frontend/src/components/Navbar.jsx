@@ -146,11 +146,17 @@ const user = JSON.parse(localStorage.getItem("user"));
               </section>
 
               <button className="border rounded-md p-3 cursor-not-allowed">
-                Team Creation - coming soon
+                Team Creation - 
+                <span className="text-gray-400">
+                coming soon
+                </span>
                 </button>
 
                 <button className="border rounded-md p-3 cursor-not-allowed">
-                  Team Invitation - coming soon
+                  Team Invitation - 
+                  <span className="text-gray-400">
+                  coming soon
+                  </span>
                 </button>
 
             </div>
