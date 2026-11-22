@@ -154,7 +154,7 @@ const user = JSON.parse(localStorage.getItem("user"));
 
                 <button className="border rounded-md p-3 cursor-not-allowed">
                   Team Invitation - 
-                  <span className="text-gray-400">
+                  <span className="text-gray-200">
                   coming soon
                   </span>
                 </button>
