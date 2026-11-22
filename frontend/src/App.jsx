@@ -15,6 +15,7 @@ import EmailVerification from "./pages/EmailVerification";
 import VerifyEmail from "./pages/VerifyEmail";
 import AcceptInvitation from "./pages/AcceptInvitation";
 import { WorkspaceProvider } from "./context/WorkSpaceContext";
+import TeamInfo from "./components/teams/TeamInfo";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -38,6 +39,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/create-task" element={<CreateTask />} />
             <Route path="/accept-invitation" element={<AcceptInvitation />} />
+            <Route path="/about-team" element={<TeamInfo />} />
 
             {/* Feature check route */}
             <Route path="/feature-check" element={<FeatureCheck />} />
