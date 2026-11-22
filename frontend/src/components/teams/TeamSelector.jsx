@@ -5,7 +5,7 @@ import TFSelect from "@/components/common/TFSelect";
 import { getMyTeams } from "@/services/teamApiService";
 import { showToast } from "@/lib/utils/toast";
 
-function TeamSelector({ selectedTeam, onTeamChange }) {
+function TeamSelector({ selectedTeam, onTeamChange, refreshKey}) {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,7 +22,7 @@ function TeamSelector({ selectedTeam, onTeamChange }) {
     };
 
     fetchTeams();
-  }, []);
+  }, [refreshKey]);
 
   const handleTeamChange = (value) => {
     const newTeam = value === "personal" ? null : value;
