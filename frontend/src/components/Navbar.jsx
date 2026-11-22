@@ -1,5 +1,11 @@
-import { LogOut, Moon, Sun, TestTube2 } from "lucide-react";
-import { TFConfirmModal } from "./common/modals";
+import {
+  LogOut,
+  Moon,
+  Sun,
+  TestTube2,
+  Plus,
+  Send,
+} from "lucide-react";
 import TFAvatar from "./common/TFAvatar";
 // import TFCommonDialog from "./common/TFCommonDialog";
 import TFCommonDrawer from "./common/TFCommonDrawer";
@@ -11,19 +17,24 @@ import { useNavigate } from "react-router-dom";
 // import { Button } from "./ui/button";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import TFLogo from "../assets/images/TF.Logo.png";
+import CreateTeamDrawer from "./teams/CreateTeamDrawer";
+import TeamInvitationDrawer from "./teams/TeamInvitationDrawer";import { TFConfirmModal } from "./common/modals";
 
 function Navbar() {
   const navigate = useNavigate();
-  const { selectedTeam, setSelectedTeam } = useWorkspace();
+  const { selectedTeam, setSelectedTeam, selectedTeamData } = useWorkspace();
 
   const [open, setOpen] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [openCreateTeam, setOpenCreateTeam] = useState(false);
+  const [openInvitation, setOpenInvitation] = useState(false);
+  const [teamRefreshKey, setTeamRefreshKey] = useState(0);
 
   const [darkMode, setDarkMode] = useLocalStorage(
     "TF-Theme-Dark",
     false
   )
-
+console.log(selectedTeamData, "Selected Team in Navbar")
   const handleLogout = () => {
     // Perform logout logic here
     localStorage.removeItem("token");
@@ -105,7 +116,7 @@ const user = JSON.parse(localStorage.getItem("user"));
               </button>
             }
           >
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-6 h-full">
 
               {/* User Profile */}
               <section className="rounded-xl border bg-muted/30 p-4">
@@ -142,22 +153,43 @@ const user = JSON.parse(localStorage.getItem("user"));
                 <TeamSelector
                   selectedTeam={selectedTeam}
                   onTeamChange={setSelectedTeam}
+                  refreshKey={teamRefreshKey}
                 />
               </section>
 
-              <button className="border rounded-md p-3 cursor-not-allowed">
-                Team Creation - 
-                <span className="text-gray-400">
-                coming soon
-                </span>
-                </button>
+              <button className="border rounded-md p-3 cursor-pointer"
+                onClick={()=>{
+                  navigate("about-team")
+                  setOpenDrawer(false);
+                }}
+              >
+                Know about Team
+              </button>
 
-                <button className="border rounded-md p-3 cursor-not-allowed">
-                  Team Invitation - 
-                  <span className="text-gray-200">
-                  coming soon
-                  </span>
-                </button>
+              <button
+                className="border rounded-md p-3 cursor-pointer
+                hover:bg-muted transition-colors"
+                onClick={() => setOpenCreateTeam(true)}
+              >
+                <span className="flex items-center gap-2">
+                  <Plus size={16} />
+                  Create Team
+                </span>
+              </button>
+
+
+              <button
+                disabled={!selectedTeam}
+                onClick={() => setOpenInvitation(true)}
+                className="border rounded-md p-3 mt-auto flex items-center justify-center gap-2 transition-colors hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Send size={16} />
+
+                {selectedTeam
+                  ? "Invite Team Members"
+                  : "Select a Team to Invite"}
+              </button>
+
 
             </div>
           </TFCommonDrawer>
@@ -222,7 +254,21 @@ const user = JSON.parse(localStorage.getItem("user"));
       confirmText="Logout"
       cancelText="Cancel"
     />
-  
+      <CreateTeamDrawer
+        open={openCreateTeam}
+        onOpenChange={setOpenCreateTeam}
+        onTeamCreated={(newTeam) =>{ 
+          setTeamRefreshKey((prev) => prev + 1);
+          setSelectedTeam(newTeam._id);
+        }}
+      />
+      <TeamInvitationDrawer
+        open={openInvitation}
+        onOpenChange={setOpenInvitation}
+        teamId={selectedTeam}
+        teamName={selectedTeamData?.name}
+      />
+
     </div>
   );
 }
